@@ -1,0 +1,31 @@
+# Created by https://www.toptal.com/developers/gitignore/api/laravel
+# Edit at https://www.toptal.com/developers/gitignore?templates=laravel
+
+### Laravel ###
+/bootstrap/cache/*
+!/bootstrap/cache/.gitignore
+/public/build/
+/public/hot
+/public/storage
+/storage/*.key
+/storage/app/*
+/storage/framework/*
+/storage/logs/*
+!/storage/app/.gitignore
+!/storage/framework/.gitignore
+!/storage/logs/.gitignore
+/vendor/
+Homestead.json
+Homestead.yaml
+phpcs.xml
+phpstan.neon
+phpunit.xml
+psalm.xml
+phpcs.xml.dist
+.env
+.phpunit.result.cache
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# End of https://www.toptal.com/developers/gitignore/api/laravel 
