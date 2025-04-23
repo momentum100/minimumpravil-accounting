@@ -1,0 +1,71 @@
+name: Deploy Production
+
+on:
+  push:
+    branches:
+      - master # Or your production branch name
+
+jobs:
+  deploy:
+    name: Deploy to Production Server
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.3' # Match your project's PHP version
+        extensions: mbstring, xml, curl, zip, mysql # Add extensions your project needs
+        coverage: none
+
+    - name: Install Composer Dependencies
+      run: composer install --no-interaction --no-dev --prefer-dist --optimize-autoloader
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20' # Or your preferred Node.js LTS version
+
+    - name: Install NPM Dependencies
+      run: npm ci
+
+    - name: Build Assets
+      run: npm run build
+
+    - name: Install SSH key
+      uses: webfactory/ssh-agent@v0.9.0
+      with:
+        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+    - name: Deploy to Server
+      run: |
+        # Add the server's host key to known_hosts to avoid prompt (more secure than StrictHostKeyChecking=no)
+        # ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts # Consider enabling this for better security
+        
+        # Connect to server and run deployment commands
+        ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'EOF'
+          cd /var/www/minimumpravil-accounting/acne-accounting
+          echo "Pulling latest changes..."
+          git pull origin master
+          echo "Running Composer Install..."
+          composer install --no-interaction --no-dev --optimize-autoloader
+          echo "Installing NPM dependencies and building assets..."
+          # Ensure Node/NPM are available in the SSH session's PATH if needed
+          # Might need to source profile: source ~/.nvm/nvm.sh or similar
+          npm ci && npm run build 
+          echo "Running Migrations..."
+          php artisan migrate --force
+          echo "Clearing caches..."
+          php artisan optimize:clear
+          echo "Optimizing application..."
+          php artisan optimize
+          echo "Setting Permissions..."
+          # Ensure the SSH user has sudo privileges without password for these commands
+          sudo chown -R www-data:www-data storage bootstrap/cache public/storage # Adjust user/group if needed
+          echo "Restarting Apache..."
+          sudo systemctl restart apache2 # Adjust service name if different (e.g., httpd)
+          echo "Deployment complete!"
+        EOF 

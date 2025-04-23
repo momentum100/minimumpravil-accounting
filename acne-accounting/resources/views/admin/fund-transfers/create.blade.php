@@ -160,6 +160,10 @@
                         .then(response => response.json())
                         .then(data => {
                             this.fromAccounts = data;
+                            // If accounts were found, select the first one by default
+                            if (this.fromAccounts.length > 0) {
+                                this.fromAccountId = this.fromAccounts[0].id;
+                            }
                         })
                         .catch(error => console.error('Error fetching from accounts:', error))
                         .finally(() => {
@@ -185,6 +189,10 @@
                         .then(response => response.json())
                         .then(data => {
                             this.toAccounts = data;
+                            // If accounts were found, select the first one by default
+                            if (this.toAccounts.length > 0) {
+                                this.toAccountId = this.toAccounts[0].id;
+                            }
                         })
                          .catch(error => console.error('Error fetching to accounts:', error))
                         .finally(() => {
