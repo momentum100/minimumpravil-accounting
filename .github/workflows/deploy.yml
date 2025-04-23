@@ -34,13 +34,15 @@ jobs:
           echo "Installing NPM dependencies and building assets..."
           # Ensure Node/NPM are available in the SSH session's PATH if needed
           # Might need to source profile: source ~/.nvm/nvm.sh or similar
-          npm ci && npm run build 
+          npm ci && npm run build
           echo "Running Migrations..."
           php artisan migrate --force
           echo "Clearing caches..."
           php artisan optimize:clear
           echo "Optimizing application..."
           php artisan optimize
+          echo "Linking storage..."
+          php artisan storage:link
           echo "Setting Permissions..."
           # Ensure the SSH user has sudo privileges without password for these commands
           sudo chown -R www-data:www-data storage bootstrap/cache public/storage # Adjust user/group if needed
