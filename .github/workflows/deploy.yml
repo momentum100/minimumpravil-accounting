@@ -14,27 +14,6 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
 
-    - name: Setup PHP
-      uses: shivammathur/setup-php@v2
-      with:
-        php-version: '8.3' # Match your project's PHP version
-        extensions: mbstring, xml, curl, zip, mysql # Add extensions your project needs
-        coverage: none
-
-    - name: Install Composer Dependencies
-      run: composer install --no-interaction --no-dev --prefer-dist --optimize-autoloader
-
-    - name: Setup Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '20' # Or your preferred Node.js LTS version
-
-    - name: Install NPM Dependencies
-      run: npm ci
-
-    - name: Build Assets
-      run: npm run build
-
     - name: Install SSH key
       uses: webfactory/ssh-agent@v0.9.0
       with:
