@@ -1,6 +1,6 @@
 # План Задач: Система Учета ACNE INC
 
-Этот документ содержит пошаговый план задач для разработки системы учета ACNE INC на Laravel.
+Этот документ содержит пошаговый план задач для разработки системы учета ACNE INC на `Laravel 12`. 
 
 ## Этап 1: Настройка Проекта и Окружения
 
@@ -96,47 +96,50 @@
 64. [ ] **Задача 7.2**: Создать Blade-шаблоны для CRUD операций с ежедневными расходами (`daily_expenses/index.blade.php`, `daily_expenses/create.blade.php`, `daily_expenses/edit.blade.php`). Форма должна позволять выбирать баера.
 65. [ ] **Задача 7.3**: Создать `AdjustmentController` (`php artisan make:controller AdjustmentController --resource`). Реализовать CRUD-методы.
 66. [ ] **Задача 7.4**: Создать Blade-шаблоны для CRUD операций с корректировками (`adjustments/index.blade.php`, `adjustments/create.blade.php`, `adjustments/edit.blade.php`). Форма должна позволять выбирать баера и период.
-67. [ ] **Задача 7.5**: Создать `FundTransferController` (`php artisan make:controller FundTransferController --resource`). Реализовать CRUD-методы.
-68. [ ] **Задача 7.6**: Создать Blade-шаблоны для CRUD операций с перемещением средств (`fund_transfers/index.blade.php`, `fund_transfers/create.blade.php`, `fund_transfers/edit.blade.php`). Форма должна позволять выбирать счета.
+67. [X] **Задача 7.5**: Создать `FundTransferController` (`php artisan make:controller FundTransferController --resource`). Реализовать CRUD-методы. *(Partially Done: Created Controller, implemented create/store/getAccounts)*
+68. [X] **Задача 7.6**: Создать Blade-шаблоны для CRUD операций с перемещением средств (`fund_transfers/index.blade.php`, `fund_transfers/create.blade.php`, `fund_transfers/edit.blade.php`). Форма должна позволять выбирать счета. *(Partially Done: Created create view)*
 69. [ ] **Задача 7.7**: Реализовать метод `financeDashboard()` в `DashboardController`.
 70. [ ] **Задача 7.8**: Создать Blade-шаблон для панели управления Финансиста (`dashboards/finance.blade.php`).
-71. [ ] **Задача 7.9**: Настроить маршруты для Finance (доступ к операциям, просмотр пользователей/команд/счетов, отчеты).
+71. [ ] **Задача 7.9**: Настроить маршруты для Finance (доступ к операциям, просмотр пользователей/команд/счетов, отчеты). *(Partially Done: Added FundTransfer & Transaction routes)*
+72. [X] **Задача (Implicit)**: Создать `TransactionController` с методами `index` и `show`.
+73. [X] **Задача (Implicit)**: Создать Blade-шаблоны `admin/transactions/index.blade.php` и `admin/transactions/show.blade.php`.
 
 ## Этап 8: UI и Контроллеры - Роль Buyer
 
-72. [ ] **Задача 8.1**: Адаптировать `DailyExpenseController` для баера (методы `index`, `create`, `store`, `edit`, `update` должны учитывать только его записи).
-73. [ ] **Задача 8.2**: Адаптировать Blade-шаблоны `daily_expenses` для баера (скрыть выбор баера, возможно упростить).
-74. [ ] **Задача 8.3**: Реализовать метод `buyerDashboard()` в `DashboardController`.
-75. [ ] **Задача 8.4**: Создать Blade-шаблон для панели управления Баера (`dashboards/buyer.blade.php`).
-76. [ ] **Задача 8.5**: Реализовать метод в `AccountController` для отображения информации о счете текущего баера.
-77. [ ] **Задача 8.6**: Создать Blade-шаблон для просмотра счета баера (`accounts/my_account.blade.php`).
-78. [ ] **Задача 8.7**: Настроить маршруты для Buyer (доступ к своим расходам, своему счету, своим отчетам).
+74. [ ] **Задача 8.1**: Адаптировать `DailyExpenseController` для баера (методы `index`, `create`, `store`, `edit`, `update` должны учитывать только его записи).
+75. [ ] **Задача 8.2**: Адаптировать Blade-шаблоны `daily_expenses` для баера (скрыть выбор баера, возможно упростить).
+76. [ ] **Задача 8.3**: Реализовать метод `buyerDashboard()` в `DashboardController`.
+77. [ ] **Задача 8.4**: Создать Blade-шаблон для панели управления Баера (`dashboards/buyer.blade.php`).
+78. [ ] **Задача 8.5**: Реализовать метод в `AccountController` для отображения информации о счете текущего баера.
+79. [ ] **Задача 8.6**: Создать Blade-шаблон для просмотра счета баера (`accounts/my_account.blade.php`).
+80. [ ] **Задача 8.7**: Настроить маршруты для Buyer (доступ к своим расходам, своему счету, своим отчетам).
 
 ## Этап 9: Интеграция с Keitaro
 
-79. [ ] **Задача 9.1**: Создать Artisan команду `IncomeFetchKeitaro` (`php artisan make:command IncomeFetchKeitaro`).
-80. [ ] **Задача 9.2**: Реализовать логику команды: использование `Http` клиента Laravel для запроса к API Keitaro (URL и API ключ из `.env`).
-81. [ ] **Задача 9.3**: Реализовать сохранение полученных данных в таблицу `income_records`.
-82. [ ] **Задача 9.4**: Зарегистрировать команду и настроить ее ежедневный запуск в `app/Console/Kernel.php`.
-83. [ ] **Задача 9.5**: Создать `IncomeController` (`php artisan make:controller IncomeController`). Реализовать метод `index` для отображения записей о доходах.
-84. [ ] **Задача 9.6**: Создать Blade-шаблон для отображения доходов (`income/index.blade.php`).
-85. [ ] **Задача 9.7**: Добавить маршрут для просмотра доходов (доступен Owner/Finance?).
+81. [ ] **Задача 9.1**: Создать Artisan команду `IncomeFetchKeitaro` (`php artisan make:command IncomeFetchKeitaro`).
+82. [ ] **Задача 9.2**: Реализовать логику команды: использование `Http` клиента Laravel для запроса к API Keitaro (URL и API ключ из `.env`).
+83. [ ] **Задача 9.3**: Реализовать сохранение полученных данных в таблицу `income_records`.
+84. [ ] **Задача 9.4**: Зарегистрировать команду и настроить ее ежедневный запуск в `app/Console/Kernel.php`.
+85. [ ] **Задача 9.5**: Создать `IncomeController` (`php artisan make:controller IncomeController`). Реализовать метод `index` для отображения записей о доходах.
+86. [ ] **Задача 9.6**: Создать Blade-шаблон для отображения доходов (`income/index.blade.php`).
+87. [ ] **Задача 9.7**: Добавить маршрут для просмотра доходов (доступен Owner/Finance?).
 
 ## Этап 10: Отчетность
 
-86. [ ] **Задача 10.1**: Создать `ReportController` (`php artisan make:controller ReportController`).
-87. [ ] **Задача 10.2**: Реализовать метод для отчета "Баланс по счетам" (агрегация `transaction_lines` по `account_id`).
-88. [ ] **Задача 10.3**: Реализовать метод для отчета "Расходы баеров" (фильтрация `daily_expenses` и `adjustments` по баерам/командам/периодам).
-89. [ ] **Задача 10.4**: Реализовать метод для отчета "Движение средств" (список `transactions` и `transaction_lines` с фильтрами).
-90. [ ] **Задача 10.5**: Создать Blade-шаблоны для отображения отчетов с фильтрами.
-91. [ ] **Задача 10.6**: Настроить маршруты для отчетов с учетом прав доступа ролей.
+88. [ ] **Задача 10.1**: Создать `ReportController` (`php artisan make:controller ReportController`).
+89. [ ] **Задача 10.2**: Реализовать метод для отчета "Баланс по счетам" (агрегация `transaction_lines` по `account_id`).
+90. [ ] **Задача 10.3**: Реализовать метод для отчета "Расходы баеров" (фильтрация `daily_expenses` и `adjustments` по баерам/командам/периодам).
+91. [ ] **Задача 10.4**: Реализовать метод для отчета "Движение средств" (список `transactions` и `transaction_lines` с фильтрами).
+92. [X] **Задача 10.5**: Создать Blade-шаблоны для отображения отчетов с фильтрами.
+93. [ ] **Задача 10.6**: Настроить маршруты для отчетов с учетом прав доступа ролей.
 
 ## Этап 11: Валидация и Завершение
 
-92. [ ] **Задача 11.1**: Создать Form Requests (`php artisan make:request StoreTeamRequest`, `StoreUserRequest`, `StoreDailyExpenseRequest` и т.д.) для всех форм создания/редактирования.
-93. [ ] **Задача 11.2**: Добавить правила валидации во все Form Requests.
-94. [ ] **Задача 11.3**: Реализовать корректный расчет и отображение балансов счетов во всех необходимых местах.
-95. [ ] **Задача 11.4**: Провести рефакторинг кода, улучшить UI/UX.
-96. [ ] **Задача 11.5**: Написать тесты (Unit/Feature) для ключевой логики (генерация транзакций, авторизация, расчет балансов).
-97. [ ] **Задача 11.6**: Провести полное ручное тестирование всех пользовательских сценариев для каждой роли.
-98. [ ] **Задача 11.7**: Подготовить документацию по развертыванию (на основе `tech.md`). 
+94. [X] **Задача 11.1**: Создать Form Requests (`php artisan make:request StoreTeamRequest`, `StoreUserRequest`, `StoreDailyExpenseRequest` и т.д.) для всех форм создания/редактирования. *(Partially Done: Created StoreFundTransferRequest)*
+95. [X] **Задача 11.2**: Добавить правила валидации во все Form Requests. *(Partially Done: Added rules to StoreFundTransferRequest)*
+96. [ ] **Задача 11.3**: Реализовать корректный расчет и отображение балансов счетов во всех необходимых местах.
+97. [ ] **Задача 11.4**: Провести рефакторинг кода, улучшить UI/UX.
+98. [ ] **Задача 11.5**: Написать тесты (Unit/Feature) для ключевой логики (генерация транзакций, авторизация, расчет балансов).
+99. [ ] **Задача 11.6**: Провести полное ручное тестирование всех пользовательских сценариев для каждой роли.
+100. [ ] **Задача 11.7**: Подготовить документацию по развертыванию (на основе `tech.md`). 
+101. [ ] **Задача 11.8**: Определить четкую логику выбора системных счетов (SYSTEM_COMPANY, SYSTEM_OPERATIONS) для разных типов операций (расходы, корректировки, доходы?) в наблюдателях/сервисах. 

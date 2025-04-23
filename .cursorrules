@@ -155,3 +155,15 @@ Below are **comprehensive rules**—best practices and "what not to do"—for yo
 -   [ ] Write meaningful tests.
 -   [ ] Avoid fat code, duplication, inline queries, and core hacks.
  
+
+ # Tools 
+ Use tools
+ When you analize logs take 250 last lines
+
+
+ # logging
+ Write logs for everything. 
+
+ # project file structure
+ laravel folder is 
+ acne-accounting/

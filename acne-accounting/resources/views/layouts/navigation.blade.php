@@ -15,6 +15,35 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+
+                    {{-- Admin Links --}}
+                    @if(in_array(Auth::user()->role, ['owner', 'finance']))
+                        <x-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
+                            {{ __('Admin Dashboard') }}
+                         </x-nav-link>
+                         <x-nav-link :href="route('admin.fund-transfers.create')" :active="request()->routeIs('admin.fund-transfers.create')">
+                            {{ __('Create Fund Transfer') }}
+                         </x-nav-link>
+                         <x-nav-link :href="route('admin.transactions.index')" :active="request()->routeIs('admin.transactions.*')">
+                            {{ __('View Transactions') }}
+                         </x-nav-link>
+                         <x-nav-link :href="route('admin.daily-expenses.index')" :active="request()->routeIs('admin.daily-expenses.*')">
+                            {{ __('Daily Expenses') }}
+                         </x-nav-link>
+                         <x-nav-link :href="route('admin.users.index')" :active="request()->routeIs('admin.users.*')">
+                            {{ __('Manage Users') }}
+                         </x-nav-link>
+                         <x-nav-link :href="route('admin.teams.index')" :active="request()->routeIs('admin.teams.*')">
+                            {{ __('Manage Teams') }}
+                         </x-nav-link>
+                         {{-- The old generic 'Admin Area' link is removed in favor of specific links --}}
+                         {{--
+                         <x-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard') || request()->routeIs('admin.teams.*') || request()->routeIs('admin.users.*')" class="relative group">
+                            {{ __('Admin Area') }}
+                             <span class="absolute top-0 right-0 block h-2 w-2 rounded-full ring-2 ring-white bg-red-400"></span>
+                         </x-nav-link>
+                         --}}
+                    @endif
                 </div>
             </div>
 
@@ -71,6 +100,35 @@
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
         </div>
+
+        {{-- Responsive Admin Links --}}
+        @if(in_array(Auth::user()->role, ['owner', 'finance']))
+            <div class="pt-4 pb-1 border-t border-gray-200">
+                <div class="px-4">
+                    <div class="font-medium text-base text-gray-800">{{ __('Admin Area') }}</div>
+                </div>
+                <div class="mt-3 space-y-1">
+                     <x-responsive-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
+                        {{ __('Admin Dashboard') }}
+                    </x-responsive-nav-link>
+                    <x-responsive-nav-link :href="route('admin.fund-transfers.create')" :active="request()->routeIs('admin.fund-transfers.create')">
+                        {{ __('Create Fund Transfer') }}
+                    </x-responsive-nav-link>
+                    <x-responsive-nav-link :href="route('admin.transactions.index')" :active="request()->routeIs('admin.transactions.*')">
+                        {{ __('View Transactions') }}
+                    </x-responsive-nav-link>
+                    <x-responsive-nav-link :href="route('admin.daily-expenses.index')" :active="request()->routeIs('admin.daily-expenses.*')">
+                        {{ __('Daily Expenses') }}
+                    </x-responsive-nav-link>
+                     <x-responsive-nav-link :href="route('admin.users.index')" :active="request()->routeIs('admin.users.*')">
+                        {{ __('Manage Users') }}
+                    </x-responsive-nav-link>
+                    <x-responsive-nav-link :href="route('admin.teams.index')" :active="request()->routeIs('admin.teams.*')">
+                        {{ __('Manage Teams') }}
+                    </x-responsive-nav-link>
+                </div>
+            </div>
+        @endif
 
         <!-- Responsive Settings Options -->
         <div class="pt-4 pb-1 border-t border-gray-200">

@@ -56,10 +56,9 @@ return new class extends Migration
      */
     public function down(): void
     {
-        // Drop foreign key first if exists
-        // Note: Schema::table is used to modify existing table
         if (Schema::hasTable('users') && Schema::hasColumn('users', 'team_id')) {
             Schema::table('users', function (Blueprint $table) {
+                // Restored Jetstream team FK drop
                 // Check if the foreign key exists before dropping
                 // The key name format is typically `<table>_<column>_foreign`
                 $foreignKeys = Schema::getConnection()->getDoctrineSchemaManager()->listTableForeignKeys('users');

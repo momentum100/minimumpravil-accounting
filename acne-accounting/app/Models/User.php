@@ -59,7 +59,7 @@ class User extends Authenticatable
     }
 
     /**
-     * Get the team that the user belongs to.
+     * Get the team that the user belongs to (primarily for buyers).
      */
     public function team(): BelongsTo
     {

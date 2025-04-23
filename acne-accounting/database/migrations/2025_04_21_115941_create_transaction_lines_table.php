@@ -24,12 +24,14 @@ return new class extends Migration
             // Indexes
             $table->index('account_id');
 
-            // Check constraint (Syntax might vary slightly based on DB)
-            // For MySQL 8+ & PostgreSQL
-            $table->check('(debit >= 0 AND credit >= 0 AND (debit > 0 OR credit > 0) AND (debit = 0 OR credit = 0))', 'chk_debit_credit');
-            // Note: SQLite does not enforce check constraints added via ->check() before SQLite 3.37.0.
-            // If using older SQLite or other DBs, this might need manual SQL or different approach.
+            // Check constraint needs to be added via raw SQL after table creation
+            // $table->check('(debit >= 0 AND credit >= 0 AND (debit > 0 OR credit > 0) AND (debit = 0 OR credit = 0))', 'chk_debit_credit');
         });
+
+        // Add CHECK constraint for MySQL 8+
+        if (Schema::getConnection()->getDriverName() === 'mysql') {
+            DB::statement('ALTER TABLE `transaction_lines` ADD CONSTRAINT `chk_debit_credit` CHECK (`debit` >= 0 AND `credit` >= 0 AND (`debit` > 0 OR `credit` > 0) AND (`debit` = 0 OR `credit` = 0))');
+        }
 
         // Add table comment if using MySQL 8+
         if (Schema::getConnection()->getDriverName() === 'mysql') {
@@ -45,13 +47,21 @@ return new class extends Migration
         // Drop foreign keys first if exists
         if (Schema::hasTable('transaction_lines')) {
             Schema::table('transaction_lines', function (Blueprint $table) {
-                // Drop check constraint if DB supports it and it exists
-                // Specific dropping syntax might vary
+                // Drop check constraint manually for MySQL
+                if (Schema::getConnection()->getDriverName() === 'mysql') {
+                    try {
+                         DB::statement('ALTER TABLE `transaction_lines` DROP CONSTRAINT `chk_debit_credit`');
+                    } catch (\Exception $e) {
+                        // Ignore error if constraint doesn't exist
+                    }
+                }
+                /*
                 try {
                     $table->dropCheck('chk_debit_credit');
                 } catch (\Exception $e) {
                     // Ignore errors if check constraint doesn't exist or dropping is not supported cleanly
                 }
+                */
 
                 $foreignKeys = Schema::getConnection()->getDoctrineSchemaManager()->listTableForeignKeys('transaction_lines');
                 $keysToDrop = [];
