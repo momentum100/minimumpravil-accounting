@@ -21,15 +21,16 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
-        'email',
-        'password',
-        'telegram_id',
-        'role',
-        'team_id',
-        'sub2',
-        'active',
+        'email',          // Nullable based on role
+        'password',       // Nullable based on role
         'is_virtual',
-        'contact_info',
+        'telegram_id',    // Corrected name
+        'terms',          // Added
+        'role',           // Added
+        'team_id',        // Added, Nullable
+        'sub2',           // Added (for tags), Nullable
+        'contact_info',   // Added, Nullable
+        'active',         // Added
     ];
 
     /**
@@ -45,16 +46,17 @@ class User extends Authenticatable
     /**
      * Get the attributes that should be cast.
      *
-     * @return array<string, string|object>
+     * @return array<string, string>
      */
     protected function casts(): array
     {
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
-            'sub2' => 'array', // Cast sub2 JSON to array
-            'active' => 'boolean',
             'is_virtual' => 'boolean',
+            'terms' => 'float',           // Keep
+            'sub2' => 'array',           // Added (existing field)
+            'active' => 'boolean',         // Added (existing field)
         ];
     }
 
@@ -75,16 +77,11 @@ class User extends Authenticatable
     }
 
     /**
-     * Get the daily expenses created by or for the user.
-     * Note: Differentiate by foreign key if needed (e.g., dailyExpensesAsBuyer, dailyExpensesAsCreator)
+     * Get the daily expenses associated with the user (creator).
      */
     public function dailyExpenses(): HasMany
     {
-        // This relation assumes user_id might link to either buyer or creator in some contexts,
-        // or more specific relations are needed depending on usage.
-        // For now, linking via 'created_by' as an example.
-        // Or use separate relations like buyerDailyExpenses() and creatorDailyExpenses()
-        return $this->hasMany(DailyExpense::class, 'created_by'); // Or 'buyer_id' depending on primary usage
+        return $this->hasMany(DailyExpense::class, 'created_by');
     }
 
     /**

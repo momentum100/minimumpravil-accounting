@@ -13,9 +13,15 @@ use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Log;
 
 class UserController extends Controller
 {
+    // Define available roles centrally
+    protected $availableRoles = ['owner', 'finance', 'buyer', 'agency'];
+    // Define available sub2 tags centrally
+    protected $availableSub2Tags = ['1', '2', '3'];
+
     /**
      * Display a listing of the resource.
      * We can filter by role here.
@@ -42,9 +48,13 @@ class UserController extends Controller
      */
     public function create(): View
     {
-        $teams = Team::orderBy('name')->get(); // For assigning buyers
-        $roles = ['owner', 'finance', 'buyer', 'agency'];
-        return view('admin.users.create', compact('teams', 'roles'));
+        Log::info('UserController@create accessed.');
+        $roles = $this->availableRoles;
+        $availableSub2Tags = $this->availableSub2Tags; // Use the class property
+        // Load teams if needed for non-agency roles
+        $teams = Team::orderBy('name')->get(); // Example: Load teams
+
+        return view('admin.users.create', compact('roles', 'availableSub2Tags', 'teams'));
     }
 
     /**
@@ -52,45 +62,54 @@ class UserController extends Controller
      */
     public function store(StoreUserRequest $request): RedirectResponse
     {
-        $validated = $request->validated();
+        Log::info('UserController@store: Received request');
 
-        // Hash password if provided
-        if (!empty($validated['password'])) {
-            $validated['password'] = Hash::make($validated['password']);
-        } else {
-            unset($validated['password']); // Ensure null if not provided
-        }
+        $validatedData = $request->validated();
+        Log::info('UserController@store: Validation passed', ['validated_data' => $validatedData]);
 
-        // Set is_virtual based on role
-        $validated['is_virtual'] = ($validated['role'] === 'agency');
+        try {
+            // Hash password only if it's present (i.e., not an agency user)
+            if (!empty($validatedData['password'])) {
+                 Log::info('UserController@store: Hashing password.');
+                 $validatedData['password'] = Hash::make($validatedData['password']);
+            } else {
+                Log::info('UserController@store: No password provided (likely agency role).');
+                unset($validatedData['password']); // Ensure password is not set if empty
+            }
 
-        // Clear team_id if not a buyer
-        if ($validated['role'] !== 'buyer') {
-            $validated['team_id'] = null;
-        }
-         // Clear contact_info if not an agency
-         if ($validated['role'] !== 'agency') {
-            $validated['contact_info'] = null;
-        }
-        // Clear sub2 if not a buyer
-        if ($validated['role'] !== 'buyer') {
-            $validated['sub2'] = null;
-        }
+            // Ensure boolean fields have defaults if not present
+            $validatedData['is_virtual'] = $validatedData['is_virtual'] ?? false;
+            $validatedData['active'] = $validatedData['active'] ?? true; // Default active to true?
+            Log::info('UserController@store: Setting boolean defaults', ['is_virtual' => $validatedData['is_virtual'], 'active' => $validatedData['active']]);
 
-        $user = User::create($validated);
+            // Ensure sub2 is an empty array if null/not provided (Form Request handles array conversion)
+            $validatedData['sub2'] = $validatedData['sub2'] ?? [];
+            Log::info('UserController@store: Final data before create', $validatedData);
 
-        // Automatically create a default USD account if user is Buyer or Agency
-        if (in_array($user->role, ['buyer', 'agency'])) {
-            $accountType = ($user->role === 'buyer') ? 'BUYER_MAIN' : 'AGENCY_MAIN';
-            Account::create([
-                'user_id' => $user->id,
-                'account_type' => $accountType,
-                'currency' => 'USD',
-                'description' => $user->name . ' Main USD Account',
+            $user = User::create($validatedData);
+            Log::info('UserController@store: User created successfully', ['user_id' => $user->id]);
+
+            // Automatically create a default USD account if user is Buyer or Agency
+            if (in_array($user->role, ['buyer', 'agency'])) {
+                $accountType = ($user->role === 'buyer') ? 'BUYER_MAIN' : 'AGENCY_MAIN';
+                Account::create([
+                    'user_id' => $user->id,
+                    'account_type' => $accountType,
+                    'currency' => 'USD',
+                    'description' => $user->name . ' Main USD Account',
+                ]);
+            }
+
+            // Redirect to the user's detail page or index page
+            return redirect()->route('admin.users.index')->with('success', 'User created successfully.');
+
+        } catch (\Exception $e) {
+            Log::error('UserController@store: Error creating user: ' . $e->getMessage(), [
+                'exception' => $e,
+                'validated_data' => $validatedData // Log validated data on error
             ]);
+            return back()->with('error', 'Failed to create user. Please check logs.')->withInput();
         }
-
-        return redirect()->route('admin.users.index')->with('success', 'User created successfully.');
     }
 
     /**
@@ -107,9 +126,10 @@ class UserController extends Controller
      */
     public function edit(User $user): View
     {
+        $roles = $this->availableRoles;
+        $availableSub2Tags = $this->availableSub2Tags;
         $teams = Team::orderBy('name')->get();
-        $roles = ['owner', 'finance', 'buyer', 'agency'];
-        return view('admin.users.edit', compact('user', 'teams', 'roles'));
+        return view('admin.users.edit', compact('user', 'roles', 'availableSub2Tags', 'teams'));
     }
 
     /**

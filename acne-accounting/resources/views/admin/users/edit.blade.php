@@ -77,13 +77,13 @@
                             <x-input-error :messages="$errors->get('team_id')" class="mt-2" />
                         </div>
 
-                        <!-- Sub2 (Only for Buyers) -->
-                        <div class="mt-4" x-show="role === 'buyer'" x-transition>
-                            <x-input-label for="sub2" :value="__('Sub2 Tags (JSON)')" />
-                             {{-- Convert array back to JSON string for textarea --}}
-                            <textarea id="sub2" name="sub2" rows="3" class="block mt-1 w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm">{{ old('sub2', json_encode($user->sub2, JSON_PRETTY_PRINT)) }}</textarea>
+                        {{-- Sub2 Tags Textarea (Only for Buyers) --}}
+                        <div class="mt-4" x-show="role === 'buyer'" x-transition.opacity>
+                            <x-input-label for="sub2" :value="__('Sub2 Tags (one per line)')" />
+                            <textarea id="sub2" name="sub2" rows="5" class="block mt-1 w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm">{{ old('sub2', $user->sub2 && is_array($user->sub2) ? implode("\n", $user->sub2) : '') }}</textarea> {{-- Convert array to lines --}}
                             <x-input-error :messages="$errors->get('sub2')" class="mt-2" />
-                            <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">Enter valid JSON, e.g., {"key1": "value1", "key2": "value2"}.</p>
+                            <x-input-error :messages="$errors->get('sub2.*')" class="mt-2" />
+                            <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">Enter tags separated by new lines. These will be saved as a JSON array.</p>
                         </div>
 
                         <!-- Contact Info (Only for Agencies) -->

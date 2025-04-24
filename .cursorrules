@@ -1,6 +1,7 @@
 # Stack
 
--   Laravel 12, PHP 8.3, MySQL 8
+-   Laravel 12, PHP 8.3, MySQL 8 
+-   Alpine 
 -   Laravel directory is in `acne-accounting` folder
 -   Windows 11 Pro development, use Windows PowerShell commands and `;` as separator
 
@@ -165,5 +166,4 @@ Below are **comprehensive rules**—best practices and "what not to do"—for yo
  Write logs for everything. 
 
  # project file structure
- laravel folder is 
- acne-accounting/
+ NB! VERY IMPORTANT - laravel folder is `acne-accounting/`

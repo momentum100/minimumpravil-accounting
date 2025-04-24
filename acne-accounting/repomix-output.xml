@@ -43,450 +43,170 @@ The content is organized as follows:
 </file_summary>
 
 <directory_structure>
-.cursorrules
+.editorconfig
+.env.example
+.gitattributes
 .gitignore
-acne-accounting/.editorconfig
-acne-accounting/.env.example
-acne-accounting/.gitattributes
-acne-accounting/.gitignore
-acne-accounting/app/Console/Commands/TestExpenseObserver.php
-acne-accounting/app/Http/Controllers/Admin/DailyExpenseController.php
-acne-accounting/app/Http/Controllers/Admin/FundTransferController.php
-acne-accounting/app/Http/Controllers/Admin/TeamController.php
-acne-accounting/app/Http/Controllers/Admin/TransactionController.php
-acne-accounting/app/Http/Controllers/Admin/UserController.php
-acne-accounting/app/Http/Controllers/Auth/AuthenticatedSessionController.php
-acne-accounting/app/Http/Controllers/Auth/ConfirmablePasswordController.php
-acne-accounting/app/Http/Controllers/Auth/EmailVerificationNotificationController.php
-acne-accounting/app/Http/Controllers/Auth/EmailVerificationPromptController.php
-acne-accounting/app/Http/Controllers/Auth/NewPasswordController.php
-acne-accounting/app/Http/Controllers/Auth/PasswordController.php
-acne-accounting/app/Http/Controllers/Auth/PasswordResetLinkController.php
-acne-accounting/app/Http/Controllers/Auth/RegisteredUserController.php
-acne-accounting/app/Http/Controllers/Auth/VerifyEmailController.php
-acne-accounting/app/Http/Controllers/Controller.php
-acne-accounting/app/Http/Controllers/ProfileController.php
-acne-accounting/app/Http/Middleware/EnsureUserIsAdmin.php
-acne-accounting/app/Http/Requests/Admin/StoreDailyExpenseRequest.php
-acne-accounting/app/Http/Requests/Admin/StoreFundTransferRequest.php
-acne-accounting/app/Http/Requests/Admin/StoreTeamRequest.php
-acne-accounting/app/Http/Requests/Admin/StoreUserRequest.php
-acne-accounting/app/Http/Requests/Admin/UpdateTeamRequest.php
-acne-accounting/app/Http/Requests/Admin/UpdateUserRequest.php
-acne-accounting/app/Http/Requests/Auth/LoginRequest.php
-acne-accounting/app/Http/Requests/ProfileUpdateRequest.php
-acne-accounting/app/Models/Account.php
-acne-accounting/app/Models/Adjustment.php
-acne-accounting/app/Models/DailyExpense.php
-acne-accounting/app/Models/FundTransfer.php
-acne-accounting/app/Models/IncomeRecord.php
-acne-accounting/app/Models/Team.php
-acne-accounting/app/Models/Transaction.php
-acne-accounting/app/Models/TransactionLine.php
-acne-accounting/app/Models/User.php
-acne-accounting/app/Observers/AdjustmentObserver.php
-acne-accounting/app/Observers/DailyExpenseObserver.php
-acne-accounting/app/Observers/FundTransferObserver.php
-acne-accounting/app/Observers/UserObserver.php
-acne-accounting/app/Providers/AppServiceProvider.php
-acne-accounting/app/Rules/AccountBelongsToUser.php
-acne-accounting/app/Services/AccountService.php
-acne-accounting/app/Services/TransactionService.php
-acne-accounting/app/View/Components/AppLayout.php
-acne-accounting/app/View/Components/GuestLayout.php
-acne-accounting/artisan
-acne-accounting/bootstrap/app.php
-acne-accounting/bootstrap/cache/.gitignore
-acne-accounting/bootstrap/providers.php
-acne-accounting/composer.json
-acne-accounting/config/app.php
-acne-accounting/config/auth.php
-acne-accounting/config/cache.php
-acne-accounting/config/database.php
-acne-accounting/config/filesystems.php
-acne-accounting/config/logging.php
-acne-accounting/config/mail.php
-acne-accounting/config/queue.php
-acne-accounting/config/services.php
-acne-accounting/config/session.php
-acne-accounting/database/.gitignore
-acne-accounting/database/factories/UserFactory.php
-acne-accounting/database/migrations/0000_12_31_235959_create_teams_table.php
-acne-accounting/database/migrations/0001_01_01_000000_create_users_table.php
-acne-accounting/database/migrations/0001_01_01_000001_create_cache_table.php
-acne-accounting/database/migrations/0001_01_01_000002_create_jobs_table.php
-acne-accounting/database/migrations/2025_04_21_113812_create_accounts_table.php
-acne-accounting/database/migrations/2025_04_21_113940_create_daily_expenses_table.php
-acne-accounting/database/migrations/2025_04_21_115353_create_adjustments_table.php
-acne-accounting/database/migrations/2025_04_21_115508_create_fund_transfers_table.php
-acne-accounting/database/migrations/2025_04_21_115924_create_transactions_table.php
-acne-accounting/database/migrations/2025_04_21_115941_create_transaction_lines_table.php
-acne-accounting/database/migrations/2025_04_21_120011_create_income_records_table.php
-acne-accounting/database/seeders/AdminUserSeeder.php
-acne-accounting/database/seeders/DatabaseSeeder.php
-acne-accounting/database/seeders/SystemAccountsSeeder.php
-acne-accounting/package.json
-acne-accounting/postcss.config.js
-acne-accounting/public/.htaccess
-acne-accounting/public/index.php
-acne-accounting/public/robots.txt
-acne-accounting/README.md
-acne-accounting/resources/css/app.css
-acne-accounting/resources/js/app.js
-acne-accounting/resources/js/bootstrap.js
-acne-accounting/resources/views/admin/daily-expenses/index.blade.php
-acne-accounting/resources/views/admin/dashboard.blade.php
-acne-accounting/resources/views/admin/fund-transfers/create.blade.php
-acne-accounting/resources/views/admin/teams/create.blade.php
-acne-accounting/resources/views/admin/teams/edit.blade.php
-acne-accounting/resources/views/admin/teams/index.blade.php
-acne-accounting/resources/views/admin/teams/show.blade.php
-acne-accounting/resources/views/admin/transactions/index.blade.php
-acne-accounting/resources/views/admin/transactions/show.blade.php
-acne-accounting/resources/views/admin/users/create.blade.php
-acne-accounting/resources/views/admin/users/edit.blade.php
-acne-accounting/resources/views/admin/users/index.blade.php
-acne-accounting/resources/views/admin/users/show.blade.php
-acne-accounting/resources/views/auth/confirm-password.blade.php
-acne-accounting/resources/views/auth/forgot-password.blade.php
-acne-accounting/resources/views/auth/login.blade.php
-acne-accounting/resources/views/auth/register.blade.php
-acne-accounting/resources/views/auth/reset-password.blade.php
-acne-accounting/resources/views/auth/verify-email.blade.php
-acne-accounting/resources/views/components/application-logo.blade.php
-acne-accounting/resources/views/components/auth-session-status.blade.php
-acne-accounting/resources/views/components/danger-button.blade.php
-acne-accounting/resources/views/components/dropdown-link.blade.php
-acne-accounting/resources/views/components/dropdown.blade.php
-acne-accounting/resources/views/components/input-error.blade.php
-acne-accounting/resources/views/components/input-label.blade.php
-acne-accounting/resources/views/components/modal.blade.php
-acne-accounting/resources/views/components/nav-link.blade.php
-acne-accounting/resources/views/components/primary-button.blade.php
-acne-accounting/resources/views/components/responsive-nav-link.blade.php
-acne-accounting/resources/views/components/secondary-button.blade.php
-acne-accounting/resources/views/components/text-input.blade.php
-acne-accounting/resources/views/dashboard.blade.php
-acne-accounting/resources/views/layouts/app.blade.php
-acne-accounting/resources/views/layouts/guest.blade.php
-acne-accounting/resources/views/layouts/navigation.blade.php
-acne-accounting/resources/views/profile/edit.blade.php
-acne-accounting/resources/views/profile/partials/delete-user-form.blade.php
-acne-accounting/resources/views/profile/partials/update-password-form.blade.php
-acne-accounting/resources/views/profile/partials/update-profile-information-form.blade.php
-acne-accounting/resources/views/welcome.blade.php
-acne-accounting/routes/auth.php
-acne-accounting/routes/console.php
-acne-accounting/routes/web.php
-acne-accounting/storage/app/.gitignore
-acne-accounting/storage/app/private/.gitignore
-acne-accounting/storage/app/public/.gitignore
-acne-accounting/storage/framework/.gitignore
-acne-accounting/storage/framework/cache/.gitignore
-acne-accounting/storage/framework/cache/data/.gitignore
-acne-accounting/storage/framework/sessions/.gitignore
-acne-accounting/storage/framework/testing/.gitignore
-acne-accounting/storage/framework/views/.gitignore
-acne-accounting/storage/logs/.gitignore
-acne-accounting/tailwind.config.js
-acne-accounting/tests/Feature/Auth/AuthenticationTest.php
-acne-accounting/tests/Feature/Auth/EmailVerificationTest.php
-acne-accounting/tests/Feature/Auth/PasswordConfirmationTest.php
-acne-accounting/tests/Feature/Auth/PasswordResetTest.php
-acne-accounting/tests/Feature/Auth/PasswordUpdateTest.php
-acne-accounting/tests/Feature/Auth/RegistrationTest.php
-acne-accounting/tests/Feature/DailyExpenseObserverTest.php
-acne-accounting/tests/Feature/ExampleTest.php
-acne-accounting/tests/Feature/Feature/DailyExpenseObserverTest.php
-acne-accounting/tests/Feature/ProfileTest.php
-acne-accounting/tests/TestCase.php
-acne-accounting/tests/Unit/ExampleTest.php
-acne-accounting/vite.config.js
-local-docs/ai_instructions.md
-local-docs/README.md
-local-docs/tasks.md
-local-docs/ui_guide.md
+app/Console/Commands/TestExpenseObserver.php
+app/Http/Controllers/Admin/DailyExpenseController.php
+app/Http/Controllers/Admin/FundTransferController.php
+app/Http/Controllers/Admin/TeamController.php
+app/Http/Controllers/Admin/TransactionController.php
+app/Http/Controllers/Admin/UserController.php
+app/Http/Controllers/Auth/AuthenticatedSessionController.php
+app/Http/Controllers/Auth/ConfirmablePasswordController.php
+app/Http/Controllers/Auth/EmailVerificationNotificationController.php
+app/Http/Controllers/Auth/EmailVerificationPromptController.php
+app/Http/Controllers/Auth/NewPasswordController.php
+app/Http/Controllers/Auth/PasswordController.php
+app/Http/Controllers/Auth/PasswordResetLinkController.php
+app/Http/Controllers/Auth/RegisteredUserController.php
+app/Http/Controllers/Auth/VerifyEmailController.php
+app/Http/Controllers/Controller.php
+app/Http/Controllers/ProfileController.php
+app/Http/Middleware/EnsureUserIsAdmin.php
+app/Http/Requests/Admin/StoreDailyExpenseRequest.php
+app/Http/Requests/Admin/StoreFundTransferRequest.php
+app/Http/Requests/Admin/StoreTeamRequest.php
+app/Http/Requests/Admin/StoreUserRequest.php
+app/Http/Requests/Admin/UpdateTeamRequest.php
+app/Http/Requests/Admin/UpdateUserRequest.php
+app/Http/Requests/Auth/LoginRequest.php
+app/Http/Requests/ProfileUpdateRequest.php
+app/Models/Account.php
+app/Models/Adjustment.php
+app/Models/DailyExpense.php
+app/Models/FundTransfer.php
+app/Models/IncomeRecord.php
+app/Models/Team.php
+app/Models/Transaction.php
+app/Models/TransactionLine.php
+app/Models/User.php
+app/Observers/AdjustmentObserver.php
+app/Observers/DailyExpenseObserver.php
+app/Observers/FundTransferObserver.php
+app/Observers/UserObserver.php
+app/Providers/AppServiceProvider.php
+app/Rules/AccountBelongsToUser.php
+app/Services/AccountService.php
+app/Services/TransactionService.php
+app/View/Components/AppLayout.php
+app/View/Components/GuestLayout.php
+artisan
+bootstrap/app.php
+bootstrap/cache/.gitignore
+bootstrap/providers.php
+composer.json
+config/app.php
+config/auth.php
+config/cache.php
+config/database.php
+config/filesystems.php
+config/logging.php
+config/mail.php
+config/queue.php
+config/services.php
+config/session.php
+database/.gitignore
+database/factories/UserFactory.php
+database/migrations/0000_12_31_235959_create_teams_table.php
+database/migrations/0001_01_01_000000_create_users_table.php
+database/migrations/0001_01_01_000001_create_cache_table.php
+database/migrations/0001_01_01_000002_create_jobs_table.php
+database/migrations/2025_04_21_113812_create_accounts_table.php
+database/migrations/2025_04_21_113940_create_daily_expenses_table.php
+database/migrations/2025_04_21_115353_create_adjustments_table.php
+database/migrations/2025_04_21_115508_create_fund_transfers_table.php
+database/migrations/2025_04_21_115924_create_transactions_table.php
+database/migrations/2025_04_21_115941_create_transaction_lines_table.php
+database/migrations/2025_04_21_120011_create_income_records_table.php
+database/seeders/AdminUserSeeder.php
+database/seeders/DatabaseSeeder.php
+database/seeders/SystemAccountsSeeder.php
+package.json
+phpunit.xml
+postcss.config.js
+public/.htaccess
+public/index.php
+public/robots.txt
+README.md
+resources/css/app.css
+resources/js/app.js
+resources/js/bootstrap.js
+resources/views/admin/daily-expenses/index.blade.php
+resources/views/admin/dashboard.blade.php
+resources/views/admin/fund-transfers/create.blade.php
+resources/views/admin/teams/create.blade.php
+resources/views/admin/teams/edit.blade.php
+resources/views/admin/teams/index.blade.php
+resources/views/admin/teams/show.blade.php
+resources/views/admin/transactions/index.blade.php
+resources/views/admin/transactions/show.blade.php
+resources/views/admin/users/create.blade.php
+resources/views/admin/users/edit.blade.php
+resources/views/admin/users/index.blade.php
+resources/views/admin/users/show.blade.php
+resources/views/auth/confirm-password.blade.php
+resources/views/auth/forgot-password.blade.php
+resources/views/auth/login.blade.php
+resources/views/auth/register.blade.php
+resources/views/auth/reset-password.blade.php
+resources/views/auth/verify-email.blade.php
+resources/views/components/application-logo.blade.php
+resources/views/components/auth-session-status.blade.php
+resources/views/components/danger-button.blade.php
+resources/views/components/dropdown-link.blade.php
+resources/views/components/dropdown.blade.php
+resources/views/components/input-error.blade.php
+resources/views/components/input-label.blade.php
+resources/views/components/modal.blade.php
+resources/views/components/nav-link.blade.php
+resources/views/components/primary-button.blade.php
+resources/views/components/responsive-nav-link.blade.php
+resources/views/components/secondary-button.blade.php
+resources/views/components/text-input.blade.php
+resources/views/dashboard.blade.php
+resources/views/layouts/app.blade.php
+resources/views/layouts/guest.blade.php
+resources/views/layouts/navigation.blade.php
+resources/views/profile/edit.blade.php
+resources/views/profile/partials/delete-user-form.blade.php
+resources/views/profile/partials/update-password-form.blade.php
+resources/views/profile/partials/update-profile-information-form.blade.php
+resources/views/welcome.blade.php
+routes/auth.php
+routes/console.php
+routes/web.php
+storage/app/.gitignore
+storage/app/private/.gitignore
+storage/app/public/.gitignore
+storage/framework/.gitignore
+storage/framework/cache/.gitignore
+storage/framework/cache/data/.gitignore
+storage/framework/sessions/.gitignore
+storage/framework/testing/.gitignore
+storage/framework/views/.gitignore
+storage/logs/.gitignore
+tailwind.config.js
+tests/Feature/Auth/AuthenticationTest.php
+tests/Feature/Auth/EmailVerificationTest.php
+tests/Feature/Auth/PasswordConfirmationTest.php
+tests/Feature/Auth/PasswordResetTest.php
+tests/Feature/Auth/PasswordUpdateTest.php
+tests/Feature/Auth/RegistrationTest.php
+tests/Feature/DailyExpenseObserverTest.php
+tests/Feature/ExampleTest.php
+tests/Feature/Feature/DailyExpenseObserverTest.php
+tests/Feature/ProfileTest.php
+tests/TestCase.php
+tests/Unit/ExampleTest.php
+vite.config.js
 </directory_structure>
 
 <files>
 This section contains the contents of the repository's files.
 
-<file path="local-docs/README.md">
-# ACNE INC - Система учета
-
-## Обзор
-
-Система учета для ACNE INC, компании, занимающейся рекламой в социальных сетях. Эта система управляет финансовыми операциями, отслеживает расходы и контролирует балансы для различных пользователей, включая баеров, агентства и финансовый отдел.
-
-## Архитектура системы
-
-Система использует принцип двойной записи в бухгалтерии со следующими основными компонентами:
-
-1. **Управление пользователями**: Обрабатывает различные роли и разрешения
-2. **Управление счетами**: Отслеживает балансы для всех субъектов системы
-3. **Система транзакций**: Записывает все финансовые операции с записями кредита/дебета
-4. **Отчетная панель**: Настраиваемые представления на основе ролей пользователей
-
-## Основные сущности
-
-### Пользователи и роли
-- **Владелец (Owner)**: Полный доступ ко всем данным и отчетам. Управляет командами, может приглашать новых пользователей в систему.
-- **Финансист (Finance)**: Управляет распределением средств и операционными расходами
-- **Баер (Buyer)**: Специалисты по рекламе, использующие аккаунты в социальных сетях. Каждый баер принадлежит к определенной команде.
-- **Агентство (Agency)**: Виртуальные пользователи, представляющие контрагентов/поставщиков аккаунтов в социальных сетях
-
-### Типы счетов
-- **Системные счета (SYSTEM)**:
-  - SYSTEM_ROMA: Основной счет владельца (обычно с отрицательным балансом)
-  - SYSTEM_USDT: Операционный счет финансового отдела
-  - FINANCE: Счет финансового отдела
-
-- **Счета агентств (AGENCY)**: 
-  - Отдельные счета для каждого рекламного агентства (AGENCY_1, AGENCY_2 и т.д.)
-
-## Структура базы данных
-
-### teams (команды)
-- uuid
-- name (название команды)
-- created_at
-- updated_at
-
-### users (пользователи)
-- uuid
-- telegram_id (null для виртуальных пользователей)
-- role (роль: owner, finance, buyer, agency)
-- name (имя)
-- team_id (ссылка на teams, null для не-баеров)
-- sub2 (текст, содержит теги баера из внешней системы, например, "tag1,tag2")
-- active (активность)
-- is_virtual (виртуальный: boolean, true для агентств)
-- contact_info (контактная информация для агентств)
-
-### accounts (счета)
-- uuid
-- user_id (ссылка на пользователя)
-- type (тип счета: SYSTEM, AGENCY, CREO, PROXY, ACCOUNTS, OTHER)
-- description (описание)
-- created_at
-- updated_at
-
-> Важно: Баланс счета не хранится в таблице accounts, а вычисляется динамически на основе записей в transaction_lines по формуле: Баланс = Сумма кредитов - Сумма дебетов.
-
-### operations (операции)
-- uuid
-- date (дата)
-- description (описание)
-- amount (количество)
-- tariff (тариф, опционально)
-- total (всего = количество * тариф)
-- created_by (создано пользователем, ссылка на users)
-- buyer_id (идентификатор баера, опционально)
-- comment (комментарий)
-- created_at (дата и время создания записи)
-- updated_at (дата и время обновления записи)
-
-### transactions (транзакции)
-- uuid
-- operation_id (идентификатор операции)
-- date (дата)
-- description (описание)
-- status (статус)
-- accounting_period (учетный период, к которому относится транзакция, например "2025.01")
-- created_at (дата и время создания записи)
-
-### transaction_lines (строки транзакций)
-- uuid
-- transaction_id (идентификатор транзакции)
-- account_id (идентификатор счета)
-- debit (дебет)
-- credit (кредит)
-- description (описание строки транзакции)
-- created_at (дата и время создания записи)
-
-## Пример операционной таблицы
-
-Пример структуры операционной таблицы, используемой пользователями:
-
-| Дата             | Имя          | Категория | Количество | Тариф  | Общее   |
-|------------------|--------------|-----------|------------|--------|---------|
-| 2025.01.01 20:26 | VAS          | 250       | 6,00       | 18,00  | 108,00  |
-| 2025.01.01 20:26 | SHYM         | 250       | 6,00       | 18,00  | 108,00  |
-| 2025.01.03 18:17 | VAS          | PROXY     | 23,00      | 1,00   | 23,00   |
-| 2025.01.03 23:59 | OP GAMBLING  | CREO      | 60,00      | 1,00   | 60,00   |
-
-### Правила доступа к операционной таблице
-
-- **Владелец (Owner)**: Видит и может редактировать все записи
-- **Финансист (Finance)**: Видит все записи, может добавлять и редактировать операционные расходы для всех пользователей
-- **Баер (Buyer)**: Видит только свои записи, может добавлять информацию о собственных расходах
-
-Записи в операционной таблице служат основанием для создания транзакций в системе двойной записи.
-
-## Типы операционных таблиц
-
-Для удобства работы разных пользователей и разделения функциональности, система использует различные операционные таблицы:
-
-### 1. daily_expenses (Ежедневные расходы)
-
-Таблица для отслеживания ежедневных расходов баеров.
-
-| Дата | Имя | Категория | Количество | Тариф | Общее | Комментарий |
-|------|-----|-----------|------------|-------|-------|-------------|
-| 2025.01.03 | VAS | PROXY | 23,00 | 1,00 | 23,00 | Покупка прокси |
-
-- **Кто вносит**: Баеры, Финансисты
-- **Особенности**: Всегда положительные значения
-- **Интерфейс**: Упрощенный для быстрого внесения расходов
-
-### 2. adjustments (Корректировки)
-
-Таблица для корректировок расходов после сверки с агентствами.
-
-| Дата внесения | Имя баера | Категория | Период корректировки | Сумма корректировки | Комментарий |
-|---------------|-----------|-----------|---------------------|---------------------|-------------|
-| 2025.02.05 | VAS | AGENCY_1 | 2025.01 | -100,00 | Корректировка после сверки с агентством |
-
-- **Кто вносит**: Только Финансисты
-- **Особенности**: 
-  - Может содержать как положительные, так и отрицательные значения
-  - **Важно**: Корректировки относятся к предыдущему месяцу (периоду), а не к дате внесения
-  - В отчетах корректировки учитываются в том месяце, к которому они относятся
-- **Интерфейс**: Требует указания причины корректировки и выбора периода, к которому она относится
-
-#### Обработка корректировок в системе двойной записи
-
-При создании транзакций на основе записей из таблицы корректировок:
-
-1. В поле `created_at` записывается фактическая дата внесения корректировки
-2. В поле `accounting_period` устанавливается период, к которому относится корректировка
-3. При формировании отчетов корректировки учитываются в периоде, указанном в `accounting_period`
-
-Это позволяет:
-- Сохранить информацию о реальной дате внесения корректировки
-- Корректно учесть корректировку в том периоде, к которому она относится
-- Формировать точные финансовые отчеты по периодам
-
-#### Учет по периодам в системе
-
-В системе двойной записи поле `accounting_period` размещается только в таблице `transactions`, а не в `transaction_lines` по следующим причинам:
-
-1. **Целостность данных:**
-   - Транзакция представляет собой единое атомарное событие
-   - Все строки одной транзакции (дебет и кредит) всегда относятся к одному учетному периоду
-
-2. **Оптимизация структуры базы данных:**
-   - Предотвращается дублирование данных
-   - Исключается риск несогласованности периодов внутри одной транзакции
-   - Соблюдаются принципы нормализации данных
-
-3. **Эффективность запросов:**
-   - Для формирования отчетов используются SQL запросы с группировкой по `accounting_period`
-   - Пример запроса для отчета по расходам за период:
-   ```sql
-   SELECT 
-       t.accounting_period, 
-       a.type,
-       SUM(tl.debit) as total_expenses
-   FROM 
-       transactions t
-   JOIN 
-       transaction_lines tl ON t.uuid = tl.transaction_id
-   JOIN 
-       accounts a ON tl.account_id = a.uuid
-   WHERE 
-       t.accounting_period = '2025.01'
-   GROUP BY 
-       t.accounting_period, a.type;
-   ```
-
-Такая организация обеспечивает корректную работу с данными при наличии операций, относящихся к прошлым периодам, и позволяет формировать точные финансовые отчеты.
-
-### 3. fund_transfers (Перемещение средств)
-
-Таблица для отслеживания перемещения средств между счетами.
-
-| Дата | Счет-отправитель | Счет-получатель | Сумма | Комментарий |
-|------|------------------|-----------------|-------|-------------|
-| 2025.01.01 | SYSTEM_ROMA | AGENCY_1 | 20000,00 | Пополнение счета агентства |
-
-- **Кто вносит**: Владелец, Финансисты
-- **Особенности**: Создает транзакции между различными счетами
-- **Интерфейс**: Выбор счетов из списка доступных
-
-Все записи из этих таблиц преобразуются в транзакции в системе двойной записи, но разделение на уровне интерфейса позволяет упростить работу пользователей и применять различные правила валидации для разных типов операций.
-
-## Ключевые рабочие процессы
-
-1. **Распределение средств**:
-   - Владелец переводит средства агентствам и финансовому отделу
-   - Финансовый отдел распределяет средства на операционные расходы
-
-2. **Отслеживание расходов**:
-   - Расходы агентства регистрируются по каждому баеру
-   - Операционные расходы (прокси, креативы и т.д.) отслеживаются финансовым отделом
-
-3. **Учет доходов**:
-   - Доходы получаются из трекера Keitaro путем ежедневных запросов.
-   - Результаты сохраняются в отдельной таблице `income_records` со следующей структурой:
-     - `id`: Уникальный идентификатор записи
-     - `amount`: Сумма дохода
-     - `created_at`: Дата и время получения данных
-     - `updated_at`: Дата и время обновления записи (если применимо)
-
-4. **Отчетность**:
-   - Фильтрация расходов агентств
-   - Отслеживание эффективности баеров
-   - Мониторинг общего баланса
-
-## Аутентификация
-
-Система использует Telegram для аутентификации и идентификации пользователей.
-
-## Панели управления
-
-В зависимости от ролей пользователей доступны различные панели управления:
-
-1. **Панель владельца**: Общее финансовое состояние, обзор всех счетов
-2. **Панель финансиста**: Распределение средств, управление расходами
-3. **Панель баера**: Личные расходы и показатели эффективности
-</file>
-
-<file path=".gitignore">
-# Created by https://www.toptal.com/developers/gitignore/api/laravel
-# Edit at https://www.toptal.com/developers/gitignore?templates=laravel
-
-### Laravel ###
-/bootstrap/cache/*
-!/bootstrap/cache/.gitignore
-/public/build/
-/public/hot
-/public/storage
-/storage/*.key
-/storage/app/*
-/storage/framework/*
-/storage/logs/*
-!/storage/app/.gitignore
-!/storage/framework/.gitignore
-!/storage/logs/.gitignore
-/vendor/
-Homestead.json
-Homestead.yaml
-phpcs.xml
-phpstan.neon
-phpunit.xml
-psalm.xml
-phpcs.xml.dist
-.env
-.phpunit.result.cache
-node_modules/
-npm-debug.log
-yarn-error.log
-
-# End of https://www.toptal.com/developers/gitignore/api/laravel
-</file>
-
-<file path="acne-accounting/.editorconfig">
+<file path=".editorconfig">
 root = true
 
 [*]
@@ -507,7 +227,7 @@ indent_size = 2
 indent_size = 4
 </file>
 
-<file path="acne-accounting/.env.example">
+<file path=".env.example">
 APP_NAME=Laravel
 APP_ENV=local
 APP_KEY=
@@ -575,7 +295,7 @@ AWS_USE_PATH_STYLE_ENDPOINT=false
 VITE_APP_NAME="${APP_NAME}"
 </file>
 
-<file path="acne-accounting/.gitattributes">
+<file path=".gitattributes">
 * text=auto eol=lf
 
 *.blade.php diff=html
@@ -589,33 +309,7 @@ CHANGELOG.md export-ignore
 .styleci.yml export-ignore
 </file>
 
-<file path="acne-accounting/.gitignore">
-/.phpunit.cache
-/node_modules
-/public/build
-/public/hot
-/public/storage
-/storage/*.key
-/storage/pail
-/vendor
-.env
-.env.backup
-.env.production
-.phpactor.json
-.phpunit.result.cache
-Homestead.json
-Homestead.yaml
-npm-debug.log
-yarn-error.log
-/auth.json
-/.fleet
-/.idea
-/.nova
-/.vscode
-/.zed
-</file>
-
-<file path="acne-accounting/app/Console/Commands/TestExpenseObserver.php">
+<file path="app/Console/Commands/TestExpenseObserver.php">
 <?php
 
 namespace App\Console\Commands;
@@ -648,7 +342,7 @@ class TestExpenseObserver extends Command
 }
 </file>
 
-<file path="acne-accounting/app/Http/Controllers/Admin/DailyExpenseController.php">
+<file path="app/Http/Controllers/Admin/DailyExpenseController.php">
 <?php
 
 namespace App\Http\Controllers\Admin;
@@ -777,7 +471,7 @@ class DailyExpenseController extends Controller
 }
 </file>
 
-<file path="acne-accounting/app/Http/Controllers/Admin/FundTransferController.php">
+<file path="app/Http/Controllers/Admin/FundTransferController.php">
 <?php
 
 namespace App\Http\Controllers\Admin;
@@ -909,7 +603,7 @@ class FundTransferController extends Controller
 }
 </file>
 
-<file path="acne-accounting/app/Http/Controllers/Admin/TeamController.php">
+<file path="app/Http/Controllers/Admin/TeamController.php">
 <?php
 
 namespace App\Http\Controllers\Admin;
@@ -995,7 +689,7 @@ class TeamController extends Controller
 }
 </file>
 
-<file path="acne-accounting/app/Http/Controllers/Admin/TransactionController.php">
+<file path="app/Http/Controllers/Admin/TransactionController.php">
 <?php
 
 namespace App\Http\Controllers\Admin;
@@ -1039,7 +733,7 @@ class TransactionController extends Controller
 }
 </file>
 
-<file path="acne-accounting/app/Http/Controllers/Admin/UserController.php">
+<file path="app/Http/Controllers/Admin/UserController.php">
 <?php
 
 namespace App\Http\Controllers\Admin;
@@ -1226,7 +920,7 @@ class UserController extends Controller
 }
 </file>
 
-<file path="acne-accounting/app/Http/Controllers/Auth/AuthenticatedSessionController.php">
+<file path="app/Http/Controllers/Auth/AuthenticatedSessionController.php">
 <?php
 
 namespace App\Http\Controllers\Auth;
@@ -1276,7 +970,7 @@ class AuthenticatedSessionController extends Controller
 }
 </file>
 
-<file path="acne-accounting/app/Http/Controllers/Auth/ConfirmablePasswordController.php">
+<file path="app/Http/Controllers/Auth/ConfirmablePasswordController.php">
 <?php
 
 namespace App\Http\Controllers\Auth;
@@ -1319,7 +1013,7 @@ class ConfirmablePasswordController extends Controller
 }
 </file>
 
-<file path="acne-accounting/app/Http/Controllers/Auth/EmailVerificationNotificationController.php">
+<file path="app/Http/Controllers/Auth/EmailVerificationNotificationController.php">
 <?php
 
 namespace App\Http\Controllers\Auth;
@@ -1346,7 +1040,7 @@ class EmailVerificationNotificationController extends Controller
 }
 </file>
 
-<file path="acne-accounting/app/Http/Controllers/Auth/EmailVerificationPromptController.php">
+<file path="app/Http/Controllers/Auth/EmailVerificationPromptController.php">
 <?php
 
 namespace App\Http\Controllers\Auth;
@@ -1370,7 +1064,7 @@ class EmailVerificationPromptController extends Controller
 }
 </file>
 
-<file path="acne-accounting/app/Http/Controllers/Auth/NewPasswordController.php">
+<file path="app/Http/Controllers/Auth/NewPasswordController.php">
 <?php
 
 namespace App\Http\Controllers\Auth;
@@ -1435,7 +1129,7 @@ class NewPasswordController extends Controller
 }
 </file>
 
-<file path="acne-accounting/app/Http/Controllers/Auth/PasswordController.php">
+<file path="app/Http/Controllers/Auth/PasswordController.php">
 <?php
 
 namespace App\Http\Controllers\Auth;
@@ -1467,7 +1161,7 @@ class PasswordController extends Controller
 }
 </file>
 
-<file path="acne-accounting/app/Http/Controllers/Auth/PasswordResetLinkController.php">
+<file path="app/Http/Controllers/Auth/PasswordResetLinkController.php">
 <?php
 
 namespace App\Http\Controllers\Auth;
@@ -1514,7 +1208,7 @@ class PasswordResetLinkController extends Controller
 }
 </file>
 
-<file path="acne-accounting/app/Http/Controllers/Auth/RegisteredUserController.php">
+<file path="app/Http/Controllers/Auth/RegisteredUserController.php">
 <?php
 
 namespace App\Http\Controllers\Auth;
@@ -1567,7 +1261,7 @@ class RegisteredUserController extends Controller
 }
 </file>
 
-<file path="acne-accounting/app/Http/Controllers/Auth/VerifyEmailController.php">
+<file path="app/Http/Controllers/Auth/VerifyEmailController.php">
 <?php
 
 namespace App\Http\Controllers\Auth;
@@ -1597,7 +1291,7 @@ class VerifyEmailController extends Controller
 }
 </file>
 
-<file path="acne-accounting/app/Http/Controllers/Controller.php">
+<file path="app/Http/Controllers/Controller.php">
 <?php
 
 namespace App\Http\Controllers;
@@ -1608,7 +1302,7 @@ abstract class Controller
 }
 </file>
 
-<file path="acne-accounting/app/Http/Controllers/ProfileController.php">
+<file path="app/Http/Controllers/ProfileController.php">
 <?php
 
 namespace App\Http\Controllers;
@@ -1671,7 +1365,7 @@ class ProfileController extends Controller
 }
 </file>
 
-<file path="acne-accounting/app/Http/Middleware/EnsureUserIsAdmin.php">
+<file path="app/Http/Middleware/EnsureUserIsAdmin.php">
 <?php
 
 namespace App\Http\Middleware;
@@ -1699,7 +1393,7 @@ class EnsureUserIsAdmin
 }
 </file>
 
-<file path="acne-accounting/app/Http/Requests/Admin/StoreDailyExpenseRequest.php">
+<file path="app/Http/Requests/Admin/StoreDailyExpenseRequest.php">
 <?php
 
 namespace App\Http\Requests\Admin;
@@ -1730,7 +1424,7 @@ class StoreDailyExpenseRequest extends FormRequest
 }
 </file>
 
-<file path="acne-accounting/app/Http/Requests/Admin/StoreFundTransferRequest.php">
+<file path="app/Http/Requests/Admin/StoreFundTransferRequest.php">
 <?php
 
 namespace App\Http\Requests\Admin;
@@ -1797,7 +1491,7 @@ class StoreFundTransferRequest extends FormRequest
 }
 </file>
 
-<file path="acne-accounting/app/Http/Requests/Admin/StoreTeamRequest.php">
+<file path="app/Http/Requests/Admin/StoreTeamRequest.php">
 <?php
 
 namespace App\Http\Requests\Admin;
@@ -1831,7 +1525,7 @@ class StoreTeamRequest extends FormRequest
 }
 </file>
 
-<file path="acne-accounting/app/Http/Requests/Admin/StoreUserRequest.php">
+<file path="app/Http/Requests/Admin/StoreUserRequest.php">
 <?php
 
 namespace App\Http\Requests\Admin;
@@ -1895,7 +1589,7 @@ class StoreUserRequest extends FormRequest
 }
 </file>
 
-<file path="acne-accounting/app/Http/Requests/Admin/UpdateTeamRequest.php">
+<file path="app/Http/Requests/Admin/UpdateTeamRequest.php">
 <?php
 
 namespace App\Http\Requests\Admin;
@@ -1937,7 +1631,7 @@ class UpdateTeamRequest extends FormRequest
 }
 </file>
 
-<file path="acne-accounting/app/Http/Requests/Admin/UpdateUserRequest.php">
+<file path="app/Http/Requests/Admin/UpdateUserRequest.php">
 <?php
 
 namespace App\Http\Requests\Admin;
@@ -2012,7 +1706,7 @@ class UpdateUserRequest extends FormRequest
 }
 </file>
 
-<file path="acne-accounting/app/Http/Requests/Auth/LoginRequest.php">
+<file path="app/Http/Requests/Auth/LoginRequest.php">
 <?php
 
 namespace App\Http\Requests\Auth;
@@ -2100,7 +1794,7 @@ class LoginRequest extends FormRequest
 }
 </file>
 
-<file path="acne-accounting/app/Http/Requests/ProfileUpdateRequest.php">
+<file path="app/Http/Requests/ProfileUpdateRequest.php">
 <?php
 
 namespace App\Http\Requests;
@@ -2133,7 +1827,7 @@ class ProfileUpdateRequest extends FormRequest
 }
 </file>
 
-<file path="acne-accounting/app/Models/Account.php">
+<file path="app/Models/Account.php">
 <?php
 
 namespace App\Models;
@@ -2181,7 +1875,7 @@ class Account extends Model
 }
 </file>
 
-<file path="acne-accounting/app/Models/Adjustment.php">
+<file path="app/Models/Adjustment.php">
 <?php
 
 namespace App\Models;
@@ -2246,7 +1940,78 @@ class Adjustment extends Model
 }
 </file>
 
-<file path="acne-accounting/app/Models/FundTransfer.php">
+<file path="app/Models/DailyExpense.php">
+<?php
+
+namespace App\Models;
+
+use App\Observers\DailyExpenseObserver;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
+
+#[ObservedBy([DailyExpenseObserver::class])]
+class DailyExpense extends Model
+{
+    use HasFactory;
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'operation_date',
+        'buyer_id',
+        'category',
+        'quantity',
+        'tariff',
+        'total',
+        'comment',
+        'created_by',
+    ];
+
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array<string, string>
+     */
+    protected $casts = [
+        'operation_date' => 'date',
+        'quantity' => 'decimal:2',
+        'tariff' => 'decimal:2',
+        'total' => 'decimal:2',
+    ];
+
+    /**
+     * Get the user who incurred the expense (buyer).
+     */
+    public function buyer(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'buyer_id');
+    }
+
+    /**
+     * Get the user who created the expense record.
+     */
+    public function creator(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
+
+    /**
+     * Get the transaction associated with the daily expense.
+     */
+    public function transaction(): MorphOne
+    {
+        return $this->morphOne(Transaction::class, 'operation');
+    }
+}
+</file>
+
+<file path="app/Models/FundTransfer.php">
 <?php
 
 namespace App\Models;
@@ -2318,7 +2083,7 @@ class FundTransfer extends Model
 }
 </file>
 
-<file path="acne-accounting/app/Models/IncomeRecord.php">
+<file path="app/Models/IncomeRecord.php">
 <?php
 
 namespace App\Models;
@@ -2363,7 +2128,48 @@ class IncomeRecord extends Model
 }
 </file>
 
-<file path="acne-accounting/app/Models/Transaction.php">
+<file path="app/Models/Team.php">
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+
+class Team extends Model
+{
+    use HasFactory;
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'name',
+        'description',
+    ];
+
+    /**
+     * Get the buyers (users with role 'buyer') associated with the team.
+     */
+    public function buyers(): HasMany
+    {
+        // Assuming 'buyer' is the role name stored in the users table
+        return $this->hasMany(User::class)->where('role', 'buyer');
+    }
+
+    // If you need *all* users associated with a team, regardless of role
+    // (though the current schema only links team_id for buyers implicitly)
+    // public function users(): HasMany
+    // {
+    //     return $this->hasMany(User::class);
+    // }
+}
+</file>
+
+<file path="app/Models/Transaction.php">
 <?php
 
 namespace App\Models;
@@ -2418,7 +2224,7 @@ class Transaction extends Model
 }
 </file>
 
-<file path="acne-accounting/app/Models/TransactionLine.php">
+<file path="app/Models/TransactionLine.php">
 <?php
 
 namespace App\Models;
@@ -2479,7 +2285,108 @@ class TransactionLine extends Model
 }
 </file>
 
-<file path="acne-accounting/app/Observers/AdjustmentObserver.php">
+<file path="app/Models/User.php">
+<?php
+
+namespace App\Models;
+
+// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+
+class User extends Authenticatable
+{
+    /** @use HasFactory<\Database\Factories\UserFactory> */
+    use HasFactory, Notifiable;
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'name',
+        'email',
+        'password',
+        'telegram_id',
+        'role',
+        'team_id',
+        'sub2',
+        'active',
+        'is_virtual',
+        'contact_info',
+    ];
+
+    /**
+     * The attributes that should be hidden for serialization.
+     *
+     * @var array<int, string>
+     */
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
+
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string|object>
+     */
+    protected function casts(): array
+    {
+        return [
+            'email_verified_at' => 'datetime',
+            'password' => 'hashed',
+            'sub2' => 'array', // Cast sub2 JSON to array
+            'active' => 'boolean',
+            'is_virtual' => 'boolean',
+        ];
+    }
+
+    /**
+     * Get the team that the user belongs to (primarily for buyers).
+     */
+    public function team(): BelongsTo
+    {
+        return $this->belongsTo(Team::class);
+    }
+
+    /**
+     * Get the accounts associated with the user.
+     */
+    public function accounts(): HasMany
+    {
+        return $this->hasMany(Account::class);
+    }
+
+    /**
+     * Get the daily expenses created by or for the user.
+     * Note: Differentiate by foreign key if needed (e.g., dailyExpensesAsBuyer, dailyExpensesAsCreator)
+     */
+    public function dailyExpenses(): HasMany
+    {
+        // This relation assumes user_id might link to either buyer or creator in some contexts,
+        // or more specific relations are needed depending on usage.
+        // For now, linking via 'created_by' as an example.
+        // Or use separate relations like buyerDailyExpenses() and creatorDailyExpenses()
+        return $this->hasMany(DailyExpense::class, 'created_by'); // Or 'buyer_id' depending on primary usage
+    }
+
+    /**
+     * Get the adjustments created by or for the user.
+     * Note: Similar to dailyExpenses, clarify relation if needed.
+     */
+    public function adjustments(): HasMany
+    {
+        return $this->hasMany(Adjustment::class, 'created_by'); // Or 'buyer_id'
+    }
+}
+</file>
+
+<file path="app/Observers/AdjustmentObserver.php">
 <?php
 
 namespace App\Observers;
@@ -2530,7 +2437,125 @@ class AdjustmentObserver
 }
 </file>
 
-<file path="acne-accounting/app/Observers/FundTransferObserver.php">
+<file path="app/Observers/DailyExpenseObserver.php">
+<?php
+
+namespace App\Observers;
+
+use App\Models\DailyExpense;
+use App\Models\Account;
+use App\Models\User;
+use App\Models\Transaction;
+use App\Models\TransactionLine;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+
+class DailyExpenseObserver
+{
+    /**
+     * Handle the DailyExpense "created" event.
+     */
+    public function created(DailyExpense $dailyExpense): void
+    {
+        // Log entry point
+        Log::info('[OBSERVER ENTRY] DailyExpenseObserver@created triggered for ID: ' . $dailyExpense->id);
+
+        // Wrap in try-catch
+        try {
+            DB::transaction(function () use ($dailyExpense) {
+                // 1. Find Buyer's USD Account (Explicitly BUYER_MAIN)
+                Log::info('[Observer] Finding buyer account for user ID: ' . $dailyExpense->buyer_id);
+                $buyerAccount = Account::where('user_id', $dailyExpense->buyer_id)
+                                       ->where('currency', 'USD')
+                                       ->where('account_type', 'BUYER_MAIN')
+                                       ->firstOrFail();
+                Log::info('[Observer] Found buyer account ID: ' . $buyerAccount->id);
+
+                // 2. Find System's USD Account (Explicitly SYSTEM_COMPANY - debit from here)
+                Log::info('[Observer] Finding system user...');
+                $systemUser = User::where('is_virtual', true)->firstOrFail();
+                Log::info('[Observer] Found system user ID: ' . $systemUser->id . '. Finding system account...');
+                $systemAccount = Account::where('user_id', $systemUser->id)
+                                        ->where('currency', 'USD')
+                                        ->where('account_type', 'SYSTEM_COMPANY')
+                                        ->firstOrFail();
+                Log::info('[Observer] Found system account ID: ' . $systemAccount->id);
+
+                 // 3. Create Transaction linked to the DailyExpense
+                 Log::info('[Observer] Creating transaction...');
+                 $transaction = $dailyExpense->transaction()->create([
+                    'description' => 'Daily Expense: ' . $dailyExpense->category . ' for Buyer #' . $dailyExpense->buyer_id,
+                    'transaction_date' => $dailyExpense->operation_date,
+                    'status' => 'completed',
+                    'accounting_period' => $dailyExpense->operation_date->format('Y-m'),
+                ]);
+                 Log::info('[Observer] Transaction created with ID: ' . $transaction->id);
+
+                // 4. Create Transaction Lines (Debit SYSTEM, Credit BUYER)
+                 Log::info('[Observer] Creating debit line for system account ID: ' . $systemAccount->id);
+                 TransactionLine::create([
+                    'transaction_id' => $transaction->id,
+                    'account_id' => $systemAccount->id,
+                    'debit' => $dailyExpense->total, // DEBIT System Account
+                    'credit' => 0,
+                    'description' => 'Expense Paid: ' . $dailyExpense->category . ' for Buyer #' . $dailyExpense->buyer_id,
+                ]);
+
+                Log::info('[Observer] Creating credit line for buyer account ID: ' . $buyerAccount->id);
+                TransactionLine::create([
+                    'transaction_id' => $transaction->id,
+                    'account_id' => $buyerAccount->id,
+                    'debit' => 0,
+                    'credit' => $dailyExpense->total, // CREDIT Buyer's Account
+                    'description' => 'Expense Received: ' . $dailyExpense->category,
+                ]);
+                Log::info('[Observer] Transaction lines created.');
+            });
+            Log::info('[Observer] Transaction committed successfully for DailyExpense ID: ' . $dailyExpense->id);
+
+        } catch (\Throwable $e) { // Catch Throwable for broader error catching
+            Log::error('[Observer] Failed to create transaction for DailyExpense ID: ' . $dailyExpense->id . ' - Error: ' . $e->getMessage(), [
+                 'exception' => $e
+            ]);
+            // Decide if you want to re-throw or handle differently
+        }
+    }
+
+    /**
+     * Handle the DailyExpense "updated" event.
+     */
+    public function updated(DailyExpense $dailyExpense): void
+    {
+        // Logic for updated event if needed
+    }
+
+    /**
+     * Handle the DailyExpense "deleted" event.
+     */
+    public function deleted(DailyExpense $dailyExpense): void
+    {
+        //
+    }
+
+    /**
+     * Handle the DailyExpense "restored" event.
+     */
+    public function restored(DailyExpense $dailyExpense): void
+    {
+        //
+    }
+
+    /**
+     * Handle the DailyExpense "force deleted" event.
+     */
+    public function forceDeleted(DailyExpense $dailyExpense): void
+    {
+        //
+    }
+}
+</file>
+
+<file path="app/Observers/FundTransferObserver.php">
 <?php
 
 namespace App\Observers;
@@ -2581,7 +2606,7 @@ class FundTransferObserver
 }
 </file>
 
-<file path="acne-accounting/app/Observers/UserObserver.php">
+<file path="app/Observers/UserObserver.php">
 <?php
 
 namespace App\Observers;
@@ -2632,12 +2657,13 @@ class UserObserver
 }
 </file>
 
-<file path="acne-accounting/app/Providers/AppServiceProvider.php">
+<file path="app/Providers/AppServiceProvider.php">
 <?php
 
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\URL;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -2654,12 +2680,17 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        // Force HTTPS scheme for URL generation if the app is running in production
+        // or if specifically configured to run under HTTPS via .env or server config.
+        // This is often necessary when behind a reverse proxy like Cloudflare.
+        if ($this->app->environment('production') || config('app.force_https')) {
+             URL::forceScheme('https');
+        }
     }
 }
 </file>
 
-<file path="acne-accounting/app/Rules/AccountBelongsToUser.php">
+<file path="app/Rules/AccountBelongsToUser.php">
 <?php
 
 namespace App\Rules;
@@ -2705,7 +2736,7 @@ class AccountBelongsToUser implements ValidationRule
 }
 </file>
 
-<file path="acne-accounting/app/Services/AccountService.php">
+<file path="app/Services/AccountService.php">
 <?php
 
 namespace App\Services;
@@ -2742,7 +2773,7 @@ class AccountService
 }
 </file>
 
-<file path="acne-accounting/app/Services/TransactionService.php">
+<file path="app/Services/TransactionService.php">
 <?php
 
 namespace App\Services;
@@ -2805,7 +2836,7 @@ class TransactionService
 }
 </file>
 
-<file path="acne-accounting/app/View/Components/AppLayout.php">
+<file path="app/View/Components/AppLayout.php">
 <?php
 
 namespace App\View\Components;
@@ -2825,7 +2856,7 @@ class AppLayout extends Component
 }
 </file>
 
-<file path="acne-accounting/app/View/Components/GuestLayout.php">
+<file path="app/View/Components/GuestLayout.php">
 <?php
 
 namespace App\View\Components;
@@ -2845,7 +2876,7 @@ class GuestLayout extends Component
 }
 </file>
 
-<file path="acne-accounting/artisan">
+<file path="artisan">
 #!/usr/bin/env php
 <?php
 
@@ -2866,12 +2897,38 @@ $status = $app->handleCommand(new ArgvInput);
 exit($status);
 </file>
 
-<file path="acne-accounting/bootstrap/cache/.gitignore">
+<file path="bootstrap/app.php">
+<?php
+
+use App\Models\DailyExpense;
+use App\Observers\DailyExpenseObserver;
+use Illuminate\Foundation\Application;
+use Illuminate\Foundation\Configuration\Exceptions;
+use Illuminate\Foundation\Configuration\Middleware;
+
+return Application::configure(basePath: dirname(__DIR__))
+    ->withRouting(
+        web: __DIR__.'/../routes/web.php',
+        commands: __DIR__.'/../routes/console.php',
+        health: '/up',
+    )
+    ->withMiddleware(function (Middleware $middleware) {
+        $middleware->alias([
+            'admin' => \App\Http\Middleware\EnsureUserIsAdmin::class,
+        ]);
+    })
+    ->withExceptions(function (Exceptions $exceptions) {
+        //
+    })
+    ->create();
+</file>
+
+<file path="bootstrap/cache/.gitignore">
 *
 !.gitignore
 </file>
 
-<file path="acne-accounting/bootstrap/providers.php">
+<file path="bootstrap/providers.php">
 <?php
 
 return [
@@ -2880,7 +2937,7 @@ return [
 ];
 </file>
 
-<file path="acne-accounting/composer.json">
+<file path="composer.json">
 {
     "$schema": "https://getcomposer.org/schema.json",
     "name": "laravel/laravel",
@@ -2959,7 +3016,201 @@ return [
 }
 </file>
 
-<file path="acne-accounting/config/auth.php">
+<file path="config/app.php">
+<?php
+
+return [
+
+    /*
+    |--------------------------------------------------------------------------
+    | Application Name
+    |--------------------------------------------------------------------------
+    |
+    | This value is the name of your application, which will be used when the
+    | framework needs to place the application's name in a notification or
+    | other UI elements where an application name needs to be displayed.
+    |
+    */
+
+    'name' => env('APP_NAME', 'Laravel'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Application Environment
+    |--------------------------------------------------------------------------
+    |
+    | This value determines the "environment" your application is currently
+    | running in. This may determine how you prefer to configure various
+    | services the application utilizes. Set this in your ".env" file.
+    |
+    */
+
+    'env' => env('APP_ENV', 'production'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Application Debug Mode
+    |--------------------------------------------------------------------------
+    |
+    | When your application is in debug mode, detailed error messages with
+    | stack traces will be shown on every error that occurs within your
+    | application. If disabled, a simple generic error page is shown.
+    |
+    */
+
+    'debug' => (bool) env('APP_DEBUG', false),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Application URL
+    |--------------------------------------------------------------------------
+    |
+    | This URL is used by the console to properly generate URLs when using
+    | the Artisan command line tool. You should set this to the root of
+    | the application so that it's available within Artisan commands.
+    |
+    */
+
+    'url' => env('APP_URL', 'http://localhost'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Application Timezone
+    |--------------------------------------------------------------------------
+    |
+    | Here you may specify the default timezone for your application, which
+    | will be used by the PHP date and date-time functions. The timezone
+    | is set to "UTC" by default as it is suitable for most use cases.
+    |
+    */
+
+    'timezone' => 'UTC',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Application Locale Configuration
+    |--------------------------------------------------------------------------
+    |
+    | The application locale determines the default locale that will be used
+    | by Laravel's translation / localization methods. This option can be
+    | set to any locale for which you plan to have translation strings.
+    |
+    */
+
+    'locale' => env('APP_LOCALE', 'en'),
+
+    'fallback_locale' => env('APP_FALLBACK_LOCALE', 'en'),
+
+    'faker_locale' => env('APP_FAKER_LOCALE', 'en_US'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Encryption Key
+    |--------------------------------------------------------------------------
+    |
+    | This key is utilized by Laravel's encryption services and should be set
+    | to a random, 32 character string to ensure that all encrypted values
+    | are secure. You should do this prior to deploying the application.
+    |
+    */
+
+    'cipher' => 'AES-256-CBC',
+
+    'key' => env('APP_KEY'),
+
+    'previous_keys' => [
+        ...array_filter(
+            explode(',', env('APP_PREVIOUS_KEYS', ''))
+        ),
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Maintenance Mode Driver
+    |--------------------------------------------------------------------------
+    |
+    | These configuration options determine the driver used to determine and
+    | manage Laravel's "maintenance mode" status. The "cache" driver will
+    | allow maintenance mode to be controlled across multiple machines.
+    |
+    | Supported drivers: "file", "cache"
+    |
+    */
+
+    'maintenance' => [
+        'driver' => env('APP_MAINTENANCE_DRIVER', 'file'),
+        'store' => env('APP_MAINTENANCE_STORE', 'database'),
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Autoloaded Service Providers
+    |--------------------------------------------------------------------------
+    |
+    | The service providers listed here will be automatically loaded on the
+    | request to your application. Feel free to add your own services to
+    | this array to grant expanded functionality to your applications.
+    |
+    */
+
+    'providers' => [
+
+        /*
+         * Laravel Framework Service Providers...
+         */
+        Illuminate\Auth\AuthServiceProvider::class,
+        Illuminate\Broadcasting\BroadcastServiceProvider::class,
+        Illuminate\Bus\BusServiceProvider::class,
+        Illuminate\Cache\CacheServiceProvider::class,
+        Illuminate\Foundation\Providers\ConsoleSupportServiceProvider::class,
+        Illuminate\Cookie\CookieServiceProvider::class,
+        Illuminate\Database\DatabaseServiceProvider::class,
+        Illuminate\Encryption\EncryptionServiceProvider::class,
+        Illuminate\Filesystem\FilesystemServiceProvider::class,
+        Illuminate\Foundation\Providers\FoundationServiceProvider::class,
+        Illuminate\Hashing\HashServiceProvider::class,
+        Illuminate\Mail\MailServiceProvider::class,
+        Illuminate\Notifications\NotificationServiceProvider::class,
+        Illuminate\Pagination\PaginationServiceProvider::class,
+        Illuminate\Pipeline\PipelineServiceProvider::class,
+        Illuminate\Queue\QueueServiceProvider::class,
+        Illuminate\Redis\RedisServiceProvider::class,
+        Illuminate\Auth\Passwords\PasswordResetServiceProvider::class,
+        Illuminate\Session\SessionServiceProvider::class,
+        Illuminate\Translation\TranslationServiceProvider::class,
+        Illuminate\Validation\ValidationServiceProvider::class,
+        Illuminate\View\ViewServiceProvider::class,
+
+        /*
+         * Package Service Providers...
+         */
+
+        /*
+         * Application Service Providers...
+         */
+        App\Providers\AppServiceProvider::class,
+        // App\Providers\AuthServiceProvider::class, // Temporarily commented out again
+        // App\Providers\BroadcastServiceProvider::class,
+        // App\Providers\EventServiceProvider::class, // Remove this again - handled by auto-discovery in L12
+        // App\Providers\RouteServiceProvider::class, // Explicitly remove this as L12 handles routing differently
+
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Class Aliases
+    |--------------------------------------------------------------------------
+    |
+    | This array of class aliases will be registered when this application
+    | is started. However, feel free to register as many as you wish as
+    | the aliases are "lazy" loaded so they don't hinder performance.
+    |
+    */
+
+];
+</file>
+
+<file path="config/auth.php">
 <?php
 
 return [
@@ -3077,7 +3328,7 @@ return [
 ];
 </file>
 
-<file path="acne-accounting/config/cache.php">
+<file path="config/cache.php">
 <?php
 
 use Illuminate\Support\Str;
@@ -3188,7 +3439,7 @@ return [
 ];
 </file>
 
-<file path="acne-accounting/config/database.php">
+<file path="config/database.php">
 <?php
 
 use Illuminate\Support\Str;
@@ -3365,7 +3616,7 @@ return [
 ];
 </file>
 
-<file path="acne-accounting/config/filesystems.php">
+<file path="config/filesystems.php">
 <?php
 
 return [
@@ -3448,7 +3699,7 @@ return [
 ];
 </file>
 
-<file path="acne-accounting/config/logging.php">
+<file path="config/logging.php">
 <?php
 
 use Monolog\Handler\NullHandler;
@@ -3583,7 +3834,7 @@ return [
 ];
 </file>
 
-<file path="acne-accounting/config/mail.php">
+<file path="config/mail.php">
 <?php
 
 return [
@@ -3704,7 +3955,7 @@ return [
 ];
 </file>
 
-<file path="acne-accounting/config/queue.php">
+<file path="config/queue.php">
 <?php
 
 return [
@@ -3819,7 +4070,7 @@ return [
 ];
 </file>
 
-<file path="acne-accounting/config/services.php">
+<file path="config/services.php">
 <?php
 
 return [
@@ -3860,7 +4111,7 @@ return [
 ];
 </file>
 
-<file path="acne-accounting/config/session.php">
+<file path="config/session.php">
 <?php
 
 use Illuminate\Support\Str;
@@ -4080,11 +4331,11 @@ return [
 ];
 </file>
 
-<file path="acne-accounting/database/.gitignore">
+<file path="database/.gitignore">
 *.sqlite*
 </file>
 
-<file path="acne-accounting/database/factories/UserFactory.php">
+<file path="database/factories/UserFactory.php">
 <?php
 
 namespace Database\Factories;
@@ -4131,7 +4382,7 @@ class UserFactory extends Factory
 }
 </file>
 
-<file path="acne-accounting/database/migrations/0000_12_31_235959_create_teams_table.php">
+<file path="database/migrations/0000_12_31_235959_create_teams_table.php">
 <?php
 
 use Illuminate\Database\Migrations\Migration;
@@ -4169,7 +4420,92 @@ return new class extends Migration
 };
 </file>
 
-<file path="acne-accounting/database/migrations/0001_01_01_000001_create_cache_table.php">
+<file path="database/migrations/0001_01_01_000000_create_users_table.php">
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('users', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('telegram_id')->nullable()->unique()->comment('ID пользователя в Telegram (null для виртуальных)');
+            $table->enum('role', ['owner', 'finance', 'buyer', 'agency'])->comment('Роль пользователя');
+            $table->string('name')->comment('Имя пользователя или название агентства');
+            $table->foreignId('team_id')->nullable()->constrained('teams')->onDelete('set null')->comment('ID команды (для баеров)');
+            $table->json('sub2')->nullable()->comment('Теги баера из внешней системы (в формате JSON)');
+            $table->string('email')->nullable()->unique()->comment('Email для входа через веб (опционально)');
+            $table->timestamp('email_verified_at')->nullable();
+            $table->string('password')->nullable()->comment('Хеш пароля для входа через веб');
+            $table->boolean('active')->default(true)->comment('Статус активности пользователя');
+            $table->boolean('is_virtual')->default(false)->comment('Признак виртуального пользователя (агентства)');
+            $table->text('contact_info')->nullable()->comment('Контактная информация (для агентств)');
+            $table->rememberToken();
+            $table->timestamps();
+        });
+
+        // Add table comment if using MySQL 8+
+        if (Schema::getConnection()->getDriverName() === 'mysql') {
+            DB::statement("ALTER TABLE `users` comment 'Пользователи системы'");
+        }
+
+        // Keep other tables created by Breeze
+        Schema::create('password_reset_tokens', function (Blueprint $table) {
+            $table->string('email')->primary();
+            $table->string('token');
+            $table->timestamp('created_at')->nullable();
+        });
+
+        Schema::create('sessions', function (Blueprint $table) {
+            $table->string('id')->primary();
+            $table->foreignId('user_id')->nullable()->index();
+            $table->string('ip_address', 45)->nullable();
+            $table->text('user_agent')->nullable();
+            $table->longText('payload');
+            $table->integer('last_activity')->index();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        if (Schema::hasTable('users') && Schema::hasColumn('users', 'team_id')) {
+            Schema::table('users', function (Blueprint $table) {
+                // Restored Jetstream team FK drop
+                // Check if the foreign key exists before dropping
+                // The key name format is typically `<table>_<column>_foreign`
+                $foreignKeys = Schema::getConnection()->getDoctrineSchemaManager()->listTableForeignKeys('users');
+                $hasForeignKey = false;
+                foreach ($foreignKeys as $foreignKey) {
+                    if ($foreignKey->getColumns() === ['team_id']) {
+                        $hasForeignKey = true;
+                        break;
+                    }
+                }
+                if ($hasForeignKey) {
+                    $table->dropForeign(['team_id']);
+                }
+            });
+        }
+
+        Schema::dropIfExists('users');
+        Schema::dropIfExists('password_reset_tokens');
+        Schema::dropIfExists('sessions');
+    }
+};
+</file>
+
+<file path="database/migrations/0001_01_01_000001_create_cache_table.php">
 <?php
 
 use Illuminate\Database\Migrations\Migration;
@@ -4207,7 +4543,7 @@ return new class extends Migration
 };
 </file>
 
-<file path="acne-accounting/database/migrations/0001_01_01_000002_create_jobs_table.php">
+<file path="database/migrations/0001_01_01_000002_create_jobs_table.php">
 <?php
 
 use Illuminate\Database\Migrations\Migration;
@@ -4267,7 +4603,7 @@ return new class extends Migration
 };
 </file>
 
-<file path="acne-accounting/database/migrations/2025_04_21_113812_create_accounts_table.php">
+<file path="database/migrations/2025_04_21_113812_create_accounts_table.php">
 <?php
 
 use Illuminate\Database\Migrations\Migration;
@@ -4323,7 +4659,7 @@ return new class extends Migration
 };
 </file>
 
-<file path="acne-accounting/database/migrations/2025_04_21_113940_create_daily_expenses_table.php">
+<file path="database/migrations/2025_04_21_113940_create_daily_expenses_table.php">
 <?php
 
 use Illuminate\Database\Migrations\Migration;
@@ -4392,7 +4728,7 @@ return new class extends Migration
 };
 </file>
 
-<file path="acne-accounting/database/migrations/2025_04_21_115353_create_adjustments_table.php">
+<file path="database/migrations/2025_04_21_115353_create_adjustments_table.php">
 <?php
 
 use Illuminate\Database\Migrations\Migration;
@@ -4457,7 +4793,7 @@ return new class extends Migration
 };
 </file>
 
-<file path="acne-accounting/database/migrations/2025_04_21_115508_create_fund_transfers_table.php">
+<file path="database/migrations/2025_04_21_115508_create_fund_transfers_table.php">
 <?php
 
 use Illuminate\Database\Migrations\Migration;
@@ -4522,7 +4858,7 @@ return new class extends Migration
 };
 </file>
 
-<file path="acne-accounting/database/migrations/2025_04_21_115924_create_transactions_table.php">
+<file path="database/migrations/2025_04_21_115924_create_transactions_table.php">
 <?php
 
 use Illuminate\Database\Migrations\Migration;
@@ -4571,7 +4907,96 @@ return new class extends Migration
 };
 </file>
 
-<file path="acne-accounting/database/migrations/2025_04_21_120011_create_income_records_table.php">
+<file path="database/migrations/2025_04_21_115941_create_transaction_lines_table.php">
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('transaction_lines', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('transaction_id')->constrained('transactions')->onDelete('cascade');
+            $table->foreignId('account_id')->constrained('accounts')->comment('Счет, по которому идет движение'); // No cascade/set null?
+            $table->decimal('debit', 15, 2)->nullable()->default(0.00)->comment('Сумма по дебету');
+            $table->decimal('credit', 15, 2)->nullable()->default(0.00)->comment('Сумма по кредиту');
+            $table->string('description')->nullable()->comment('Описание строки (опционально)');
+            $table->timestamps(); // Keep only created_at as per spec?
+
+            // Indexes
+            $table->index('account_id');
+
+            // Check constraint needs to be added via raw SQL after table creation
+            // $table->check('(debit >= 0 AND credit >= 0 AND (debit > 0 OR credit > 0) AND (debit = 0 OR credit = 0))', 'chk_debit_credit');
+        });
+
+        // Add CHECK constraint for MySQL 8+
+        if (Schema::getConnection()->getDriverName() === 'mysql') {
+            DB::statement('ALTER TABLE `transaction_lines` ADD CONSTRAINT `chk_debit_credit` CHECK (`debit` >= 0 AND `credit` >= 0 AND (`debit` > 0 OR `credit` > 0) AND (`debit` = 0 OR `credit` = 0))');
+        }
+
+        // Add table comment if using MySQL 8+
+        if (Schema::getConnection()->getDriverName() === 'mysql') {
+            DB::statement("ALTER TABLE `transaction_lines` comment 'Строки транзакций (дебет/кредит)'");
+        }
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        // Drop foreign keys first if exists
+        if (Schema::hasTable('transaction_lines')) {
+            Schema::table('transaction_lines', function (Blueprint $table) {
+                // Drop check constraint manually for MySQL
+                if (Schema::getConnection()->getDriverName() === 'mysql') {
+                    try {
+                         DB::statement('ALTER TABLE `transaction_lines` DROP CONSTRAINT `chk_debit_credit`');
+                    } catch (\Exception $e) {
+                        // Ignore error if constraint doesn't exist
+                    }
+                }
+                /*
+                try {
+                    $table->dropCheck('chk_debit_credit');
+                } catch (\Exception $e) {
+                    // Ignore errors if check constraint doesn't exist or dropping is not supported cleanly
+                }
+                */
+
+                $foreignKeys = Schema::getConnection()->getDoctrineSchemaManager()->listTableForeignKeys('transaction_lines');
+                $keysToDrop = [];
+                foreach ($foreignKeys as $foreignKey) {
+                    if (in_array($foreignKey->getColumns(), [['transaction_id'], ['account_id']])) {
+                        $keysToDrop[] = $foreignKey->getName();
+                    }
+                }
+                foreach ($keysToDrop as $keyName) {
+                    try {
+                        if(str_contains($keyName, 'transaction_id')) $table->dropForeign(['transaction_id']);
+                        elseif(str_contains($keyName, 'account_id')) $table->dropForeign(['account_id']);
+                        else DB::statement('ALTER TABLE transaction_lines DROP FOREIGN KEY ' . $keyName);
+                    } catch (\Exception $e) {
+                        DB::statement('ALTER TABLE transaction_lines DROP FOREIGN KEY ' . $keyName);
+                    }
+                }
+            });
+        }
+        Schema::dropIfExists('transaction_lines');
+    }
+};
+</file>
+
+<file path="database/migrations/2025_04_21_120011_create_income_records_table.php">
 <?php
 
 use Illuminate\Database\Migrations\Migration;
@@ -4611,7 +5036,7 @@ return new class extends Migration
 };
 </file>
 
-<file path="acne-accounting/database/seeders/AdminUserSeeder.php">
+<file path="database/seeders/AdminUserSeeder.php">
 <?php
 
 namespace Database\Seeders;
@@ -4655,7 +5080,39 @@ class AdminUserSeeder extends Seeder
 }
 </file>
 
-<file path="acne-accounting/database/seeders/SystemAccountsSeeder.php">
+<file path="database/seeders/DatabaseSeeder.php">
+<?php
+
+namespace Database\Seeders;
+
+// use App\Models\User; // Commented out if default user factory is not needed
+// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Database\Seeder;
+
+class DatabaseSeeder extends Seeder
+{
+    /**
+     * Seed the application's database.
+     */
+    public function run(): void
+    {
+        $this->call([
+            AdminUserSeeder::class, // Creates Admin and System users
+            SystemAccountsSeeder::class, // Creates system accounts linked to System user
+            // Add other seeders here if needed
+        ]);
+
+        // Remove or keep default user factory call as needed
+        // User::factory(10)->create();
+        // User::factory()->create([
+        //     'name' => 'Test User',
+        //     'email' => 'test@example.com',
+        // ]);
+    }
+}
+</file>
+
+<file path="database/seeders/SystemAccountsSeeder.php">
 <?php
 
 namespace Database\Seeders;
@@ -4709,7 +5166,67 @@ class SystemAccountsSeeder extends Seeder
 }
 </file>
 
-<file path="acne-accounting/postcss.config.js">
+<file path="package.json">
+{
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "build": "vite build",
+        "dev": "vite"
+    },
+    "devDependencies": {
+        "@tailwindcss/forms": "^0.5.2",
+        "@tailwindcss/vite": "^4.0.0",
+        "alpinejs": "^3.4.2",
+        "autoprefixer": "^10.4.2",
+        "axios": "^1.8.2",
+        "concurrently": "^9.0.1",
+        "flatpickr": "^4.6.13",
+        "laravel-vite-plugin": "^1.2.0",
+        "postcss": "^8.4.31",
+        "tailwindcss": "^3.1.0",
+        "vite": "^6.2.4"
+    }
+}
+</file>
+
+<file path="phpunit.xml">
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
+         bootstrap="vendor/autoload.php"
+         colors="true"
+>
+    <testsuites>
+        <testsuite name="Unit">
+            <directory>tests/Unit</directory>
+        </testsuite>
+        <testsuite name="Feature">
+            <directory>tests/Feature</directory>
+        </testsuite>
+    </testsuites>
+    <source>
+        <include>
+            <directory>app</directory>
+        </include>
+    </source>
+    <php>
+        <env name="APP_ENV" value="testing"/>
+        <env name="APP_MAINTENANCE_DRIVER" value="file"/>
+        <env name="BCRYPT_ROUNDS" value="4"/>
+        <env name="CACHE_STORE" value="array"/>
+        <env name="DB_CONNECTION" value="sqlite"/>
+        <env name="DB_DATABASE" value=":memory:"/>
+        <env name="MAIL_MAILER" value="array"/>
+        <env name="PULSE_ENABLED" value="false"/>
+        <env name="QUEUE_CONNECTION" value="sync"/>
+        <env name="SESSION_DRIVER" value="array"/>
+        <env name="TELESCOPE_ENABLED" value="false"/>
+    </php>
+</phpunit>
+</file>
+
+<file path="postcss.config.js">
 export default {
     plugins: {
         tailwindcss: {},
@@ -4718,7 +5235,7 @@ export default {
 };
 </file>
 
-<file path="acne-accounting/public/.htaccess">
+<file path="public/.htaccess">
 <IfModule mod_rewrite.c>
     <IfModule mod_negotiation.c>
         Options -MultiViews -Indexes
@@ -4746,7 +5263,7 @@ export default {
 </IfModule>
 </file>
 
-<file path="acne-accounting/public/index.php">
+<file path="public/index.php">
 <?php
 
 use Illuminate\Foundation\Application;
@@ -4769,76 +5286,20 @@ $app = require_once __DIR__.'/../bootstrap/app.php';
 $app->handleRequest(Request::capture());
 </file>
 
-<file path="acne-accounting/public/robots.txt">
+<file path="public/robots.txt">
 User-agent: *
 Disallow:
 </file>
 
-<file path="acne-accounting/README.md">
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+<file path="resources/css/app.css">
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
-
-## About Laravel
-
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
-
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
-
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
-
-## Learning Laravel
-
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
-
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
-
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-## Laravel Sponsors
-
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
-
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development/)**
-- **[Active Logic](https://activelogic.com)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+@import 'flatpickr/dist/flatpickr.min.css';
 </file>
 
-<file path="acne-accounting/resources/js/app.js">
+<file path="resources/js/app.js">
 import './bootstrap';
 
 import Alpine from 'alpinejs';
@@ -4848,7 +5309,26 @@ window.Alpine = Alpine;
 Alpine.start();
 </file>
 
-<file path="acne-accounting/resources/views/admin/daily-expenses/index.blade.php">
+<file path="resources/js/bootstrap.js">
+import axios from 'axios';
+window.axios = axios;
+
+window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+
+// Import flatpickr and make it global
+import flatpickr from 'flatpickr';
+window.flatpickr = flatpickr;
+
+/**
+ * Echo exposes an expressive API for subscribing to channels and listening
+ * for events that are broadcast by Laravel. Echo and event broadcasting
+ * allows your team to easily build robust real-time web applications.
+ */
+
+// import Echo from 'laravel-echo';
+</file>
+
+<file path="resources/views/admin/daily-expenses/index.blade.php">
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
@@ -5161,7 +5641,7 @@ Alpine.start();
 </x-app-layout>
 </file>
 
-<file path="acne-accounting/resources/views/admin/dashboard.blade.php">
+<file path="resources/views/admin/dashboard.blade.php">
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
@@ -5186,7 +5666,7 @@ Alpine.start();
 </x-app-layout>
 </file>
 
-<file path="acne-accounting/resources/views/admin/fund-transfers/create.blade.php">
+<file path="resources/views/admin/fund-transfers/create.blade.php">
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
@@ -5349,6 +5829,10 @@ Alpine.start();
                         .then(response => response.json())
                         .then(data => {
                             this.fromAccounts = data;
+                            // If accounts were found, select the first one by default
+                            if (this.fromAccounts.length > 0) {
+                                this.fromAccountId = this.fromAccounts[0].id;
+                            }
                         })
                         .catch(error => console.error('Error fetching from accounts:', error))
                         .finally(() => {
@@ -5374,6 +5858,10 @@ Alpine.start();
                         .then(response => response.json())
                         .then(data => {
                             this.toAccounts = data;
+                            // If accounts were found, select the first one by default
+                            if (this.toAccounts.length > 0) {
+                                this.toAccountId = this.toAccounts[0].id;
+                            }
                         })
                          .catch(error => console.error('Error fetching to accounts:', error))
                         .finally(() => {
@@ -5393,7 +5881,7 @@ Alpine.start();
 </x-app-layout>
 </file>
 
-<file path="acne-accounting/resources/views/admin/teams/create.blade.php">
+<file path="resources/views/admin/teams/create.blade.php">
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
@@ -5440,7 +5928,7 @@ Alpine.start();
 </x-app-layout>
 </file>
 
-<file path="acne-accounting/resources/views/admin/teams/edit.blade.php">
+<file path="resources/views/admin/teams/edit.blade.php">
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
@@ -5488,7 +5976,7 @@ Alpine.start();
 </x-app-layout>
 </file>
 
-<file path="acne-accounting/resources/views/admin/teams/index.blade.php">
+<file path="resources/views/admin/teams/index.blade.php">
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
@@ -5574,7 +6062,7 @@ Alpine.start();
 </x-app-layout>
 </file>
 
-<file path="acne-accounting/resources/views/admin/teams/show.blade.php">
+<file path="resources/views/admin/teams/show.blade.php">
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
@@ -5651,7 +6139,7 @@ Alpine.start();
 </x-app-layout>
 </file>
 
-<file path="acne-accounting/resources/views/admin/transactions/index.blade.php">
+<file path="resources/views/admin/transactions/index.blade.php">
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
@@ -5712,7 +6200,7 @@ Alpine.start();
 </x-app-layout>
 </file>
 
-<file path="acne-accounting/resources/views/admin/transactions/show.blade.php">
+<file path="resources/views/admin/transactions/show.blade.php">
 <x-app-layout>
     <x-slot name="header">
         <div class="flex justify-between items-center">
@@ -5806,7 +6294,7 @@ Alpine.start();
 </x-app-layout>
 </file>
 
-<file path="acne-accounting/resources/views/admin/users/create.blade.php">
+<file path="resources/views/admin/users/create.blade.php">
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
@@ -5920,7 +6408,7 @@ Alpine.start();
 </x-app-layout>
 </file>
 
-<file path="acne-accounting/resources/views/admin/users/edit.blade.php">
+<file path="resources/views/admin/users/edit.blade.php">
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
@@ -6052,7 +6540,7 @@ Alpine.start();
 </x-app-layout>
 </file>
 
-<file path="acne-accounting/resources/views/admin/users/index.blade.php">
+<file path="resources/views/admin/users/index.blade.php">
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
@@ -6171,7 +6659,7 @@ Alpine.start();
 </x-app-layout>
 </file>
 
-<file path="acne-accounting/resources/views/admin/users/show.blade.php">
+<file path="resources/views/admin/users/show.blade.php">
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
@@ -6280,7 +6768,7 @@ Alpine.start();
 </x-app-layout>
 </file>
 
-<file path="acne-accounting/resources/views/auth/confirm-password.blade.php">
+<file path="resources/views/auth/confirm-password.blade.php">
 <x-guest-layout>
     <div class="mb-4 text-sm text-gray-600">
         {{ __('This is a secure area of the application. Please confirm your password before continuing.') }}
@@ -6310,7 +6798,7 @@ Alpine.start();
 </x-guest-layout>
 </file>
 
-<file path="acne-accounting/resources/views/auth/forgot-password.blade.php">
+<file path="resources/views/auth/forgot-password.blade.php">
 <x-guest-layout>
     <div class="mb-4 text-sm text-gray-600">
         {{ __('Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.') }}
@@ -6338,7 +6826,7 @@ Alpine.start();
 </x-guest-layout>
 </file>
 
-<file path="acne-accounting/resources/views/auth/login.blade.php">
+<file path="resources/views/auth/login.blade.php">
 <x-guest-layout>
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
@@ -6388,7 +6876,7 @@ Alpine.start();
 </x-guest-layout>
 </file>
 
-<file path="acne-accounting/resources/views/auth/register.blade.php">
+<file path="resources/views/auth/register.blade.php">
 <x-guest-layout>
     <form method="POST" action="{{ route('register') }}">
         @csrf
@@ -6443,7 +6931,7 @@ Alpine.start();
 </x-guest-layout>
 </file>
 
-<file path="acne-accounting/resources/views/auth/reset-password.blade.php">
+<file path="resources/views/auth/reset-password.blade.php">
 <x-guest-layout>
     <form method="POST" action="{{ route('password.store') }}">
         @csrf
@@ -6485,7 +6973,7 @@ Alpine.start();
 </x-guest-layout>
 </file>
 
-<file path="acne-accounting/resources/views/auth/verify-email.blade.php">
+<file path="resources/views/auth/verify-email.blade.php">
 <x-guest-layout>
     <div class="mb-4 text-sm text-gray-600">
         {{ __('Thanks for signing up! Before getting started, could you verify your email address by clicking on the link we just emailed to you? If you didn\'t receive the email, we will gladly send you another.') }}
@@ -6519,13 +7007,13 @@ Alpine.start();
 </x-guest-layout>
 </file>
 
-<file path="acne-accounting/resources/views/components/application-logo.blade.php">
+<file path="resources/views/components/application-logo.blade.php">
 <svg viewBox="0 0 316 316" xmlns="http://www.w3.org/2000/svg" {{ $attributes }}>
     <path d="M305.8 81.125C305.77 80.995 305.69 80.885 305.65 80.755C305.56 80.525 305.49 80.285 305.37 80.075C305.29 79.935 305.17 79.815 305.07 79.685C304.94 79.515 304.83 79.325 304.68 79.175C304.55 79.045 304.39 78.955 304.25 78.845C304.09 78.715 303.95 78.575 303.77 78.475L251.32 48.275C249.97 47.495 248.31 47.495 246.96 48.275L194.51 78.475C194.33 78.575 194.19 78.725 194.03 78.845C193.89 78.955 193.73 79.045 193.6 79.175C193.45 79.325 193.34 79.515 193.21 79.685C193.11 79.815 192.99 79.935 192.91 80.075C192.79 80.285 192.71 80.525 192.63 80.755C192.58 80.875 192.51 80.995 192.48 81.125C192.38 81.495 192.33 81.875 192.33 82.265V139.625L148.62 164.795V52.575C148.62 52.185 148.57 51.805 148.47 51.435C148.44 51.305 148.36 51.195 148.32 51.065C148.23 50.835 148.16 50.595 148.04 50.385C147.96 50.245 147.84 50.125 147.74 49.995C147.61 49.825 147.5 49.635 147.35 49.485C147.22 49.355 147.06 49.265 146.92 49.155C146.76 49.025 146.62 48.885 146.44 48.785L93.99 18.585C92.64 17.805 90.98 17.805 89.63 18.585L37.18 48.785C37 48.885 36.86 49.035 36.7 49.155C36.56 49.265 36.4 49.355 36.27 49.485C36.12 49.635 36.01 49.825 35.88 49.995C35.78 50.125 35.66 50.245 35.58 50.385C35.46 50.595 35.38 50.835 35.3 51.065C35.25 51.185 35.18 51.305 35.15 51.435C35.05 51.805 35 52.185 35 52.575V232.235C35 233.795 35.84 235.245 37.19 236.025L142.1 296.425C142.33 296.555 142.58 296.635 142.82 296.725C142.93 296.765 143.04 296.835 143.16 296.865C143.53 296.965 143.9 297.015 144.28 297.015C144.66 297.015 145.03 296.965 145.4 296.865C145.5 296.835 145.59 296.775 145.69 296.745C145.95 296.655 146.21 296.565 146.45 296.435L251.36 236.035C252.72 235.255 253.55 233.815 253.55 232.245V174.885L303.81 145.945C305.17 145.165 306 143.725 306 142.155V82.265C305.95 81.875 305.89 81.495 305.8 81.125ZM144.2 227.205L100.57 202.515L146.39 176.135L196.66 147.195L240.33 172.335L208.29 190.625L144.2 227.205ZM244.75 114.995V164.795L226.39 154.225L201.03 139.625V89.825L219.39 100.395L244.75 114.995ZM249.12 57.105L292.81 82.265L249.12 107.425L205.43 82.265L249.12 57.105ZM114.49 184.425L96.13 194.995V85.305L121.49 70.705L139.85 60.135V169.815L114.49 184.425ZM91.76 27.425L135.45 52.585L91.76 77.745L48.07 52.585L91.76 27.425ZM43.67 60.135L62.03 70.705L87.39 85.305V202.545V202.555V202.565C87.39 202.735 87.44 202.895 87.46 203.055C87.49 203.265 87.49 203.485 87.55 203.695V203.705C87.6 203.875 87.69 204.035 87.76 204.195C87.84 204.375 87.89 204.575 87.99 204.745C87.99 204.745 87.99 204.755 88 204.755C88.09 204.905 88.22 205.035 88.33 205.175C88.45 205.335 88.55 205.495 88.69 205.635L88.7 205.645C88.82 205.765 88.98 205.855 89.12 205.965C89.28 206.085 89.42 206.225 89.59 206.325C89.6 206.325 89.6 206.325 89.61 206.335C89.62 206.335 89.62 206.345 89.63 206.345L139.87 234.775V285.065L43.67 229.705V60.135ZM244.75 229.705L148.58 285.075V234.775L219.8 194.115L244.75 179.875V229.705ZM297.2 139.625L253.49 164.795V114.995L278.85 100.395L297.21 89.825V139.625H297.2Z"/>
 </svg>
 </file>
 
-<file path="acne-accounting/resources/views/components/auth-session-status.blade.php">
+<file path="resources/views/components/auth-session-status.blade.php">
 @props(['status'])
 
 @if ($status)
@@ -6535,17 +7023,17 @@ Alpine.start();
 @endif
 </file>
 
-<file path="acne-accounting/resources/views/components/danger-button.blade.php">
+<file path="resources/views/components/danger-button.blade.php">
 <button {{ $attributes->merge(['type' => 'submit', 'class' => 'inline-flex items-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-500 active:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition ease-in-out duration-150']) }}>
     {{ $slot }}
 </button>
 </file>
 
-<file path="acne-accounting/resources/views/components/dropdown-link.blade.php">
+<file path="resources/views/components/dropdown-link.blade.php">
 <a {{ $attributes->merge(['class' => 'block w-full px-4 py-2 text-start text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out']) }}>{{ $slot }}</a>
 </file>
 
-<file path="acne-accounting/resources/views/components/dropdown.blade.php">
+<file path="resources/views/components/dropdown.blade.php">
 @props(['align' => 'right', 'width' => '48', 'contentClasses' => 'py-1 bg-white'])
 
 @php
@@ -6583,7 +7071,7 @@ $width = match ($width) {
 </div>
 </file>
 
-<file path="acne-accounting/resources/views/components/input-error.blade.php">
+<file path="resources/views/components/input-error.blade.php">
 @props(['messages'])
 
 @if ($messages)
@@ -6595,7 +7083,15 @@ $width = match ($width) {
 @endif
 </file>
 
-<file path="acne-accounting/resources/views/components/modal.blade.php">
+<file path="resources/views/components/input-label.blade.php">
+@props(['value'])
+
+<label {{ $attributes->merge(['class' => 'block font-medium text-sm text-gray-700 dark:text-gray-300']) }}>
+    {{ $value ?? $slot }}
+</label>
+</file>
+
+<file path="resources/views/components/modal.blade.php">
 @props([
     'name',
     'show' => false,
@@ -6676,7 +7172,7 @@ $maxWidth = [
 </div>
 </file>
 
-<file path="acne-accounting/resources/views/components/nav-link.blade.php">
+<file path="resources/views/components/nav-link.blade.php">
 @props(['active'])
 
 @php
@@ -6690,13 +7186,13 @@ $classes = ($active ?? false)
 </a>
 </file>
 
-<file path="acne-accounting/resources/views/components/primary-button.blade.php">
+<file path="resources/views/components/primary-button.blade.php">
 <button {{ $attributes->merge(['type' => 'submit', 'class' => 'inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150']) }}>
     {{ $slot }}
 </button>
 </file>
 
-<file path="acne-accounting/resources/views/components/responsive-nav-link.blade.php">
+<file path="resources/views/components/responsive-nav-link.blade.php">
 @props(['active'])
 
 @php
@@ -6710,13 +7206,19 @@ $classes = ($active ?? false)
 </a>
 </file>
 
-<file path="acne-accounting/resources/views/components/secondary-button.blade.php">
+<file path="resources/views/components/secondary-button.blade.php">
 <button {{ $attributes->merge(['type' => 'button', 'class' => 'inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-25 transition ease-in-out duration-150']) }}>
     {{ $slot }}
 </button>
 </file>
 
-<file path="acne-accounting/resources/views/dashboard.blade.php">
+<file path="resources/views/components/text-input.blade.php">
+@props(['disabled' => false])
+
+<input @disabled($disabled) {{ $attributes->merge(['class' => 'border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm']) }}>
+</file>
+
+<file path="resources/views/dashboard.blade.php">
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
@@ -6736,7 +7238,7 @@ $classes = ($active ?? false)
 </x-app-layout>
 </file>
 
-<file path="acne-accounting/resources/views/layouts/app.blade.php">
+<file path="resources/views/layouts/app.blade.php">
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
@@ -6775,7 +7277,7 @@ $classes = ($active ?? false)
 </html>
 </file>
 
-<file path="acne-accounting/resources/views/layouts/guest.blade.php">
+<file path="resources/views/layouts/guest.blade.php">
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
@@ -6808,7 +7310,168 @@ $classes = ($active ?? false)
 </html>
 </file>
 
-<file path="acne-accounting/resources/views/profile/edit.blade.php">
+<file path="resources/views/layouts/navigation.blade.php">
+<nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
+    <!-- Primary Navigation Menu -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between h-16">
+            <div class="flex">
+                <!-- Logo -->
+                <div class="shrink-0 flex items-center">
+                    <a href="{{ route('dashboard') }}">
+                        <x-application-logo class="block h-9 w-auto fill-current text-gray-800" />
+                    </a>
+                </div>
+
+                <!-- Navigation Links -->
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                        {{ __('Dashboard') }}
+                    </x-nav-link>
+
+                    {{-- Admin Links --}}
+                    @if(in_array(Auth::user()->role, ['owner', 'finance']))
+                        <x-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
+                            {{ __('Admin Dashboard') }}
+                         </x-nav-link>
+                         <x-nav-link :href="route('admin.fund-transfers.create')" :active="request()->routeIs('admin.fund-transfers.create')">
+                            {{ __('Create Fund Transfer') }}
+                         </x-nav-link>
+                         <x-nav-link :href="route('admin.transactions.index')" :active="request()->routeIs('admin.transactions.*')">
+                            {{ __('View Transactions') }}
+                         </x-nav-link>
+                         <x-nav-link :href="route('admin.daily-expenses.index')" :active="request()->routeIs('admin.daily-expenses.*')">
+                            {{ __('Daily Expenses') }}
+                         </x-nav-link>
+                         <x-nav-link :href="route('admin.users.index')" :active="request()->routeIs('admin.users.*')">
+                            {{ __('Manage Users') }}
+                         </x-nav-link>
+                         <x-nav-link :href="route('admin.teams.index')" :active="request()->routeIs('admin.teams.*')">
+                            {{ __('Manage Teams') }}
+                         </x-nav-link>
+                         {{-- The old generic 'Admin Area' link is removed in favor of specific links --}}
+                         {{--
+                         <x-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard') || request()->routeIs('admin.teams.*') || request()->routeIs('admin.users.*')" class="relative group">
+                            {{ __('Admin Area') }}
+                             <span class="absolute top-0 right-0 block h-2 w-2 rounded-full ring-2 ring-white bg-red-400"></span>
+                         </x-nav-link>
+                         --}}
+                    @endif
+                </div>
+            </div>
+
+            <!-- Settings Dropdown -->
+            <div class="hidden sm:flex sm:items-center sm:ms-6">
+                <x-dropdown align="right" width="48">
+                    <x-slot name="trigger">
+                        <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
+                            <div>{{ Auth::user()->name }}</div>
+
+                            <div class="ms-1">
+                                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                </svg>
+                            </div>
+                        </button>
+                    </x-slot>
+
+                    <x-slot name="content">
+                        <x-dropdown-link :href="route('profile.edit')">
+                            {{ __('Profile') }}
+                        </x-dropdown-link>
+
+                        <!-- Authentication -->
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+
+                            <x-dropdown-link :href="route('logout')"
+                                    onclick="event.preventDefault();
+                                                this.closest('form').submit();">
+                                {{ __('Log Out') }}
+                            </x-dropdown-link>
+                        </form>
+                    </x-slot>
+                </x-dropdown>
+            </div>
+
+            <!-- Hamburger -->
+            <div class="-me-2 flex items-center sm:hidden">
+                <button @click="open = ! open" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out">
+                    <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                        <path :class="{'hidden': open, 'inline-flex': ! open }" class="inline-flex" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        <path :class="{'hidden': ! open, 'inline-flex': open }" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Responsive Navigation Menu -->
+    <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
+        <div class="pt-2 pb-3 space-y-1">
+            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                {{ __('Dashboard') }}
+            </x-responsive-nav-link>
+        </div>
+
+        {{-- Responsive Admin Links --}}
+        @if(in_array(Auth::user()->role, ['owner', 'finance']))
+            <div class="pt-4 pb-1 border-t border-gray-200">
+                <div class="px-4">
+                    <div class="font-medium text-base text-gray-800">{{ __('Admin Area') }}</div>
+                </div>
+                <div class="mt-3 space-y-1">
+                     <x-responsive-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
+                        {{ __('Admin Dashboard') }}
+                    </x-responsive-nav-link>
+                    <x-responsive-nav-link :href="route('admin.fund-transfers.create')" :active="request()->routeIs('admin.fund-transfers.create')">
+                        {{ __('Create Fund Transfer') }}
+                    </x-responsive-nav-link>
+                    <x-responsive-nav-link :href="route('admin.transactions.index')" :active="request()->routeIs('admin.transactions.*')">
+                        {{ __('View Transactions') }}
+                    </x-responsive-nav-link>
+                    <x-responsive-nav-link :href="route('admin.daily-expenses.index')" :active="request()->routeIs('admin.daily-expenses.*')">
+                        {{ __('Daily Expenses') }}
+                    </x-responsive-nav-link>
+                     <x-responsive-nav-link :href="route('admin.users.index')" :active="request()->routeIs('admin.users.*')">
+                        {{ __('Manage Users') }}
+                    </x-responsive-nav-link>
+                    <x-responsive-nav-link :href="route('admin.teams.index')" :active="request()->routeIs('admin.teams.*')">
+                        {{ __('Manage Teams') }}
+                    </x-responsive-nav-link>
+                </div>
+            </div>
+        @endif
+
+        <!-- Responsive Settings Options -->
+        <div class="pt-4 pb-1 border-t border-gray-200">
+            <div class="px-4">
+                <div class="font-medium text-base text-gray-800">{{ Auth::user()->name }}</div>
+                <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
+            </div>
+
+            <div class="mt-3 space-y-1">
+                <x-responsive-nav-link :href="route('profile.edit')">
+                    {{ __('Profile') }}
+                </x-responsive-nav-link>
+
+                <!-- Authentication -->
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+
+                    <x-responsive-nav-link :href="route('logout')"
+                            onclick="event.preventDefault();
+                                        this.closest('form').submit();">
+                        {{ __('Log Out') }}
+                    </x-responsive-nav-link>
+                </form>
+            </div>
+        </div>
+    </div>
+</nav>
+</file>
+
+<file path="resources/views/profile/edit.blade.php">
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
@@ -6840,7 +7503,7 @@ $classes = ($active ?? false)
 </x-app-layout>
 </file>
 
-<file path="acne-accounting/resources/views/profile/partials/delete-user-form.blade.php">
+<file path="resources/views/profile/partials/delete-user-form.blade.php">
 <section class="space-y-6">
     <header>
         <h2 class="text-lg font-medium text-gray-900">
@@ -6898,7 +7561,7 @@ $classes = ($active ?? false)
 </section>
 </file>
 
-<file path="acne-accounting/resources/views/profile/partials/update-password-form.blade.php">
+<file path="resources/views/profile/partials/update-password-form.blade.php">
 <section>
     <header>
         <h2 class="text-lg font-medium text-gray-900">
@@ -6949,7 +7612,7 @@ $classes = ($active ?? false)
 </section>
 </file>
 
-<file path="acne-accounting/resources/views/profile/partials/update-profile-information-form.blade.php">
+<file path="resources/views/profile/partials/update-profile-information-form.blade.php">
 <section>
     <header>
         <h2 class="text-lg font-medium text-gray-900">
@@ -7016,7 +7679,7 @@ $classes = ($active ?? false)
 </section>
 </file>
 
-<file path="acne-accounting/resources/views/welcome.blade.php">
+<file path="resources/views/welcome.blade.php">
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
@@ -7296,7 +7959,7 @@ $classes = ($active ?? false)
 </html>
 </file>
 
-<file path="acne-accounting/routes/auth.php">
+<file path="routes/auth.php">
 <?php
 
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
@@ -7358,7 +8021,7 @@ Route::middleware('auth')->group(function () {
 });
 </file>
 
-<file path="acne-accounting/routes/console.php">
+<file path="routes/console.php">
 <?php
 
 use Illuminate\Foundation\Inspiring;
@@ -7369,24 +8032,79 @@ Artisan::command('inspire', function () {
 })->purpose('Display an inspiring quote');
 </file>
 
-<file path="acne-accounting/storage/app/.gitignore">
+<file path="routes/web.php">
+<?php
+
+use App\Http\Controllers\ProfileController;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\TeamController;
+use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\FundTransferController;
+use App\Http\Controllers\Admin\TransactionController;
+use App\Http\Controllers\Admin\DailyExpenseController;
+
+Route::get('/', function () {
+    return view('welcome');
+});
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+require __DIR__.'/auth.php';
+
+// Admin Routes
+Route::middleware(['auth', 'verified', 'admin'])
+    ->prefix('admin')
+    ->name('admin.')
+    ->group(function () {
+        Route::get('/', function() { // Basic Admin Dashboard
+            return view('admin.dashboard'); // TODO: Create admin dashboard view
+        })->name('dashboard');
+
+        Route::resource('teams', TeamController::class);
+        Route::resource('users', UserController::class);
+
+        // Fund Transfers
+        Route::get('fund-transfers/create', [FundTransferController::class, 'create'])->name('fund-transfers.create');
+        Route::post('fund-transfers', [FundTransferController::class, 'store'])->name('fund-transfers.store');
+
+        // API endpoint for user accounts (used by fund transfer form)
+        Route::get('users/{user}/accounts', [FundTransferController::class, 'getAccountsForUser'])->name('users.accounts');
+
+        // Transactions
+        Route::resource('transactions', TransactionController::class)->only(['index', 'show']);
+
+        // Daily Expenses (using index for view/add, store for AJAX add)
+        Route::get('daily-expenses', [DailyExpenseController::class, 'index'])->name('daily-expenses.index');
+        Route::post('daily-expenses', [DailyExpenseController::class, 'store'])->name('daily-expenses.store');
+    });
+</file>
+
+<file path="storage/app/.gitignore">
 *
 !private/
 !public/
 !.gitignore
 </file>
 
-<file path="acne-accounting/storage/app/private/.gitignore">
+<file path="storage/app/private/.gitignore">
 *
 !.gitignore
 </file>
 
-<file path="acne-accounting/storage/app/public/.gitignore">
+<file path="storage/app/public/.gitignore">
 *
 !.gitignore
 </file>
 
-<file path="acne-accounting/storage/framework/.gitignore">
+<file path="storage/framework/.gitignore">
 compiled.php
 config.php
 down
@@ -7398,38 +8116,38 @@ schedule-*
 services.json
 </file>
 
-<file path="acne-accounting/storage/framework/cache/.gitignore">
+<file path="storage/framework/cache/.gitignore">
 *
 !data/
 !.gitignore
 </file>
 
-<file path="acne-accounting/storage/framework/cache/data/.gitignore">
+<file path="storage/framework/cache/data/.gitignore">
 *
 !.gitignore
 </file>
 
-<file path="acne-accounting/storage/framework/sessions/.gitignore">
+<file path="storage/framework/sessions/.gitignore">
 *
 !.gitignore
 </file>
 
-<file path="acne-accounting/storage/framework/testing/.gitignore">
+<file path="storage/framework/testing/.gitignore">
 *
 !.gitignore
 </file>
 
-<file path="acne-accounting/storage/framework/views/.gitignore">
+<file path="storage/framework/views/.gitignore">
 *
 !.gitignore
 </file>
 
-<file path="acne-accounting/storage/logs/.gitignore">
+<file path="storage/logs/.gitignore">
 *
 !.gitignore
 </file>
 
-<file path="acne-accounting/tailwind.config.js">
+<file path="tailwind.config.js">
 import defaultTheme from 'tailwindcss/defaultTheme';
 import forms from '@tailwindcss/forms';
 
@@ -7453,7 +8171,7 @@ export default {
 };
 </file>
 
-<file path="acne-accounting/tests/Feature/Auth/AuthenticationTest.php">
+<file path="tests/Feature/Auth/AuthenticationTest.php">
 <?php
 
 namespace Tests\Feature\Auth;
@@ -7510,7 +8228,7 @@ class AuthenticationTest extends TestCase
 }
 </file>
 
-<file path="acne-accounting/tests/Feature/Auth/EmailVerificationTest.php">
+<file path="tests/Feature/Auth/EmailVerificationTest.php">
 <?php
 
 namespace Tests\Feature\Auth;
@@ -7571,7 +8289,7 @@ class EmailVerificationTest extends TestCase
 }
 </file>
 
-<file path="acne-accounting/tests/Feature/Auth/PasswordConfirmationTest.php">
+<file path="tests/Feature/Auth/PasswordConfirmationTest.php">
 <?php
 
 namespace Tests\Feature\Auth;
@@ -7618,7 +8336,7 @@ class PasswordConfirmationTest extends TestCase
 }
 </file>
 
-<file path="acne-accounting/tests/Feature/Auth/PasswordResetTest.php">
+<file path="tests/Feature/Auth/PasswordResetTest.php">
 <?php
 
 namespace Tests\Feature\Auth;
@@ -7694,7 +8412,7 @@ class PasswordResetTest extends TestCase
 }
 </file>
 
-<file path="acne-accounting/tests/Feature/Auth/PasswordUpdateTest.php">
+<file path="tests/Feature/Auth/PasswordUpdateTest.php">
 <?php
 
 namespace Tests\Feature\Auth;
@@ -7748,7 +8466,7 @@ class PasswordUpdateTest extends TestCase
 }
 </file>
 
-<file path="acne-accounting/tests/Feature/Auth/RegistrationTest.php">
+<file path="tests/Feature/Auth/RegistrationTest.php">
 <?php
 
 namespace Tests\Feature\Auth;
@@ -7782,7 +8500,7 @@ class RegistrationTest extends TestCase
 }
 </file>
 
-<file path="acne-accounting/tests/Feature/DailyExpenseObserverTest.php">
+<file path="tests/Feature/DailyExpenseObserverTest.php">
 <?php
 
 namespace Tests\Feature;
@@ -7805,7 +8523,7 @@ class DailyExpenseObserverTest extends TestCase
 }
 </file>
 
-<file path="acne-accounting/tests/Feature/ExampleTest.php">
+<file path="tests/Feature/ExampleTest.php">
 <?php
 
 namespace Tests\Feature;
@@ -7827,7 +8545,7 @@ class ExampleTest extends TestCase
 }
 </file>
 
-<file path="acne-accounting/tests/Feature/Feature/DailyExpenseObserverTest.php">
+<file path="tests/Feature/Feature/DailyExpenseObserverTest.php">
 <?php
 
 namespace Tests\Feature\Feature;
@@ -7850,7 +8568,7 @@ class DailyExpenseObserverTest extends TestCase
 }
 </file>
 
-<file path="acne-accounting/tests/Feature/ProfileTest.php">
+<file path="tests/Feature/ProfileTest.php">
 <?php
 
 namespace Tests\Feature;
@@ -7952,7 +8670,7 @@ class ProfileTest extends TestCase
 }
 </file>
 
-<file path="acne-accounting/tests/TestCase.php">
+<file path="tests/TestCase.php">
 <?php
 
 namespace Tests;
@@ -7965,7 +8683,7 @@ abstract class TestCase extends BaseTestCase
 }
 </file>
 
-<file path="acne-accounting/tests/Unit/ExampleTest.php">
+<file path="tests/Unit/ExampleTest.php">
 <?php
 
 namespace Tests\Unit;
@@ -7984,7 +8702,7 @@ class ExampleTest extends TestCase
 }
 </file>
 
-<file path="acne-accounting/vite.config.js">
+<file path="vite.config.js">
 import { defineConfig } from 'vite';
 import laravel from 'laravel-vite-plugin';
 
@@ -7998,1595 +8716,94 @@ export default defineConfig({
 });
 </file>
 
-<file path="local-docs/ai_instructions.md">
-# Cursor's Memory Bank
-
-I am cursor, an expert software engineer with a unique characteristic: my memory resets completely between sessions. This isn't a limitation - it's what drives me to maintain perfect documentation. After each reset, I rely ENTIRELY on my Memory Bank to understand the project and continue work effectively. I MUST read ALL memory bank files at the start of EVERY task - this is not optional.
-
-## Memory Bank Structure
-
-The Memory Bank consists of core files and optional context files, all in Markdown format. Files build upon each other in a clear hierarchy:
-
-flowchart TD
-    PB[projectbrief.md] --> PC[productContext.md]
-    PB --> SP[systemPatterns.md]
-    PB --> TC[techContext.md]
-    
-    PC --> AC[activeContext.md]
-    SP --> AC
-    TC --> AC
-    
-    AC --> P[progress.md]
-
-### Core Files (Required)
-1. `projectbrief.md`
-   - Foundation document that shapes all other files
-   - Created at project start if it doesn't exist
-   - Defines core requirements and goals
-   - Source of truth for project scope
-
-2. `productContext.md`
-   - Why this project exists
-   - Problems it solves
-   - How it should work
-   - User experience goals
-
-3. `activeContext.md`
-   - Current work focus
-   - Recent changes
-   - Next steps
-   - Active decisions and considerations
-   - Important patterns and preferences
-   - Learnings and project insights
-
-4. `systemPatterns.md`
-   - System architecture
-   - Key technical decisions
-   - Design patterns in use
-   - Component relationships
-   - Critical implementation paths
-
-5. `techContext.md`
-   - Technologies used
-   - Development setup
-   - Technical constraints
-   - Dependencies
-   - Tool usage patterns
-
-6. `progress.md`
-   - What works
-   - What's left to build
-   - Current status
-   - Known issues
-   - Evolution of project decisions
-
-### Additional Context
-Create additional files/folders within memory-bank/ when they help organize:
-- Complex feature documentation
-- Integration specifications
-- API documentation
-- Testing strategies
-- Deployment procedures
-
-## Core Workflows
-
-### Plan Mode 
-NB! Plan mode short command - PM
-flowchart TD
-    Start[Start] --> ReadFiles[Read Memory Bank]
-    ReadFiles --> CheckFiles{Files Complete?}
-    
-    CheckFiles -->|No| Plan[Create Plan]
-    Plan --> Document[Document in Chat]
-    
-    CheckFiles -->|Yes| Verify[Verify Context]
-    Verify --> Strategy[Develop Strategy]
-    Strategy --> Present[Present Approach]
-
-### Act Mode
-NB! Act mode short command - AM
-flowchart TD
-    Start[Start] --> Context[Check Memory Bank]
-    Context --> Update[Update Documentation]
-    Update --> Execute[Execute Task]
-    Execute --> Document[Document Changes]
-
-## Documentation Updates
-
-Memory Bank updates occur when:
-1. Discovering new project patterns
-2. After implementing significant changes
-3. When user requests with **update memory bank** (MUST review ALL files)
-4. When context needs clarification
-
-flowchart TD
-    Start[Update Process]
-    
-    subgraph Process
-        P1[Review ALL Files]
-        P2[Document Current State]
-        P3[Clarify Next Steps]
-        P4[Document Insights & Patterns]
-        
-        P1 --> P2 --> P3 --> P4
-    end
-    
-    Start --> Process
-
-Note: When triggered by **update memory bank**, I MUST review every memory bank file, even if some don't require updates. Focus particularly on activeContext.md and progress.md as they track current state.
-
-REMEMBER: After every memory reset, I begin completely fresh. The Memory Bank is my only link to previous work. It must be maintained with precision and clarity, as my effectiveness depends entirely on its accuracy.
+<file path=".gitignore">
+/.phpunit.cache
+/node_modules
+/public/build
+/public/hot
+/public/storage
+/storage/*.key
+/storage/pail
+/vendor
+.env
+.env.backup
+.env.production
+.phpactor.json
+.phpunit.result.cache
+Homestead.json
+Homestead.yaml
+npm-debug.log
+yarn-error.log
+/auth.json
+/.fleet
+/.idea
+/.nova
+/.vscode
+/.zed
 </file>
 
-<file path="local-docs/ui_guide.md">
-# UI Гайд: Система Учета ACNE INC
+<file path="README.md">
+<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
-Этот документ описывает основные формы и элементы пользовательского интерфейса (UI), доступные для различных ролей пользователей в системе учета ACNE INC.
+<p align="center">
+<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+</p>
 
-## Общие Элементы
+## About Laravel
 
-*   **Навигационное Меню**: В зависимости от роли, предоставляет доступ к различным разделам (Панель управления, Операции, Отчеты, Управление и т.д.).
-*   **Панель Управления (Dashboard)**: Стартовая страница для каждой роли, отображающая ключевую информацию и быстрые ссылки.
-*   **Таблицы Данных**: Используются для отображения списков операций, пользователей, счетов и т.д. Поддерживают сортировку, фильтрацию и пагинацию.
-*   **Формы**: Стандартные веб-формы для ввода и редактирования данных с использованием Bootstrap 5 стилей.
-*   **Уведомления**: Для информирования об успешных действиях или ошибках.
+Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
 
-## 1. Роль: Владелец (Owner)
+- [Simple, fast routing engine](https://laravel.com/docs/routing).
+- [Powerful dependency injection container](https://laravel.com/docs/container).
+- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
+- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
+- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
+- [Robust background job processing](https://laravel.com/docs/queues).
+- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
 
-Владелец имеет полный доступ ко всем функциям системы.
+Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
-### 1.1. Панель Управления
+## Learning Laravel
 
-*   **Сводка**: Балансы ключевых системных счетов (SYSTEM_ROMA, SYSTEM_USDT, FINANCE), общий оборот, количество активных баеров/агентств.
-*   **Быстрые ссылки**: Управление пользователями, Управление командами, Перемещение средств, Основные отчеты.
+Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
 
-### 1.2. Формы Управления
+You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
 
-*   **Форма Управления Пользователями**:
-    *   **Создание/Приглашение**: Поля для ввода имени, выбора роли (`finance`, `buyer`, `agency`), Email (для веб-входа), Telegram ID (опционально, для связи), Команды (для `buyer`), Контактной информации (для `agency`). Возможность отправки приглашения.
-    *   **Редактирование**: Изменение имени, роли, команды, статуса активности (`active`), `sub2` (JSON), контактной информации. Нельзя изменять `telegram_id`?
-    *   **Список Пользователей**: Таблица со всеми пользователями, их ролями, статусами, командами.
-*   **Форма Управления Командами**:
-    *   **Создание**: Поле для ввода Названия (`name`), Описания (`description`).
-    *   **Редактирование**: Изменение названия, описания.
-    *   **Список Команд**: Таблица со всеми командами, количеством участников.
-*   **Форма Управления Счетами** (Предполагается, что счета создаются автоматически или через специальные операции):
-    *   **Просмотр**: Таблица всех счетов (`accounts`) с указанием типа (`account_type`), владельца (`user_id`), описания (`description`), валюты (`currency`), текущего баланса (вычисляется).
-    *   *Возможно*: Форма для ручного создания системных счетов.
+If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
 
-### 1.3. Формы Операций
+## Laravel Sponsors
 
-Владелец имеет доступ ко всем формам операций, как и Финансист.
+We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
 
-*   **Форма Перемещения Средств (`fund_transfers`)**: (Аналогично Финансисту)
-    *   Поля: Дата (`transfer_date`), Счет-отправитель (`from_account_id` - выбор из списка), Счет-получатель (`to_account_id` - выбор из списка), Сумма (`amount`), Комментарий (`comment`).
-*   **Форма Ежедневных Расходов (`daily_expenses`)**: (Доступ для просмотра/редактирования всех записей)
-    *   Поля: Дата (`operation_date`), Баер (`buyer_id` - выбор), Категория (`category`), Количество (`quantity`), Тариф (`tariff`), Комментарий (`comment`).
-*   **Форма Корректировок (`adjustments`)**: (Доступ для просмотра/редактирования всех записей)
-    *   Поля: Дата внесения (`entry_date`), Баер (`buyer_id` - выбор), Категория (`category` - напр., счет агентства), Период корректировки (`adjustment_period` - YYYY.MM), Сумма (`amount`), Комментарий (`comment`).
+### Premium Partners
 
-### 1.4. Отчеты
+- **[Vehikl](https://vehikl.com/)**
+- **[Tighten Co.](https://tighten.co)**
+- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
+- **[64 Robots](https://64robots.com)**
+- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
+- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
+- **[Redberry](https://redberry.international/laravel-development/)**
+- **[Active Logic](https://activelogic.com)**
 
-*   Доступ ко всем отчетам без ограничений.
-*   Фильтры по датам, пользователям, командам, типам счетов, категориям операций.
+## Contributing
 
-## 2. Роль: Финансист (Finance)
+Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
 
-Финансист управляет операционными расходами и перемещением средств.
+## Code of Conduct
 
-### 2.1. Панель Управления
+In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
 
-*   **Сводка**: Баланс счета FINANCE, SYSTEM_USDT, недавние операции (расходы, корректировки, перемещения).
-*   **Быстрые ссылки**: Добавить расход, Добавить корректировку, Переместить средства, Отчеты.
+## Security Vulnerabilities
 
-### 2.2. Формы Операций
+If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
 
-*   **Форма Ежедневных Расходов (`daily_expenses`)**: (Может добавлять/редактировать расходы *для любого* баера)
-    *   Поля: Дата (`operation_date`), Баер (`buyer_id` - выбор из списка баеров), Категория (`category`), Количество (`quantity`), Тариф (`tariff`), Комментарий (`comment`).
-*   **Форма Корректировок (`adjustments`)**: (Может добавлять/редактировать корректировки)
-    *   Поля: Дата внесения (`entry_date` - текущая), Баер (`buyer_id` - выбор), Категория (`category` - текст или выбор, напр., счет агентства), Период корректировки (`adjustment_period` - выбор месяца/года, YYYY.MM), Сумма (`amount` - положительная или отрицательная), Комментарий/Причина (`comment` - обязательно).
-*   **Форма Перемещения Средств (`fund_transfers`)**: (Может инициировать перемещения между счетами, к которым есть доступ)
-    *   Поля: Дата (`transfer_date`), Счет-отправитель (`from_account_id` - выбор из доступных), Счет-получатель (`to_account_id` - выбор из доступных), Сумма (`amount`), Комментарий (`comment`).
+## License
 
-### 2.3. Просмотр Данных
-
-*   **Просмотр Операций**: Доступ к таблицам со всеми записями `daily_expenses`, `adjustments`, `fund_transfers`.
-*   **Просмотр Пользователей/Команд**: Доступ к спискам пользователей и команд в режиме чтения.
-*   **Просмотр Счетов**: Доступ к списку всех счетов и их балансов в режиме чтения.
-
-### 2.4. Отчеты
-
-*   Доступ ко всем основным финансовым отчетам.
-*   Фильтры по датам, баерам, командам, типам счетов, категориям операций.
-
-## 3. Роль: Баер (Buyer)
-
-Баер вносит информацию о своих ежедневных расходах.
-
-### 3.1. Панель Управления
-
-*   **Сводка**: Баланс основного счета, недавние *собственные* расходы, возможно, статистика расходов по категориям.
-*   **Быстрые ссылки**: Добавить расход, Мои расходы, Мои отчеты.
-
-### 3.2. Формы Операций
-
-*   **Форма Ежедневных Расходов (`daily_expenses`)**: (Может добавлять/редактировать *только свои* расходы)
-    *   Поля: Дата (`operation_date`), Категория (`category` - выбор из списка: PROXY, CREO, ACCOUNTS, OTHER), Количество (`quantity`), Тариф (`tariff` - может быть по умолчанию 1.00), Комментарий (`comment`). Поле `buyer_id` и `created_by` заполняется автоматически текущим пользователем.
-
-### 3.3. Просмотр Данных
-
-*   **Просмотр Моих Операций**: Доступ к таблице только со *своими* записями `daily_expenses` и `adjustments` (если корректировки видны баерам).
-*   **Просмотр Моего Счета**: Информация о своем основном счете и его балансе.
-
-### 3.4. Отчеты
-
-*   Доступ только к отчетам, касающимся *собственной* деятельности.
-*   Отчет по расходам за период (с фильтром по дате, категории).
-
-## 4. Роль: Агентство (Agency)
-
-Виртуальный пользователь, представляющий контрагента. Как правило, не имеет прямого доступа к интерфейсу. Взаимодействие происходит через Финансиста или Владельца (например, при корректировках или пополнении счета агентства).
-
-*   **Интерфейс**: Не предусмотрен.
-*   **Представление в системе**: Записи в таблице `users` с `is_virtual=true`, соответствующий счет в `accounts`.
-</file>
-
-<file path=".cursorrules">
-# Stack
-
--   Laravel 12, PHP 8.3, MySQL 8
--   Laravel directory is in `acne-accounting` folder
--   Windows 11 Pro development, use Windows PowerShell commands and `;` as separator
-
-# Coding
-
-## LLM Coding Agent Guidelines for Laravel + PHP (Breeze & Tailwind)
-
-Below are **comprehensive rules**—best practices and "what not to do"—for your LLM-powered coding assistant when scaffolding, developing, or reviewing a Laravel (≥v10) project using PHP, Breeze authentication, and Tailwind CSS. These guidelines embody SOLID, KISS, and DRY principles.
-
----
-
-## 📐 1. Architectural & Coding Principles
-
-### 1.1 SOLID Principles
-
-1.  **Single Responsibility**
-    – One class/module → one responsibility.
-2.  **Open/Closed**
-    – Classes open for extension, closed for modification (use inheritance/composition).
-3.  **Liskov Substitution**
-    – Subclasses must be replaceable for their base classes.
-4.  **Interface Segregation**
-    – Interfaces should be granular; avoid "fat" interfaces.
-5.  **Dependency Inversion**
-    – Depend on abstractions (interfaces) rather than concretions.
-
-### 1.2 KISS (Keep It Simple, Stupid)
-
--   Favour straightforward solutions over over-engineering.
--   Avoid unnecessary patterns, micro-optimizations, or deep inheritance hierarchies.
--   Use Laravel's built-in features (Form Requests, Policies, Resources) before inventing custom abstractions.
-
-### 1.3 DRY (Don't Repeat Yourself)
-
--   Extract repeated Blade components, Tailwind class groups (`@apply`), and PHP logic into:
-    -   **Blade components** (`<x-alert …/>`)
-    -   **View Composers**
-    -   **Traits**, **Helper classes**, or **Services**
--   Reuse validation rules via **Form Request** classes.
--   Share configuration values in `config/*.php`.
-
----
-
-## 🛠️ 2. Laravel-Specific Practices
-
-### 2.1 Project Structure & Conventions
-
--   **PSR-12** coding standards; enforce via `php-cs-fixer` or `Laravel Pint`.
--   **Naming:**
-    -   Controllers → `PascalCaseController` (e.g. `UserController`)
-    -   Models → singular (`User`), matching DB `users` table.
-    -   Routes → `snake_case`/URL-friendly.
--   **Route Model Binding**
-    ```php
-    Route::get('/posts/{post}', [PostController::class, 'show']);
-    ```
--   **Thin Controllers**
-    -   Delegate to Actions or Service classes for business logic.
-    -   One action = one public method.
-
-### 2.2 Validation & Security
-
--   Use **Form Request** classes for input validation/authorization.
--   Always `authorize()` in Form Requests.
--   Escape output in Blade: `{{ $var }}`; only use `{!! !!}` for trusted HTML.
--   Protect against mass assignment: set `$fillable` or `$guarded` on Eloquent models.
-
-### 2.3 Eloquent & Database
-
--   **Eager-load** relationships to prevent N+1 queries:
-    ```php
-    Post::with(['author', 'comments'])->paginate();
-    ```
--   Use **Query Scopes** for reusable filters.
--   Migrate schema via Laravel migrations; avoid raw SQL when possible.
--   Use **Seeders & Factories** for test data.
-
-### 2.4 APIs & Resources
-
--   Return **API Resources** for JSON responses:
-    ```php
-    return new UserResource($user);
-    ```
--   Leverage HTTP Response helpers:
-    ```php
-    return response()->noContent(); // 204
-    ```
--   Version API routes (e.g., `/api/v1/...`).
-
-### 2.5 Testing
-
--   **Feature Tests** for endpoints; **Unit Tests** for individual classes.
--   Use **Factories** (`User::factory()`) and `RefreshDatabase` trait.
--   Aim >80% coverage on critical paths.
-
----
-
-## 🎨 3. Tailwind CSS & Breeze Frontend
-
-### 3.1 Tailwind Best Practices
-
--   **Utility-first:** compose small classes for clarity.
--   Extract repeating class sets via `tailwind.config.js` plugins or `@apply` in CSS:
-    ```css
-    .btn {
-        @apply px-4 py-2 rounded-lg bg-blue-600 text-white;
-    }
-    ```
--   Use variants (`hover:`, `focus:`, `dark:`) for states.
--   Purge unused CSS in production (`NODE_ENV=production npm run build`).
-
-### 3.2 Breeze Scaffolding
-
--   After `php artisan breeze:install`, organize:
-    -   `resources/views/layouts` for base layouts.
-    -   Blade components in `resources/views/components`.
--   Customize the Tailwind config (`tailwind.config.js`): add brand colors, spacing scales, etc.
-
----
-
-## 🚫 4. Bad Practices to Avoid
-
--   **Fat Controllers & Models**
-    – Business logic sprawled across controllers/models.
--   **Inline SQL or DB Queries in Views**
-    – Breaks separation; invite performance issues.
--   **Duplicated Validation Rules**
-    – Copy-pasting rules across controllers.
--   **Overridden Framework Code**
-    – Avoid hacking core; extend via Events, Listeners, or Service Providers.
--   **Global Facade Abuse**
-    – Prefer Dependency Injection over static facades when testability is needed.
--   **Neglecting Migrations & Version Control**
-    – Hand-editing DB schema outside migrations.
--   **Skipping Cache/Eager-Loading**
-    – Leads to slow pages and high DB load.
--   **Hard-coded URLs, Credentials, or Magic Strings**
-    – Always use `config()` or `.env`.
-
----
-
-## ✅ 5. Summary Checklist
-
--   [ ] Adhere to SOLID, KISS, DRY.
--   [ ] PSR-12 code style + Laravel conventions.
--   [ ] Thin Controllers → Services/Actions.
--   [ ] Form Requests for validation & auth.
--   [ ] Eager-load Eloquent relations.
--   [ ] API Resources for JSON.
--   [ ] Tailwind utility classes + purge.
--   [ ] Extract repeated Blade/Tailwind via components & `@apply`.
--   [ ] Write meaningful tests.
--   [ ] Avoid fat code, duplication, inline queries, and core hacks.
- 
-
- # Tools 
- Use tools
- When you analize logs take 250 last lines
-
-
- # logging
- Write logs for everything. 
-
- # project file structure
- laravel folder is 
- acne-accounting/
-</file>
-
-<file path="acne-accounting/app/Models/DailyExpense.php">
-<?php
-
-namespace App\Models;
-
-use App\Observers\DailyExpenseObserver;
-use Illuminate\Database\Eloquent\Attributes\ObservedBy;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\MorphOne;
-
-#[ObservedBy([DailyExpenseObserver::class])]
-class DailyExpense extends Model
-{
-    use HasFactory;
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
-    protected $fillable = [
-        'operation_date',
-        'buyer_id',
-        'category',
-        'quantity',
-        'tariff',
-        'total',
-        'comment',
-        'created_by',
-    ];
-
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
-    protected $casts = [
-        'operation_date' => 'date',
-        'quantity' => 'decimal:2',
-        'tariff' => 'decimal:2',
-        'total' => 'decimal:2',
-    ];
-
-    /**
-     * Get the user who incurred the expense (buyer).
-     */
-    public function buyer(): BelongsTo
-    {
-        return $this->belongsTo(User::class, 'buyer_id');
-    }
-
-    /**
-     * Get the user who created the expense record.
-     */
-    public function creator(): BelongsTo
-    {
-        return $this->belongsTo(User::class, 'created_by');
-    }
-
-    /**
-     * Get the transaction associated with the daily expense.
-     */
-    public function transaction(): MorphOne
-    {
-        return $this->morphOne(Transaction::class, 'operation');
-    }
-}
-</file>
-
-<file path="acne-accounting/app/Models/Team.php">
-<?php
-
-namespace App\Models;
-
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-
-class Team extends Model
-{
-    use HasFactory;
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
-    protected $fillable = [
-        'name',
-        'description',
-    ];
-
-    /**
-     * Get the buyers (users with role 'buyer') associated with the team.
-     */
-    public function buyers(): HasMany
-    {
-        // Assuming 'buyer' is the role name stored in the users table
-        return $this->hasMany(User::class)->where('role', 'buyer');
-    }
-
-    // If you need *all* users associated with a team, regardless of role
-    // (though the current schema only links team_id for buyers implicitly)
-    // public function users(): HasMany
-    // {
-    //     return $this->hasMany(User::class);
-    // }
-}
-</file>
-
-<file path="acne-accounting/app/Models/User.php">
-<?php
-
-namespace App\Models;
-
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-
-class User extends Authenticatable
-{
-    /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-        'telegram_id',
-        'role',
-        'team_id',
-        'sub2',
-        'active',
-        'is_virtual',
-        'contact_info',
-    ];
-
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
-
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string|object>
-     */
-    protected function casts(): array
-    {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-            'sub2' => 'array', // Cast sub2 JSON to array
-            'active' => 'boolean',
-            'is_virtual' => 'boolean',
-        ];
-    }
-
-    /**
-     * Get the team that the user belongs to (primarily for buyers).
-     */
-    public function team(): BelongsTo
-    {
-        return $this->belongsTo(Team::class);
-    }
-
-    /**
-     * Get the accounts associated with the user.
-     */
-    public function accounts(): HasMany
-    {
-        return $this->hasMany(Account::class);
-    }
-
-    /**
-     * Get the daily expenses created by or for the user.
-     * Note: Differentiate by foreign key if needed (e.g., dailyExpensesAsBuyer, dailyExpensesAsCreator)
-     */
-    public function dailyExpenses(): HasMany
-    {
-        // This relation assumes user_id might link to either buyer or creator in some contexts,
-        // or more specific relations are needed depending on usage.
-        // For now, linking via 'created_by' as an example.
-        // Or use separate relations like buyerDailyExpenses() and creatorDailyExpenses()
-        return $this->hasMany(DailyExpense::class, 'created_by'); // Or 'buyer_id' depending on primary usage
-    }
-
-    /**
-     * Get the adjustments created by or for the user.
-     * Note: Similar to dailyExpenses, clarify relation if needed.
-     */
-    public function adjustments(): HasMany
-    {
-        return $this->hasMany(Adjustment::class, 'created_by'); // Or 'buyer_id'
-    }
-}
-</file>
-
-<file path="acne-accounting/app/Observers/DailyExpenseObserver.php">
-<?php
-
-namespace App\Observers;
-
-use App\Models\DailyExpense;
-use App\Models\Account;
-use App\Models\User;
-use App\Models\Transaction;
-use App\Models\TransactionLine;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
-
-class DailyExpenseObserver
-{
-    /**
-     * Handle the DailyExpense "created" event.
-     */
-    public function created(DailyExpense $dailyExpense): void
-    {
-        // Log entry point
-        Log::info('[OBSERVER ENTRY] DailyExpenseObserver@created triggered for ID: ' . $dailyExpense->id);
-
-        // Wrap in try-catch
-        try {
-            DB::transaction(function () use ($dailyExpense) {
-                // 1. Find Buyer's USD Account (Explicitly BUYER_MAIN)
-                Log::info('[Observer] Finding buyer account for user ID: ' . $dailyExpense->buyer_id);
-                $buyerAccount = Account::where('user_id', $dailyExpense->buyer_id)
-                                       ->where('currency', 'USD')
-                                       ->where('account_type', 'BUYER_MAIN')
-                                       ->firstOrFail();
-                Log::info('[Observer] Found buyer account ID: ' . $buyerAccount->id);
-
-                // 2. Find System's USD Account (Explicitly SYSTEM_COMPANY - debit from here)
-                Log::info('[Observer] Finding system user...');
-                $systemUser = User::where('is_virtual', true)->firstOrFail();
-                Log::info('[Observer] Found system user ID: ' . $systemUser->id . '. Finding system account...');
-                $systemAccount = Account::where('user_id', $systemUser->id)
-                                        ->where('currency', 'USD')
-                                        ->where('account_type', 'SYSTEM_COMPANY')
-                                        ->firstOrFail();
-                Log::info('[Observer] Found system account ID: ' . $systemAccount->id);
-
-                 // 3. Create Transaction linked to the DailyExpense
-                 Log::info('[Observer] Creating transaction...');
-                 $transaction = $dailyExpense->transaction()->create([
-                    'description' => 'Daily Expense: ' . $dailyExpense->category . ' for Buyer #' . $dailyExpense->buyer_id,
-                    'transaction_date' => $dailyExpense->operation_date,
-                    'status' => 'completed',
-                    'accounting_period' => $dailyExpense->operation_date->format('Y-m'),
-                ]);
-                 Log::info('[Observer] Transaction created with ID: ' . $transaction->id);
-
-                // 4. Create Transaction Lines (Debit SYSTEM, Credit BUYER)
-                 Log::info('[Observer] Creating debit line for system account ID: ' . $systemAccount->id);
-                 TransactionLine::create([
-                    'transaction_id' => $transaction->id,
-                    'account_id' => $systemAccount->id,
-                    'debit' => $dailyExpense->total, // DEBIT System Account
-                    'credit' => 0,
-                    'description' => 'Expense Paid: ' . $dailyExpense->category . ' for Buyer #' . $dailyExpense->buyer_id,
-                ]);
-
-                Log::info('[Observer] Creating credit line for buyer account ID: ' . $buyerAccount->id);
-                TransactionLine::create([
-                    'transaction_id' => $transaction->id,
-                    'account_id' => $buyerAccount->id,
-                    'debit' => 0,
-                    'credit' => $dailyExpense->total, // CREDIT Buyer's Account
-                    'description' => 'Expense Received: ' . $dailyExpense->category,
-                ]);
-                Log::info('[Observer] Transaction lines created.');
-            });
-            Log::info('[Observer] Transaction committed successfully for DailyExpense ID: ' . $dailyExpense->id);
-
-        } catch (\Throwable $e) { // Catch Throwable for broader error catching
-            Log::error('[Observer] Failed to create transaction for DailyExpense ID: ' . $dailyExpense->id . ' - Error: ' . $e->getMessage(), [
-                 'exception' => $e
-            ]);
-            // Decide if you want to re-throw or handle differently
-        }
-    }
-
-    /**
-     * Handle the DailyExpense "updated" event.
-     */
-    public function updated(DailyExpense $dailyExpense): void
-    {
-        // Logic for updated event if needed
-    }
-
-    /**
-     * Handle the DailyExpense "deleted" event.
-     */
-    public function deleted(DailyExpense $dailyExpense): void
-    {
-        //
-    }
-
-    /**
-     * Handle the DailyExpense "restored" event.
-     */
-    public function restored(DailyExpense $dailyExpense): void
-    {
-        //
-    }
-
-    /**
-     * Handle the DailyExpense "force deleted" event.
-     */
-    public function forceDeleted(DailyExpense $dailyExpense): void
-    {
-        //
-    }
-}
-</file>
-
-<file path="acne-accounting/bootstrap/app.php">
-<?php
-
-use App\Models\DailyExpense;
-use App\Observers\DailyExpenseObserver;
-use Illuminate\Foundation\Application;
-use Illuminate\Foundation\Configuration\Exceptions;
-use Illuminate\Foundation\Configuration\Middleware;
-
-return Application::configure(basePath: dirname(__DIR__))
-    ->withRouting(
-        web: __DIR__.'/../routes/web.php',
-        commands: __DIR__.'/../routes/console.php',
-        health: '/up',
-    )
-    ->withMiddleware(function (Middleware $middleware) {
-        $middleware->alias([
-            'admin' => \App\Http\Middleware\EnsureUserIsAdmin::class,
-        ]);
-    })
-    ->withExceptions(function (Exceptions $exceptions) {
-        //
-    })
-    ->create();
-</file>
-
-<file path="acne-accounting/config/app.php">
-<?php
-
-return [
-
-    /*
-    |--------------------------------------------------------------------------
-    | Application Name
-    |--------------------------------------------------------------------------
-    |
-    | This value is the name of your application, which will be used when the
-    | framework needs to place the application's name in a notification or
-    | other UI elements where an application name needs to be displayed.
-    |
-    */
-
-    'name' => env('APP_NAME', 'Laravel'),
-
-    /*
-    |--------------------------------------------------------------------------
-    | Application Environment
-    |--------------------------------------------------------------------------
-    |
-    | This value determines the "environment" your application is currently
-    | running in. This may determine how you prefer to configure various
-    | services the application utilizes. Set this in your ".env" file.
-    |
-    */
-
-    'env' => env('APP_ENV', 'production'),
-
-    /*
-    |--------------------------------------------------------------------------
-    | Application Debug Mode
-    |--------------------------------------------------------------------------
-    |
-    | When your application is in debug mode, detailed error messages with
-    | stack traces will be shown on every error that occurs within your
-    | application. If disabled, a simple generic error page is shown.
-    |
-    */
-
-    'debug' => (bool) env('APP_DEBUG', false),
-
-    /*
-    |--------------------------------------------------------------------------
-    | Application URL
-    |--------------------------------------------------------------------------
-    |
-    | This URL is used by the console to properly generate URLs when using
-    | the Artisan command line tool. You should set this to the root of
-    | the application so that it's available within Artisan commands.
-    |
-    */
-
-    'url' => env('APP_URL', 'http://localhost'),
-
-    /*
-    |--------------------------------------------------------------------------
-    | Application Timezone
-    |--------------------------------------------------------------------------
-    |
-    | Here you may specify the default timezone for your application, which
-    | will be used by the PHP date and date-time functions. The timezone
-    | is set to "UTC" by default as it is suitable for most use cases.
-    |
-    */
-
-    'timezone' => 'UTC',
-
-    /*
-    |--------------------------------------------------------------------------
-    | Application Locale Configuration
-    |--------------------------------------------------------------------------
-    |
-    | The application locale determines the default locale that will be used
-    | by Laravel's translation / localization methods. This option can be
-    | set to any locale for which you plan to have translation strings.
-    |
-    */
-
-    'locale' => env('APP_LOCALE', 'en'),
-
-    'fallback_locale' => env('APP_FALLBACK_LOCALE', 'en'),
-
-    'faker_locale' => env('APP_FAKER_LOCALE', 'en_US'),
-
-    /*
-    |--------------------------------------------------------------------------
-    | Encryption Key
-    |--------------------------------------------------------------------------
-    |
-    | This key is utilized by Laravel's encryption services and should be set
-    | to a random, 32 character string to ensure that all encrypted values
-    | are secure. You should do this prior to deploying the application.
-    |
-    */
-
-    'cipher' => 'AES-256-CBC',
-
-    'key' => env('APP_KEY'),
-
-    'previous_keys' => [
-        ...array_filter(
-            explode(',', env('APP_PREVIOUS_KEYS', ''))
-        ),
-    ],
-
-    /*
-    |--------------------------------------------------------------------------
-    | Maintenance Mode Driver
-    |--------------------------------------------------------------------------
-    |
-    | These configuration options determine the driver used to determine and
-    | manage Laravel's "maintenance mode" status. The "cache" driver will
-    | allow maintenance mode to be controlled across multiple machines.
-    |
-    | Supported drivers: "file", "cache"
-    |
-    */
-
-    'maintenance' => [
-        'driver' => env('APP_MAINTENANCE_DRIVER', 'file'),
-        'store' => env('APP_MAINTENANCE_STORE', 'database'),
-    ],
-
-    /*
-    |--------------------------------------------------------------------------
-    | Autoloaded Service Providers
-    |--------------------------------------------------------------------------
-    |
-    | The service providers listed here will be automatically loaded on the
-    | request to your application. Feel free to add your own services to
-    | this array to grant expanded functionality to your applications.
-    |
-    */
-
-    'providers' => [
-
-        /*
-         * Laravel Framework Service Providers...
-         */
-        Illuminate\Auth\AuthServiceProvider::class,
-        Illuminate\Broadcasting\BroadcastServiceProvider::class,
-        Illuminate\Bus\BusServiceProvider::class,
-        Illuminate\Cache\CacheServiceProvider::class,
-        Illuminate\Foundation\Providers\ConsoleSupportServiceProvider::class,
-        Illuminate\Cookie\CookieServiceProvider::class,
-        Illuminate\Database\DatabaseServiceProvider::class,
-        Illuminate\Encryption\EncryptionServiceProvider::class,
-        Illuminate\Filesystem\FilesystemServiceProvider::class,
-        Illuminate\Foundation\Providers\FoundationServiceProvider::class,
-        Illuminate\Hashing\HashServiceProvider::class,
-        Illuminate\Mail\MailServiceProvider::class,
-        Illuminate\Notifications\NotificationServiceProvider::class,
-        Illuminate\Pagination\PaginationServiceProvider::class,
-        Illuminate\Pipeline\PipelineServiceProvider::class,
-        Illuminate\Queue\QueueServiceProvider::class,
-        Illuminate\Redis\RedisServiceProvider::class,
-        Illuminate\Auth\Passwords\PasswordResetServiceProvider::class,
-        Illuminate\Session\SessionServiceProvider::class,
-        Illuminate\Translation\TranslationServiceProvider::class,
-        Illuminate\Validation\ValidationServiceProvider::class,
-        Illuminate\View\ViewServiceProvider::class,
-
-        /*
-         * Package Service Providers...
-         */
-
-        /*
-         * Application Service Providers...
-         */
-        App\Providers\AppServiceProvider::class,
-        // App\Providers\AuthServiceProvider::class, // Temporarily commented out again
-        // App\Providers\BroadcastServiceProvider::class,
-        // App\Providers\EventServiceProvider::class, // Remove this again - handled by auto-discovery in L12
-        // App\Providers\RouteServiceProvider::class, // Explicitly remove this as L12 handles routing differently
-
-    ],
-
-    /*
-    |--------------------------------------------------------------------------
-    | Class Aliases
-    |--------------------------------------------------------------------------
-    |
-    | This array of class aliases will be registered when this application
-    | is started. However, feel free to register as many as you wish as
-    | the aliases are "lazy" loaded so they don't hinder performance.
-    |
-    */
-
-];
-</file>
-
-<file path="acne-accounting/database/migrations/0001_01_01_000000_create_users_table.php">
-<?php
-
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Support\Facades\DB;
-
-return new class extends Migration
-{
-    /**
-     * Run the migrations.
-     */
-    public function up(): void
-    {
-        Schema::create('users', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('telegram_id')->nullable()->unique()->comment('ID пользователя в Telegram (null для виртуальных)');
-            $table->enum('role', ['owner', 'finance', 'buyer', 'agency'])->comment('Роль пользователя');
-            $table->string('name')->comment('Имя пользователя или название агентства');
-            $table->foreignId('team_id')->nullable()->constrained('teams')->onDelete('set null')->comment('ID команды (для баеров)');
-            $table->json('sub2')->nullable()->comment('Теги баера из внешней системы (в формате JSON)');
-            $table->string('email')->nullable()->unique()->comment('Email для входа через веб (опционально)');
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password')->nullable()->comment('Хеш пароля для входа через веб');
-            $table->boolean('active')->default(true)->comment('Статус активности пользователя');
-            $table->boolean('is_virtual')->default(false)->comment('Признак виртуального пользователя (агентства)');
-            $table->text('contact_info')->nullable()->comment('Контактная информация (для агентств)');
-            $table->rememberToken();
-            $table->timestamps();
-        });
-
-        // Add table comment if using MySQL 8+
-        if (Schema::getConnection()->getDriverName() === 'mysql') {
-            DB::statement("ALTER TABLE `users` comment 'Пользователи системы'");
-        }
-
-        // Keep other tables created by Breeze
-        Schema::create('password_reset_tokens', function (Blueprint $table) {
-            $table->string('email')->primary();
-            $table->string('token');
-            $table->timestamp('created_at')->nullable();
-        });
-
-        Schema::create('sessions', function (Blueprint $table) {
-            $table->string('id')->primary();
-            $table->foreignId('user_id')->nullable()->index();
-            $table->string('ip_address', 45)->nullable();
-            $table->text('user_agent')->nullable();
-            $table->longText('payload');
-            $table->integer('last_activity')->index();
-        });
-    }
-
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
-    {
-        if (Schema::hasTable('users') && Schema::hasColumn('users', 'team_id')) {
-            Schema::table('users', function (Blueprint $table) {
-                // Restored Jetstream team FK drop
-                // Check if the foreign key exists before dropping
-                // The key name format is typically `<table>_<column>_foreign`
-                $foreignKeys = Schema::getConnection()->getDoctrineSchemaManager()->listTableForeignKeys('users');
-                $hasForeignKey = false;
-                foreach ($foreignKeys as $foreignKey) {
-                    if ($foreignKey->getColumns() === ['team_id']) {
-                        $hasForeignKey = true;
-                        break;
-                    }
-                }
-                if ($hasForeignKey) {
-                    $table->dropForeign(['team_id']);
-                }
-            });
-        }
-
-        Schema::dropIfExists('users');
-        Schema::dropIfExists('password_reset_tokens');
-        Schema::dropIfExists('sessions');
-    }
-};
-</file>
-
-<file path="acne-accounting/database/migrations/2025_04_21_115941_create_transaction_lines_table.php">
-<?php
-
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Support\Facades\DB;
-
-return new class extends Migration
-{
-    /**
-     * Run the migrations.
-     */
-    public function up(): void
-    {
-        Schema::create('transaction_lines', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('transaction_id')->constrained('transactions')->onDelete('cascade');
-            $table->foreignId('account_id')->constrained('accounts')->comment('Счет, по которому идет движение'); // No cascade/set null?
-            $table->decimal('debit', 15, 2)->nullable()->default(0.00)->comment('Сумма по дебету');
-            $table->decimal('credit', 15, 2)->nullable()->default(0.00)->comment('Сумма по кредиту');
-            $table->string('description')->nullable()->comment('Описание строки (опционально)');
-            $table->timestamps(); // Keep only created_at as per spec?
-
-            // Indexes
-            $table->index('account_id');
-
-            // Check constraint needs to be added via raw SQL after table creation
-            // $table->check('(debit >= 0 AND credit >= 0 AND (debit > 0 OR credit > 0) AND (debit = 0 OR credit = 0))', 'chk_debit_credit');
-        });
-
-        // Add CHECK constraint for MySQL 8+
-        if (Schema::getConnection()->getDriverName() === 'mysql') {
-            DB::statement('ALTER TABLE `transaction_lines` ADD CONSTRAINT `chk_debit_credit` CHECK (`debit` >= 0 AND `credit` >= 0 AND (`debit` > 0 OR `credit` > 0) AND (`debit` = 0 OR `credit` = 0))');
-        }
-
-        // Add table comment if using MySQL 8+
-        if (Schema::getConnection()->getDriverName() === 'mysql') {
-            DB::statement("ALTER TABLE `transaction_lines` comment 'Строки транзакций (дебет/кредит)'");
-        }
-    }
-
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
-    {
-        // Drop foreign keys first if exists
-        if (Schema::hasTable('transaction_lines')) {
-            Schema::table('transaction_lines', function (Blueprint $table) {
-                // Drop check constraint manually for MySQL
-                if (Schema::getConnection()->getDriverName() === 'mysql') {
-                    try {
-                         DB::statement('ALTER TABLE `transaction_lines` DROP CONSTRAINT `chk_debit_credit`');
-                    } catch (\Exception $e) {
-                        // Ignore error if constraint doesn't exist
-                    }
-                }
-                /*
-                try {
-                    $table->dropCheck('chk_debit_credit');
-                } catch (\Exception $e) {
-                    // Ignore errors if check constraint doesn't exist or dropping is not supported cleanly
-                }
-                */
-
-                $foreignKeys = Schema::getConnection()->getDoctrineSchemaManager()->listTableForeignKeys('transaction_lines');
-                $keysToDrop = [];
-                foreach ($foreignKeys as $foreignKey) {
-                    if (in_array($foreignKey->getColumns(), [['transaction_id'], ['account_id']])) {
-                        $keysToDrop[] = $foreignKey->getName();
-                    }
-                }
-                foreach ($keysToDrop as $keyName) {
-                    try {
-                        if(str_contains($keyName, 'transaction_id')) $table->dropForeign(['transaction_id']);
-                        elseif(str_contains($keyName, 'account_id')) $table->dropForeign(['account_id']);
-                        else DB::statement('ALTER TABLE transaction_lines DROP FOREIGN KEY ' . $keyName);
-                    } catch (\Exception $e) {
-                        DB::statement('ALTER TABLE transaction_lines DROP FOREIGN KEY ' . $keyName);
-                    }
-                }
-            });
-        }
-        Schema::dropIfExists('transaction_lines');
-    }
-};
-</file>
-
-<file path="acne-accounting/database/seeders/DatabaseSeeder.php">
-<?php
-
-namespace Database\Seeders;
-
-// use App\Models\User; // Commented out if default user factory is not needed
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use Illuminate\Database\Seeder;
-
-class DatabaseSeeder extends Seeder
-{
-    /**
-     * Seed the application's database.
-     */
-    public function run(): void
-    {
-        $this->call([
-            AdminUserSeeder::class, // Creates Admin and System users
-            SystemAccountsSeeder::class, // Creates system accounts linked to System user
-            // Add other seeders here if needed
-        ]);
-
-        // Remove or keep default user factory call as needed
-        // User::factory(10)->create();
-        // User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
-    }
-}
-</file>
-
-<file path="acne-accounting/package.json">
-{
-    "private": true,
-    "type": "module",
-    "scripts": {
-        "build": "vite build",
-        "dev": "vite"
-    },
-    "devDependencies": {
-        "@tailwindcss/forms": "^0.5.2",
-        "@tailwindcss/vite": "^4.0.0",
-        "alpinejs": "^3.4.2",
-        "autoprefixer": "^10.4.2",
-        "axios": "^1.8.2",
-        "concurrently": "^9.0.1",
-        "flatpickr": "^4.6.13",
-        "laravel-vite-plugin": "^1.2.0",
-        "postcss": "^8.4.31",
-        "tailwindcss": "^3.1.0",
-        "vite": "^6.2.4"
-    }
-}
-</file>
-
-<file path="acne-accounting/resources/css/app.css">
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-@import 'flatpickr/dist/flatpickr.min.css';
-</file>
-
-<file path="acne-accounting/resources/js/bootstrap.js">
-import axios from 'axios';
-window.axios = axios;
-
-window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
-
-// Import flatpickr and make it global
-import flatpickr from 'flatpickr';
-window.flatpickr = flatpickr;
-
-/**
- * Echo exposes an expressive API for subscribing to channels and listening
- * for events that are broadcast by Laravel. Echo and event broadcasting
- * allows your team to easily build robust real-time web applications.
- */
-
-// import Echo from 'laravel-echo';
-</file>
-
-<file path="acne-accounting/resources/views/components/input-label.blade.php">
-@props(['value'])
-
-<label {{ $attributes->merge(['class' => 'block font-medium text-sm text-gray-700 dark:text-gray-300']) }}>
-    {{ $value ?? $slot }}
-</label>
-</file>
-
-<file path="acne-accounting/resources/views/components/text-input.blade.php">
-@props(['disabled' => false])
-
-<input @disabled($disabled) {{ $attributes->merge(['class' => 'border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm']) }}>
-</file>
-
-<file path="acne-accounting/resources/views/layouts/navigation.blade.php">
-<nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
-    <!-- Primary Navigation Menu -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between h-16">
-            <div class="flex">
-                <!-- Logo -->
-                <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}">
-                        <x-application-logo class="block h-9 w-auto fill-current text-gray-800" />
-                    </a>
-                </div>
-
-                <!-- Navigation Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
-                    </x-nav-link>
-
-                    {{-- Admin Links --}}
-                    @if(in_array(Auth::user()->role, ['owner', 'finance']))
-                        <x-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
-                            {{ __('Admin Dashboard') }}
-                         </x-nav-link>
-                         <x-nav-link :href="route('admin.fund-transfers.create')" :active="request()->routeIs('admin.fund-transfers.create')">
-                            {{ __('Create Fund Transfer') }}
-                         </x-nav-link>
-                         <x-nav-link :href="route('admin.transactions.index')" :active="request()->routeIs('admin.transactions.*')">
-                            {{ __('View Transactions') }}
-                         </x-nav-link>
-                         <x-nav-link :href="route('admin.daily-expenses.index')" :active="request()->routeIs('admin.daily-expenses.*')">
-                            {{ __('Daily Expenses') }}
-                         </x-nav-link>
-                         <x-nav-link :href="route('admin.users.index')" :active="request()->routeIs('admin.users.*')">
-                            {{ __('Manage Users') }}
-                         </x-nav-link>
-                         <x-nav-link :href="route('admin.teams.index')" :active="request()->routeIs('admin.teams.*')">
-                            {{ __('Manage Teams') }}
-                         </x-nav-link>
-                         {{-- The old generic 'Admin Area' link is removed in favor of specific links --}}
-                         {{--
-                         <x-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard') || request()->routeIs('admin.teams.*') || request()->routeIs('admin.users.*')" class="relative group">
-                            {{ __('Admin Area') }}
-                             <span class="absolute top-0 right-0 block h-2 w-2 rounded-full ring-2 ring-white bg-red-400"></span>
-                         </x-nav-link>
-                         --}}
-                    @endif
-                </div>
-            </div>
-
-            <!-- Settings Dropdown -->
-            <div class="hidden sm:flex sm:items-center sm:ms-6">
-                <x-dropdown align="right" width="48">
-                    <x-slot name="trigger">
-                        <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
-                            <div>{{ Auth::user()->name }}</div>
-
-                            <div class="ms-1">
-                                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-                                </svg>
-                            </div>
-                        </button>
-                    </x-slot>
-
-                    <x-slot name="content">
-                        <x-dropdown-link :href="route('profile.edit')">
-                            {{ __('Profile') }}
-                        </x-dropdown-link>
-
-                        <!-- Authentication -->
-                        <form method="POST" action="{{ route('logout') }}">
-                            @csrf
-
-                            <x-dropdown-link :href="route('logout')"
-                                    onclick="event.preventDefault();
-                                                this.closest('form').submit();">
-                                {{ __('Log Out') }}
-                            </x-dropdown-link>
-                        </form>
-                    </x-slot>
-                </x-dropdown>
-            </div>
-
-            <!-- Hamburger -->
-            <div class="-me-2 flex items-center sm:hidden">
-                <button @click="open = ! open" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out">
-                    <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-                        <path :class="{'hidden': open, 'inline-flex': ! open }" class="inline-flex" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                        <path :class="{'hidden': ! open, 'inline-flex': open }" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Responsive Navigation Menu -->
-    <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
-        <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                {{ __('Dashboard') }}
-            </x-responsive-nav-link>
-        </div>
-
-        {{-- Responsive Admin Links --}}
-        @if(in_array(Auth::user()->role, ['owner', 'finance']))
-            <div class="pt-4 pb-1 border-t border-gray-200">
-                <div class="px-4">
-                    <div class="font-medium text-base text-gray-800">{{ __('Admin Area') }}</div>
-                </div>
-                <div class="mt-3 space-y-1">
-                     <x-responsive-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
-                        {{ __('Admin Dashboard') }}
-                    </x-responsive-nav-link>
-                    <x-responsive-nav-link :href="route('admin.fund-transfers.create')" :active="request()->routeIs('admin.fund-transfers.create')">
-                        {{ __('Create Fund Transfer') }}
-                    </x-responsive-nav-link>
-                    <x-responsive-nav-link :href="route('admin.transactions.index')" :active="request()->routeIs('admin.transactions.*')">
-                        {{ __('View Transactions') }}
-                    </x-responsive-nav-link>
-                    <x-responsive-nav-link :href="route('admin.daily-expenses.index')" :active="request()->routeIs('admin.daily-expenses.*')">
-                        {{ __('Daily Expenses') }}
-                    </x-responsive-nav-link>
-                     <x-responsive-nav-link :href="route('admin.users.index')" :active="request()->routeIs('admin.users.*')">
-                        {{ __('Manage Users') }}
-                    </x-responsive-nav-link>
-                    <x-responsive-nav-link :href="route('admin.teams.index')" :active="request()->routeIs('admin.teams.*')">
-                        {{ __('Manage Teams') }}
-                    </x-responsive-nav-link>
-                </div>
-            </div>
-        @endif
-
-        <!-- Responsive Settings Options -->
-        <div class="pt-4 pb-1 border-t border-gray-200">
-            <div class="px-4">
-                <div class="font-medium text-base text-gray-800">{{ Auth::user()->name }}</div>
-                <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
-            </div>
-
-            <div class="mt-3 space-y-1">
-                <x-responsive-nav-link :href="route('profile.edit')">
-                    {{ __('Profile') }}
-                </x-responsive-nav-link>
-
-                <!-- Authentication -->
-                <form method="POST" action="{{ route('logout') }}">
-                    @csrf
-
-                    <x-responsive-nav-link :href="route('logout')"
-                            onclick="event.preventDefault();
-                                        this.closest('form').submit();">
-                        {{ __('Log Out') }}
-                    </x-responsive-nav-link>
-                </form>
-            </div>
-        </div>
-    </div>
-</nav>
-</file>
-
-<file path="acne-accounting/routes/web.php">
-<?php
-
-use App\Http\Controllers\ProfileController;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Admin\TeamController;
-use App\Http\Controllers\Admin\UserController;
-use App\Http\Controllers\Admin\FundTransferController;
-use App\Http\Controllers\Admin\TransactionController;
-use App\Http\Controllers\Admin\DailyExpenseController;
-
-Route::get('/', function () {
-    return view('welcome');
-});
-
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
-
-require __DIR__.'/auth.php';
-
-// Admin Routes
-Route::middleware(['auth', 'verified', 'admin'])
-    ->prefix('admin')
-    ->name('admin.')
-    ->group(function () {
-        Route::get('/', function() { // Basic Admin Dashboard
-            return view('admin.dashboard'); // TODO: Create admin dashboard view
-        })->name('dashboard');
-
-        Route::resource('teams', TeamController::class);
-        Route::resource('users', UserController::class);
-
-        // Fund Transfers
-        Route::get('fund-transfers/create', [FundTransferController::class, 'create'])->name('fund-transfers.create');
-        Route::post('fund-transfers', [FundTransferController::class, 'store'])->name('fund-transfers.store');
-
-        // API endpoint for user accounts (used by fund transfer form)
-        Route::get('users/{user}/accounts', [FundTransferController::class, 'getAccountsForUser'])->name('users.accounts');
-
-        // Transactions
-        Route::resource('transactions', TransactionController::class)->only(['index', 'show']);
-
-        // Daily Expenses (using index for view/add, store for AJAX add)
-        Route::get('daily-expenses', [DailyExpenseController::class, 'index'])->name('daily-expenses.index');
-        Route::post('daily-expenses', [DailyExpenseController::class, 'store'])->name('daily-expenses.store');
-    });
-</file>
-
-<file path="local-docs/tasks.md">
-# План Задач: Система Учета ACNE INC
-
-Этот документ содержит пошаговый план задач для разработки системы учета ACNE INC на `Laravel 12`. 
-
-## Этап 1: Настройка Проекта и Окружения
-
-1.  [X] **Задача 1.1**: Установить последнюю стабильную версию Laravel с помощью Composer (`composer create-project laravel/laravel acne-accounting`).
-2.  [X] **Задача 1.2**: Перейти в директорию проекта (`cd acne-accounting`).
-3.  [X] **Задача 1.3**: Сконфигурировать файл `.env` (Название приложения, URL, Данные для подключения к БД MySQL).
-4.  [X] **Задача 1.4**: Создать базу данных MySQL, указанную в `.env`.
-5.  [X] **Задача 1.5**: Установить пакет Laravel Breeze (`composer require laravel/breeze --dev`).
-6.  [X] **Задача 1.6**: Установить скаффолдинг Breeze с Blade (`php artisan breeze:install blade`).
-7.  [X] **Задача 1.7**: Установить зависимости NPM (`npm install`).
-8.  [X] **Задача 1.8**: Собрать фронтенд-ассеты (`npm run build`).
-9.  [X] **Задача 1.9**: Запустить миграции Breeze (`php artisan migrate`) для создания таблиц `users`, `password_reset_tokens`, `failed_jobs`, `personal_access_tokens`.
-10. [X] **Задача 1.10**: Проверить конфигурацию Tailwind CSS, установленную Breeze (например, `tailwind.config.js`, `postcss.config.js`, `vite.config.js`, `resources/css/app.css`).
-11. [X] **Задача 1.11**: Убедиться, что фронтенд-ассеты с Tailwind CSS успешно собраны (выполнено в Задаче 1.8).
-12. [ ] **Задача 1.12**: Проверить базовую установку и стандартную аутентификацию Laravel (Регистрация, Вход, Выход).
-
-## Этап 2: Миграции Базы Данных
-
-*Примечание: Для всех миграций использовать типы данных и ограничения, указанные в `tech.md`.* 
-
-13. [X] **Задача 2.1**: Создать миграцию для таблицы `teams` (`php artisan make:migration create_teams_table`).
-14. [X] **Задача 2.2**: Описать структуру таблицы `teams` в файле миграции.
-15. [X] **Задача 2.3**: Изменить существующую миграцию `users` (добавленную Breeze), добавив поля: `telegram_id`, `role`, `team_id` (с внешним ключом к `teams`), `sub2` (JSON), `active`, `is_virtual`, `contact_info`.
-16. [X] **Задача 2.4**: Создать миграцию для таблицы `accounts` (`php artisan make:migration create_accounts_table`).
-17. [X] **Задача 2.5**: Описать структуру таблицы `accounts` в файле миграции (включая внешний ключ `user_id` к `users`).
-18. [X] **Задача 2.6**: Создать миграцию для таблицы `daily_expenses` (`php artisan make:migration create_daily_expenses_table`).
-19. [X] **Задача 2.7**: Описать структуру таблицы `daily_expenses` в файле миграции (включая внешние ключи `buyer_id`, `created_by` к `users`).
-20. [X] **Задача 2.8**: Создать миграцию для таблицы `adjustments` (`php artisan make:migration create_adjustments_table`).
-21. [X] **Задача 2.9**: Описать структуру таблицы `adjustments` в файле миграции (включая внешние ключи `buyer_id`, `created_by` к `users`).
-22. [X] **Задача 2.10**: Создать миграцию для таблицы `fund_transfers` (`php artisan make:migration create_fund_transfers_table`).
-23. [X] **Задача 2.11**: Описать структуру таблицы `fund_transfers` в файле миграции (включая внешние ключи `from_account_id`, `to_account_id` к `accounts`, `created_by` к `users`).
-24. [X] **Задача 2.12**: Создать миграцию для таблицы `transactions` (`php artisan make:migration create_transactions_table`).
-25. [X] **Задача 2.13**: Описать структуру таблицы `transactions` в файле миграции (включая полиморфные колонки `operation_id`, `operation_type`, индексы).
-26. [X] **Задача 2.14**: Создать миграцию для таблицы `transaction_lines` (`php artisan make:migration create_transaction_lines_table`).
-27. [X] **Задача 2.15**: Описать структуру таблицы `transaction_lines` в файле миграции (включая внешние ключи `transaction_id`, `account_id`, индексы, проверку `chk_debit_credit`).
-28. [X] **Задача 2.16**: Создать миграцию для таблицы `income_records` (`php artisan make:migration create_income_records_table`).
-29. [X] **Задача 2.17**: Описать структуру таблицы `income_records` в файле миграции.
-30. [X] **Задача 2.18**: Запустить все созданные миграции (`php artisan migrate`).
-
-## Этап 3: Модели Eloquent и Отношения
-
-31. [X] **Задача 3.1**: Создать модель `Team` (`php artisan make:model Team`). Определить отношение `users()` (hasMany).
-32. [X] **Задача 3.2**: Настроить модель `User` (добавлена Breeze): добавить `$fillable` поля, добавить приведение `sub2` к `json/array`, определить отношение `team()` (belongsTo, nullable), `accounts()` (hasMany), `dailyExpenses()` (hasMany), `adjustments()` (hasMany).
-33. [X] **Задача 3.3**: Создать модель `Account` (`php artisan make:model Account`). Определить отношения `user()` (belongsTo, nullable), `transactionLines()` (hasMany). Добавить метод `getBalance()` (или аксессор).
-34. [X] **Задача 3.4**: Создать модель `DailyExpense` (`php artisan make:model DailyExpense`). Определить отношения `buyer()` (belongsTo User), `creator()` (belongsTo User), `transaction()` (morphOne).
-35. [X] **Задача 3.5**: Создать модель `Adjustment` (`php artisan make:model Adjustment`). Определить отношения `buyer()` (belongsTo User), `creator()` (belongsTo User), `transaction()` (morphOne).
-36. [X] **Задача 3.6**: Создать модель `FundTransfer` (`php artisan make:model FundTransfer`). Определить отношения `fromAccount()` (belongsTo Account), `toAccount()` (belongsTo Account), `creator()` (belongsTo User), `transaction()` (morphOne).
-37. [X] **Задача 3.7**: Создать модель `Transaction` (`php artisan make:model Transaction`). Определить отношения `lines()` (hasMany), `operation()` (morphTo).
-38. [X] **Задача 3.8**: Создать модель `TransactionLine` (`php artisan make:model TransactionLine`). Определить отношения `transaction()` (belongsTo), `account()` (belongsTo).
-39. [X] **Задача 3.9**: Создать модель `IncomeRecord` (`php artisan make:model IncomeRecord`).
-
-## Этап 4: Основная Логика (Сервисы/Наблюдатели)
-
-40. [X] **Задача 4.1**: Создать сервисы `AccountService` (для поиска счетов) и `TransactionService` (для записи транзакций двойной записи).
-41. [X] **Задача 4.2**: Создать наблюдатели (Observers) для моделей `DailyExpense`, `Adjustment`, `FundTransfer`.
-42. [X] **Задача 4.3**: Зарегистрировать наблюдателей в `EventServiceProvider` и добавить провайдер в `config/app.php`.
-43. [ ] **Задача 4.4**: Реализовать метод `recordOperationTransaction` в `TransactionService` для атомарного создания `Transaction` и связанных `TransactionLine` (дебет/кредит), принимая ID счетов и суммы.
-44. [ ] **Задача 4.5**: В `DailyExpenseObserver` (метод `created`), используя `AccountService` и `TransactionService`, инициировать создание транзакции (дебет счета баера, кредит счета агентства/источника - *уточнить логику кредита*).
-45. [ ] **Задача 4.6**: В `AdjustmentObserver` (метод `created`), используя `AccountService` и `TransactionService`, инициировать создание транзакции (дебет/кредит счета баера, кредит/дебет счета агентства, с учетом `accounting_period`).
-46. [ ] **Задача 4.7**: В `FundTransferObserver` (метод `created`), используя `AccountService` и `TransactionService`, инициировать создание транзакции (дебет счета получателя, кредит счета отправителя).
-47. [ ] **Задача 4.8**: Реализовать логику автоматического создания `Account` (тип `BUYER_MAIN`, валюта USD) при создании `User` с ролью `buyer` (например, в `UserObserver` или `AccountService`).
-48. [ ] **Задача 4.9**: Реализовать логику автоматического создания `Account` (тип `AGENCY`, валюта USD) при создании `User` с ролью `agency` (например, в `UserObserver` или `AccountService`).
-
-## Этап 5: Аутентификация и Авторизация
-
-49. [ ] **Задача 5.1**: Настроить веб-аутентификацию (формы входа/регистрации уже должны быть от Breeze).
-50. [ ] **Задача 5.2**: Реализовать аутентификацию через Telegram (например, добавить маршрут, контроллер `TelegramAuthController`, использовать Socialite или HTTP-клиент для взаимодействия с Telegram API, связать/создать пользователя по `telegram_id`).
-51. [ ] **Задача 5.3**: Определить роли пользователей (можно использовать ENUM в модели `User` или пакет для управления ролями, например, `spatie/laravel-permission`).
-52. [ ] **Задача 5.4**: Создать `AuthServiceProvider` и определить Gates или Policies для контроля доступа:
-    *   `TeamPolicy`: Управление командами (только Owner).
-    *   `UserPolicy`: Управление пользователями (только Owner).
-    *   `DailyExpensePolicy`: Создание/Редактирование (Buyer - только свои, Finance/Owner - все), Просмотр (Buyer - свои, Finance/Owner - все).
-    *   `AdjustmentPolicy`: Создание/Редактирование (Finance/Owner), Просмотр (Finance/Owner, Buyer - ?).
-    *   `FundTransferPolicy`: Создание/Редактирование (Finance/Owner), Просмотр (Finance/Owner).
-    *   `AccountPolicy`: Просмотр (Owner/Finance - все, Buyer - свой).
-53. [ ] **Задача 5.5**: Применить middleware и проверки авторизации в контроллерах и маршрутах.
-
-## Этап 6: UI и Контроллеры - Роль Owner
-
-54. [ ] **Задача 6.1**: Создать `TeamController` (`php artisan make:controller TeamController --resource`). Реализовать CRUD-методы с использованием `TeamPolicy`.
-55. [ ] **Задача 6.2**: Создать Blade-шаблоны для CRUD операций с командами (`teams/index.blade.php`, `teams/create.blade.php`, `teams/edit.blade.php`).
-56. [ ] **Задача 6.3**: Создать `UserController` (частично существует от Breeze). Дополнить методами для управления пользователями (index, edit, update, destroy, invite?) с использованием `UserPolicy`.
-57. [ ] **Задача 6.4**: Создать Blade-шаблоны для управления пользователями (`users/index.blade.php`, `users/edit.blade.php`).
-58. [ ] **Задача 6.5**: Создать контроллер `DashboardController`. Реализовать метод `ownerDashboard()`.
-59. [ ] **Задача 6.6**: Создать Blade-шаблон для панели управления Владельца (`dashboards/owner.blade.php`).
-60. [ ] **Задача 6.7**: Создать `AccountController`. Реализовать метод `index()` для Владельца (отображение всех счетов).
-61. [ ] **Задача 6.8**: Создать Blade-шаблон для списка счетов (`accounts/index.blade.php`).
-62. [ ] **Задача 6.9**: Настроить маршруты (`routes/web.php`) для Owner (управление командами, пользователями, просмотр счетов, доступ ко всем операциям, отчеты).
-
-## Этап 7: UI и Контроллеры - Роль Finance
-
-63. [ ] **Задача 7.1**: Создать `DailyExpenseController` (`php artisan make:controller DailyExpenseController --resource`). Реализовать CRUD-методы с учетом прав Finance (может редактировать все).
-64. [ ] **Задача 7.2**: Создать Blade-шаблоны для CRUD операций с ежедневными расходами (`daily_expenses/index.blade.php`, `daily_expenses/create.blade.php`, `daily_expenses/edit.blade.php`). Форма должна позволять выбирать баера.
-65. [ ] **Задача 7.3**: Создать `AdjustmentController` (`php artisan make:controller AdjustmentController --resource`). Реализовать CRUD-методы.
-66. [ ] **Задача 7.4**: Создать Blade-шаблоны для CRUD операций с корректировками (`adjustments/index.blade.php`, `adjustments/create.blade.php`, `adjustments/edit.blade.php`). Форма должна позволять выбирать баера и период.
-67. [X] **Задача 7.5**: Создать `FundTransferController` (`php artisan make:controller FundTransferController --resource`). Реализовать CRUD-методы. *(Partially Done: Created Controller, implemented create/store/getAccounts)*
-68. [X] **Задача 7.6**: Создать Blade-шаблоны для CRUD операций с перемещением средств (`fund_transfers/index.blade.php`, `fund_transfers/create.blade.php`, `fund_transfers/edit.blade.php`). Форма должна позволять выбирать счета. *(Partially Done: Created create view)*
-69. [ ] **Задача 7.7**: Реализовать метод `financeDashboard()` в `DashboardController`.
-70. [ ] **Задача 7.8**: Создать Blade-шаблон для панели управления Финансиста (`dashboards/finance.blade.php`).
-71. [ ] **Задача 7.9**: Настроить маршруты для Finance (доступ к операциям, просмотр пользователей/команд/счетов, отчеты). *(Partially Done: Added FundTransfer & Transaction routes)*
-72. [X] **Задача (Implicit)**: Создать `TransactionController` с методами `index` и `show`.
-73. [X] **Задача (Implicit)**: Создать Blade-шаблоны `admin/transactions/index.blade.php` и `admin/transactions/show.blade.php`.
-
-## Этап 8: UI и Контроллеры - Роль Buyer
-
-74. [ ] **Задача 8.1**: Адаптировать `DailyExpenseController` для баера (методы `index`, `create`, `store`, `edit`, `update` должны учитывать только его записи).
-75. [ ] **Задача 8.2**: Адаптировать Blade-шаблоны `daily_expenses` для баера (скрыть выбор баера, возможно упростить).
-76. [ ] **Задача 8.3**: Реализовать метод `buyerDashboard()` в `DashboardController`.
-77. [ ] **Задача 8.4**: Создать Blade-шаблон для панели управления Баера (`dashboards/buyer.blade.php`).
-78. [ ] **Задача 8.5**: Реализовать метод в `AccountController` для отображения информации о счете текущего баера.
-79. [ ] **Задача 8.6**: Создать Blade-шаблон для просмотра счета баера (`accounts/my_account.blade.php`).
-80. [ ] **Задача 8.7**: Настроить маршруты для Buyer (доступ к своим расходам, своему счету, своим отчетам).
-
-## Этап 9: Интеграция с Keitaro
-
-81. [ ] **Задача 9.1**: Создать Artisan команду `IncomeFetchKeitaro` (`php artisan make:command IncomeFetchKeitaro`).
-82. [ ] **Задача 9.2**: Реализовать логику команды: использование `Http` клиента Laravel для запроса к API Keitaro (URL и API ключ из `.env`).
-83. [ ] **Задача 9.3**: Реализовать сохранение полученных данных в таблицу `income_records`.
-84. [ ] **Задача 9.4**: Зарегистрировать команду и настроить ее ежедневный запуск в `app/Console/Kernel.php`.
-85. [ ] **Задача 9.5**: Создать `IncomeController` (`php artisan make:controller IncomeController`). Реализовать метод `index` для отображения записей о доходах.
-86. [ ] **Задача 9.6**: Создать Blade-шаблон для отображения доходов (`income/index.blade.php`).
-87. [ ] **Задача 9.7**: Добавить маршрут для просмотра доходов (доступен Owner/Finance?).
-
-## Этап 10: Отчетность
-
-88. [ ] **Задача 10.1**: Создать `ReportController` (`php artisan make:controller ReportController`).
-89. [ ] **Задача 10.2**: Реализовать метод для отчета "Баланс по счетам" (агрегация `transaction_lines` по `account_id`).
-90. [ ] **Задача 10.3**: Реализовать метод для отчета "Расходы баеров" (фильтрация `daily_expenses` и `adjustments` по баерам/командам/периодам).
-91. [ ] **Задача 10.4**: Реализовать метод для отчета "Движение средств" (список `transactions` и `transaction_lines` с фильтрами).
-92. [X] **Задача 10.5**: Создать Blade-шаблоны для отображения отчетов с фильтрами.
-93. [ ] **Задача 10.6**: Настроить маршруты для отчетов с учетом прав доступа ролей.
-
-## Этап 11: Валидация и Завершение
-
-94. [X] **Задача 11.1**: Создать Form Requests (`php artisan make:request StoreTeamRequest`, `StoreUserRequest`, `StoreDailyExpenseRequest` и т.д.) для всех форм создания/редактирования. *(Partially Done: Created StoreFundTransferRequest)*
-95. [X] **Задача 11.2**: Добавить правила валидации во все Form Requests. *(Partially Done: Added rules to StoreFundTransferRequest)*
-96. [ ] **Задача 11.3**: Реализовать корректный расчет и отображение балансов счетов во всех необходимых местах.
-97. [ ] **Задача 11.4**: Провести рефакторинг кода, улучшить UI/UX.
-98. [ ] **Задача 11.5**: Написать тесты (Unit/Feature) для ключевой логики (генерация транзакций, авторизация, расчет балансов).
-99. [ ] **Задача 11.6**: Провести полное ручное тестирование всех пользовательских сценариев для каждой роли.
-100. [ ] **Задача 11.7**: Подготовить документацию по развертыванию (на основе `tech.md`). 
-101. [ ] **Задача 11.8**: Определить четкую логику выбора системных счетов (SYSTEM_COMPANY, SYSTEM_OPERATIONS) для разных типов операций (расходы, корректировки, доходы?) в наблюдателях/сервисах.
+The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
 </file>
 
 </files>

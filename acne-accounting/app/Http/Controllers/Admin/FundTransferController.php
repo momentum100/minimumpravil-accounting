@@ -24,10 +24,9 @@ class FundTransferController extends Controller
     public function create(): View
     {
         // Get the System user
-        $systemUser = User::where('is_virtual', true)->first(); // Assuming only one virtual/system user
+        $systemUser = User::where('is_virtual', true)->first();
         if (!$systemUser) {
-            // Handle case where system user doesn't exist, maybe throw an error or redirect
-            abort(500, 'System user not found.'); 
+            abort(500, 'System user not found.');
         }
 
         // Get non-virtual users suitable for transfers (for the 'To' dropdown)
@@ -35,8 +34,22 @@ class FundTransferController extends Controller
 
         // Create the list for the 'From' dropdown: System user + non-virtual users
         $fromUsers = $toUsers->prepend($systemUser);
-        
-        return view('admin.fund-transfers.create', compact('fromUsers', 'toUsers'));
+
+        // Pass the system user ID as a default
+        $defaultFromUserId = $systemUser->id;
+
+        // Fetch recent fund transfer transactions
+        $recentTransfers = Transaction::where('operation_type', FundTransfer::class)
+            ->with(['operation.fromAccount', 'operation.toAccount']) // Eager load details via FundTransfer
+            ->latest('transaction_date') // Order by date descending
+            ->paginate(10); // Paginate results, 10 per page
+
+        return view('admin.fund-transfers.create', compact(
+            'fromUsers',
+            'toUsers',
+            'defaultFromUserId',
+            'recentTransfers' // Pass transactions to the view
+        ));
     }
 
     /**

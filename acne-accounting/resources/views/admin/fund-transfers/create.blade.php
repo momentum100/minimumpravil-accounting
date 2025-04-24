@@ -6,7 +6,7 @@
     </x-slot>
 
     <div class="py-12">
-        <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
 
@@ -42,6 +42,7 @@
                                     <x-input-label for="from_account_id" value="Account (USD)" />
                                     <select id="from_account_id" name="from_account_id"
                                             x-model="fromAccountId"
+                                            x-ref="fromAccountSelect"
                                             :disabled="!fromUserId || loadingFromAccounts"
                                             class="mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm disabled:opacity-50">
                                         <option value="" x-show="!fromUserId || loadingFromAccounts">{{ __('Select User First...') }}</option>
@@ -76,6 +77,7 @@
                                     <x-input-label for="to_account_id" value="Account (USD)" />
                                     <select id="to_account_id" name="to_account_id"
                                             x-model="toAccountId"
+                                            x-ref="toAccountSelect"
                                             :disabled="!toUserId || loadingToAccounts"
                                             class="mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm disabled:opacity-50">
                                         <option value="" x-show="!toUserId || loadingToAccounts">{{ __('Select User First...') }}</option>
@@ -121,10 +123,66 @@
         </div>
     </div>
 
+    {{-- Recent Transfers Table Section --}}
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 text-gray-900 dark:text-gray-100">
+                    <h3 class="text-lg font-semibold mb-4">{{ __('Recent Fund Transfers') }}</h3>
+
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                            <thead class="bg-gray-50 dark:bg-gray-700">
+                                <tr>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Date</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">From Account</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">To Account</th>
+                                    <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Amount</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Description/Comment</th>
+                                    <th scope="col" class="relative px-6 py-3">
+                                        <span class="sr-only">View</span>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+                                @forelse ($recentTransfers as $transaction)
+                                    @if ($transaction->operation) {{-- Check if operation (FundTransfer) exists --}}
+                                        <tr>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">{{ $transaction->transaction_date->format('Y-m-d') }}</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-300">{{ $transaction->operation->fromAccount->description ?? 'N/A' }}</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-300">{{ $transaction->operation->toAccount->description ?? 'N/A' }}</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm text-gray-900 dark:text-gray-100">{{ number_format($transaction->operation->amount, 2) }} {{ $transaction->operation->currency }}</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-300">{{ $transaction->operation->comment ?: $transaction->description }}</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                                <a href="{{ route('admin.transactions.show', $transaction) }}" class="text-indigo-600 dark:text-indigo-400 hover:text-indigo-900 dark:hover:text-indigo-300">View</a>
+                                            </td>
+                                        </tr>
+                                    @endif
+                                @empty
+                                    <tr>
+                                        <td colspan="6" class="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500 dark:text-gray-400">
+                                            {{ __('No recent fund transfers found.') }}
+                                        </td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
+
+                    {{-- Pagination Links --}}
+                    <div class="mt-4">
+                        {{ $recentTransfers->links() }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{-- End Recent Transfers Table Section --}}
+
     <script>
         function fundTransferForm() {
             return {
-                fromUserId: '{{ old("from_user_id") }}',
+                fromUserId: '{{ old("from_user_id", $defaultFromUserId ?? '') }}',
                 fromAccountId: '{{ old("from_account_id") }}',
                 fromAccounts: [],
                 loadingFromAccounts: false,
@@ -134,71 +192,115 @@
                 loadingToAccounts: false,
 
                 init() {
+                    console.log('Init - Initial fromUserId:', this.fromUserId);
+                    console.log('Init - Initial toUserId:', this.toUserId);
                     // Fetch initial accounts if user IDs are pre-selected (e.g., validation failed)
                     if (this.fromUserId) {
+                        console.log('Init - Calling fetchFromAccounts for user:', this.fromUserId);
                         this.fetchFromAccounts();
                     }
                     if (this.toUserId) {
+                        console.log('Init - Calling fetchToAccounts for user:', this.toUserId);
                         this.fetchToAccounts();
                     }
                 },
 
                 fetchFromAccounts() {
+                    console.log('fetchFromAccounts - Started');
                     if (!this.fromUserId) {
+                        console.log('fetchFromAccounts - No fromUserId, resetting.');
                         this.fromAccounts = [];
                         this.fromAccountId = '';
                         return;
                     }
+                    console.log('fetchFromAccounts - Fetching for user ID:', this.fromUserId);
                     this.loadingFromAccounts = true;
                     this.fromAccounts = []; // Clear previous options
                     this.fromAccountId = ''; // Reset selection
 
                     // Construct URL carefully
                     const url = `{{ route('admin.users.accounts', ':userId') }}`.replace(':userId', this.fromUserId);
+                    console.log('fetchFromAccounts - Fetch URL:', url);
 
                     fetch(url)
                         .then(response => response.json())
                         .then(data => {
+                            console.log('fetchFromAccounts - Received data:', data);
                             this.fromAccounts = data;
-                            // If accounts were found, select the first one by default
                             if (this.fromAccounts.length > 0) {
                                 this.fromAccountId = this.fromAccounts[0].id;
+                                console.log('fetchFromAccounts - Setting default fromAccountId model:', this.fromAccountId);
+                                // Use $nextTick to ensure options are rendered before setting value
+                                this.$nextTick(() => {
+                                    if (this.$refs.fromAccountSelect) {
+                                        this.$refs.fromAccountSelect.value = this.fromAccountId;
+                                        console.log('fetchFromAccounts - $nextTick: Forcing select value to:', this.$refs.fromAccountSelect.value);
+                                    } else {
+                                        console.error('fetchFromAccounts - $nextTick: $refs.fromAccountSelect not found');
+                                    }
+                                });
+                            } else {
+                                console.log('fetchFromAccounts - No accounts received.');
+                                this.fromAccountId = ''; // Reset if no accounts
+                                this.$nextTick(() => { // Also reset select value if no accounts
+                                    if (this.$refs.fromAccountSelect) this.$refs.fromAccountSelect.value = '';
+                                });
                             }
                         })
                         .catch(error => console.error('Error fetching from accounts:', error))
                         .finally(() => {
                             this.loadingFromAccounts = false;
-                            // Attempt to re-select old value if present after loading
-                            this.$nextTick(() => { this.fromAccountId = '{{ old("from_account_id") }}'; });
+                            // Attempt to re-select old value if present after loading - REMOVED
+                            // this.$nextTick(() => { this.fromAccountId = '{{ old("from_account_id") }}'; });
                         });
                 },
 
                 fetchToAccounts() {
+                     console.log('fetchToAccounts - Started');
                      if (!this.toUserId) {
+                        console.log('fetchToAccounts - No toUserId, resetting.');
                         this.toAccounts = [];
                         this.toAccountId = '';
                         return;
                     }
+                    console.log('fetchToAccounts - Fetching for user ID:', this.toUserId);
                     this.loadingToAccounts = true;
                     this.toAccounts = []; // Clear previous options
                     this.toAccountId = ''; // Reset selection
 
                     const url = `{{ route('admin.users.accounts', ':userId') }}`.replace(':userId', this.toUserId);
+                    console.log('fetchToAccounts - Fetch URL:', url);
 
                     fetch(url)
                         .then(response => response.json())
                         .then(data => {
+                            console.log('fetchToAccounts - Received data:', data);
                             this.toAccounts = data;
-                            // If accounts were found, select the first one by default
                             if (this.toAccounts.length > 0) {
                                 this.toAccountId = this.toAccounts[0].id;
+                                console.log('fetchToAccounts - Setting default toAccountId model:', this.toAccountId);
+                                // Use $nextTick to ensure options are rendered before setting value
+                                this.$nextTick(() => {
+                                    if (this.$refs.toAccountSelect) {
+                                        this.$refs.toAccountSelect.value = this.toAccountId;
+                                        console.log('fetchToAccounts - $nextTick: Forcing select value to:', this.$refs.toAccountSelect.value);
+                                    } else {
+                                        console.error('fetchToAccounts - $nextTick: $refs.toAccountSelect not found');
+                                    }
+                                });
+                            } else {
+                                console.log('fetchToAccounts - No accounts received.');
+                                this.toAccountId = ''; // Reset if no accounts
+                                this.$nextTick(() => { // Also reset select value if no accounts
+                                    if (this.$refs.toAccountSelect) this.$refs.toAccountSelect.value = '';
+                                });
                             }
                         })
                          .catch(error => console.error('Error fetching to accounts:', error))
                         .finally(() => {
                             this.loadingToAccounts = false;
-                            // Attempt to re-select old value if present after loading
-                            this.$nextTick(() => { this.toAccountId = '{{ old("to_account_id") }}'; });
+                            // Attempt to re-select old value if present after loading - REMOVED
+                            // this.$nextTick(() => { this.toAccountId = '{{ old("to_account_id") }}'; });
                         });
                 },
 
