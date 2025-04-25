@@ -30,31 +30,31 @@ class StoreUserRequest extends FormRequest
     {
         Log::info('StoreUserRequest: Generating validation rules...', ['request_data' => $this->all()]);
         $isAgency = $this->input('role') === 'agency';
-        Log::info('StoreUserRequest: Role check for rules', ['role' => $this->input('role'), 'isAgency' => $isAgency]);
+        $isBuyer = $this->input('role') === 'buyer';
+        // Define roles needing web login credentials
+        $isWebLoginRole = in_array($this->input('role'), ['owner', 'finance', 'buyer']); 
+        Log::info('StoreUserRequest: Role check for rules', ['role' => $this->input('role'), 'isAgency' => $isAgency, 'isBuyer' => $isBuyer, 'isWebLoginRole' => $isWebLoginRole]);
         $availableRoles = ['owner', 'finance', 'buyer', 'agency']; // Define available roles
 
         $rules = [
             'name' => ['required', 'string', 'max:255'],
-            'role' => ['required', Rule::in($availableRoles)], // Validate role
-            'is_virtual' => ['sometimes', 'boolean'],
-            'telegram_id' => ['nullable', 'numeric', // Use telegram_id now
-                Rule::requiredIf(!$isAgency),
-            ],
-            'email' => ['nullable', 'string', 'lowercase', 'email', 'max:255', 'unique:users,email',
-                Rule::requiredIf(!$isAgency),
+            'role' => ['required', Rule::in($availableRoles)],
+            // is_virtual is set in prepareForValidation, no direct input validation needed
+            'telegram_id' => ['nullable', 'numeric', 'unique:users,telegram_id'], // Optional for all, unique if provided
+            'email' => ['nullable', 'string', 'lowercase', 'email', 'max:255', 'unique:users,email', 
+                Rule::requiredIf($isWebLoginRole), // Required only for roles needing web login
             ],
             'password' => ['nullable', 'confirmed', Password::defaults(),
-                Rule::requiredIf(!$isAgency),
+                Rule::requiredIf($isWebLoginRole), // Required only if email/web login is needed
             ],
-            'sub2' => ['nullable', 'array'], // Validate 'sub2' field
-            'sub2.*' => ['string', 'max:50'], // Validate individual tags in sub2
-            'terms' => ['nullable', 'numeric', 'min:0', 'max:1',
-                Rule::requiredIf($isAgency),
+            'sub2' => ['nullable', 'array', Rule::requiredIf($isBuyer)], // Required only for buyer
+            'sub2.*' => ['string', 'max:50'],
+            'terms' => ['nullable', 'numeric', 'min:0', // Terms: 0 to 1 (e.g., 0.01 for 1%)
+                Rule::requiredIf($isAgency), // Required only for agency
             ],
-            // Add validation for other fields if needed (team_id, contact_info, active)
-            'team_id' => ['nullable', 'exists:teams,id', Rule::requiredIf($this->input('role') === 'buyer')], // Required only for buyer
-            'contact_info' => ['nullable', 'string', Rule::requiredIf($isAgency)], // Required only for agency
-            'active' => ['sometimes', 'boolean'],
+            'team_id' => ['nullable', 'exists:teams,id', Rule::requiredIf($isBuyer)], // Required only for buyer
+            'contact_info' => ['nullable', 'string', 'max:1000', Rule::requiredIf($isAgency)], // Required only for agency
+            'active' => ['sometimes', 'boolean'], // Handled in prepareForValidation default
         ];
 
         Log::info('StoreUserRequest: Finished generating rules.');
@@ -70,49 +70,57 @@ class StoreUserRequest extends FormRequest
         $role = $this->input('role');
         $isAgency = $role === 'agency';
         $isBuyer = $role === 'buyer';
+        $isWebLoginRole = in_array($role, ['owner', 'finance', 'buyer']); // Define roles needing web login
 
         $sub2Input = $this->input('sub2');
         $sub2Array = null;
 
+        // Process sub2 textarea for buyers
         if ($isBuyer && is_string($sub2Input)) {
             Log::info('StoreUserRequest: Processing sub2 textarea for buyer');
             $sub2Array = collect(explode("\n", $sub2Input))
                 ->map(fn ($line) => trim($line))
-                ->filter()
+                ->filter() // Remove empty lines
                 ->values()
                 ->all();
         }
 
-        // Ensure boolean fields have defaults / correct types
-        $this->merge([
-            'is_virtual' => $this->boolean('is_virtual'),
-            'active' => $this->boolean('active'), // Ensure active is boolean
-            // Overwrite sub2 with processed array for buyers, or null for others
-            'sub2' => $sub2Array, 
-        ]);
+        $mergeData = [
+            // Ensure active defaults to true if not present, and is boolean
+            'active' => $this->boolean('active', true),
+            // Set is_virtual based on role
+            'is_virtual' => $isAgency,
+            // Use processed sub2 array for buyers, null otherwise
+            'sub2' => $sub2Array,
+        ];
 
         // Null out fields based on role
         if ($isAgency) {
-            $this->merge([
-                'email' => null,
-                'password' => null,
-                'password_confirmation' => null,
-                'telegram_id' => null,
-                'team_id' => null, // Agencies might not have teams
-            ]);
+             // Null out fields not applicable to agencies
+            $mergeData['team_id'] = null;
+            $mergeData['sub2'] = null; // Ensure sub2 is null for agencies
+            // Keep telegram_id, contact_info, terms as they are relevant for agencies
         } else {
             // If not an agency, null out agency-specific fields
-            $this->merge([
-                'terms' => null,
-                // Null contact_info only if it's not a buyer (buyers might have it?)
-                // Let validation handle requirement based on role
-                // 'contact_info' => null, 
-            ]);
-            // Null out buyer specific fields if role is not buyer
+            $mergeData['terms'] = null;
+            $mergeData['contact_info'] = null; // Contact info is only for Agency role
+
+            // If not a buyer, null out buyer-specific fields
             if (!$isBuyer) {
-                $this->merge(['team_id' => null]);
+                $mergeData['team_id'] = null;
+                $mergeData['sub2'] = null; // Ensure sub2 is null if not buyer
             }
         }
+
+        // If not a role needing web login (i.e., only agency now), null out email/password
+        if (!$isWebLoginRole) {
+             $mergeData['email'] = null;
+             $mergeData['password'] = null;
+             $mergeData['password_confirmation'] = null;
+        }
+
+        $this->merge($mergeData);
+
         Log::info('StoreUserRequest: After prepareForValidation', ['request_data' => $this->all()]);
     }
 

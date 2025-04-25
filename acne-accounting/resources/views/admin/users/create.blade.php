@@ -30,29 +30,29 @@
                             <x-input-error :messages="$errors->get('role')" class="mt-2" />
                         </div>
 
-                        <!-- Email (Optional, primarily for web login roles) -->
-                        <div class="mt-4">
+                        <!-- Email (Only for Web Login Roles like Owner, Finance, Buyer) -->
+                        <div class="mt-4" x-show="['owner', 'finance', 'buyer'].includes(role)" x-transition>
                             <x-input-label for="email" :value="__('Email (for Web Login)')" />
                             <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" />
                             <x-input-error :messages="$errors->get('email')" class="mt-2" />
-                            <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">Optional. Required for Owner/Finance roles if web login needed.</p>
+                            <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">Required for Owner, Finance, or Buyer roles for web login.</p>
                         </div>
 
-                        <!-- Password (Optional, linked to Email) -->
-                        <div class="mt-4">
+                        <!-- Password (Only for Web Login Roles like Owner, Finance, Buyer) -->
+                        <div class="mt-4" x-show="['owner', 'finance', 'buyer'].includes(role)" x-transition>
                             <x-input-label for="password" :value="__('Password (for Web Login)')" />
                             <x-text-input id="password" class="block mt-1 w-full" type="password" name="password" />
                             <x-input-error :messages="$errors->get('password')" class="mt-2" />
                         </div>
-                        <div class="mt-4">
+                        <div class="mt-4" x-show="['owner', 'finance', 'buyer'].includes(role)" x-transition>
                             <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
                             <x-text-input id="password_confirmation" class="block mt-1 w-full" type="password" name="password_confirmation" />
                             <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
                         </div>
 
-                        <!-- Telegram ID (Optional) -->
+                        <!-- Telegram ID (Optional for all roles) -->
                         <div class="mt-4">
-                            <x-input-label for="telegram_id" :value="__('Telegram ID')" />
+                            <x-input-label for="telegram_id" :value="__('Telegram ID (Optional)')" />
                             <x-text-input id="telegram_id" class="block mt-1 w-full" type="text" name="telegram_id" :value="old('telegram_id')" />
                             <x-input-error :messages="$errors->get('telegram_id')" class="mt-2" />
                         </div>
@@ -70,7 +70,7 @@
                         </div>
 
                         {{-- Sub2 Tags Textarea (Only for Buyers) --}}
-                        <div class="mt-4" x-show="role === 'buyer'" x-transition.opacity>
+                        <div class="mt-4" x-show="role === 'buyer'" x-transition>
                             <x-input-label for="sub2" :value="__('Sub2 Tags (one per line)')" />
                             <textarea id="sub2" name="sub2" rows="5" class="block mt-1 w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm">{{ old('sub2') }}</textarea>
                             <x-input-error :messages="$errors->get('sub2')" class="mt-2" />
@@ -78,26 +78,13 @@
                             <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">Enter tags separated by new lines. These will be saved as a JSON array.</p>
                         </div>
 
-                        {{-- Remove Checkbox section for Sub2 Tags --}}
-                        {{--
-                        <div class="mt-4">
-                            <x-input-label :value="__('Sub2 Tags')" />
-                            <div class="mt-2 space-y-2">
-                                @if(!empty($availableSub2Tags))
-                                    @foreach($availableSub2Tags as $tag)
-                                        <label for="sub2_tag_{{ $loop->index }}" class="inline-flex items-center mr-4">
-                                            <input id="sub2_tag_{{ $loop->index }}" type="checkbox" class="rounded dark:bg-gray-900 border-gray-300 dark:border-gray-700 text-indigo-600 shadow-sm focus:ring-indigo-500 dark:focus:ring-indigo-600 dark:focus:ring-offset-gray-800" name="sub2[]" value="{{ $tag }}" {{ in_array($tag, old('sub2', [])) ? 'checked' : '' }}>
-                                            <span class="ms-2 text-sm text-gray-600 dark:text-gray-400">{{ $tag }}</span>
-                                        </label>
-                                    @endforeach
-                                @else
-                                    <p class="text-sm text-gray-500 dark:text-gray-400">No Sub2 tags available.</p>
-                                @endif
-                            </div>
-                            <x-input-error :messages="$errors->get('sub2')" class="mt-2" />
-                             <x-input-error :messages="$errors->get('sub2.*')" class="mt-2" />
+                        <!-- Terms (Only for Agencies) -->
+                        <div class="mt-4" x-show="role === 'agency'" x-transition>
+                            <x-input-label for="terms" :value="__('Agency Terms (e.g., 0.01 for 1%)')" />
+                            <x-text-input id="terms" class="block mt-1 w-full" type="number" step="0.001" min="0" name="terms" :value="old('terms')" />
+                            <x-input-error :messages="$errors->get('terms')" class="mt-2" />
+                            <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">Enter the terms as a decimal (e.g., 0.05 for 5%).</p>
                         </div>
-                        --}}
 
                         <!-- Contact Info (Only for Agencies) -->
                         <div class="mt-4" x-show="role === 'agency'" x-transition>
@@ -106,7 +93,7 @@
                             <x-input-error :messages="$errors->get('contact_info')" class="mt-2" />
                         </div>
 
-                        <!-- Active Status -->
+                        <!-- Active Status (Visible for all) -->
                         <div class="block mt-4">
                             <label for="active" class="inline-flex items-center">
                                 <input id="active" type="checkbox" class="rounded dark:bg-gray-900 border-gray-300 dark:border-gray-700 text-indigo-600 shadow-sm focus:ring-indigo-500 dark:focus:ring-indigo-600 dark:focus:ring-offset-gray-800" name="active" value="1" {{ old('active', 1) ? 'checked' : '' }}>
@@ -115,6 +102,7 @@
                              <x-input-error :messages="$errors->get('active')" class="mt-2" />
                         </div>
 
+                        {{-- Note: is_virtual is handled automatically based on role in the backend --}}
 
                         <div class="flex items-center justify-end mt-4">
                             <a href="{{ route('admin.users.index') }}" class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800 mr-4">
