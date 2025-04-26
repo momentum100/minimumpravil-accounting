@@ -42,11 +42,16 @@ jobs:
           echo "Optimizing application..."
           php artisan optimize
           echo "Linking storage..."
-          php artisan storage:link
+          # Check if the link exists before creating it
+          if [ ! -L public/storage ]; then
+            php artisan storage:link
+          else
+            echo "Storage link already exists. Skipping."
+          fi
           echo "Setting Permissions..."
           # Ensure the SSH user has sudo privileges without password for these commands
           sudo chown -R www-data:www-data storage bootstrap/cache public/storage # Adjust user/group if needed
           echo "Restarting Apache..."
           sudo systemctl restart apache2 # Adjust service name if different (e.g., httpd)
           echo "Deployment complete!"
-        EOF 
+        EOF
