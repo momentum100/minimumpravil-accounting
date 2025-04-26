@@ -65,8 +65,8 @@ This document describes how to use the API endpoint for submitting bulk daily ex
     Replace `YOUR_APP_URL` with the actual base URL of your application (e.g., `http://127.0.0.1:8000`) and `YOUR_API_KEY` with the value of `INTERNAL_API_KEY` from your `.env` file.
 
     ```bash
-    curl -X POST YOUR_APP_URL/api/v1/bulk-expenses \
-    -H "Authorization: Bearer YOUR_API_KEY" \
+    curl -X POST http://127.0.0.1:8000/api/v1/bulk-expenses \
+    -H "Authorization: Bearer api_key" \
     -H "Content-Type: application/json" \
     -H "Accept: application/json" \
     -d '{
