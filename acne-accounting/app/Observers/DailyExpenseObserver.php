@@ -45,9 +45,9 @@ class DailyExpenseObserver
                  Log::info('[Observer] Creating transaction...');
                  $transaction = $dailyExpense->transaction()->create([
                     'description' => 'Daily Expense: ' . $dailyExpense->category . ' for Buyer #' . $dailyExpense->buyer_id,
-                    'transaction_date' => $dailyExpense->operation_date,
+                    'transaction_date' => $dailyExpense->created_at,
                     'status' => 'completed',
-                    'accounting_period' => $dailyExpense->operation_date->format('Y-m'),
+                    'accounting_period' => $dailyExpense->created_at->format('Y.m'),
                 ]);
                  Log::info('[Observer] Transaction created with ID: ' . $transaction->id);
 

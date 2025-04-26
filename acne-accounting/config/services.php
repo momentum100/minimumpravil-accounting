@@ -35,4 +35,10 @@ return [
         ],
     ],
 
+    // Internal API Configuration
+    'internal_api' => [
+        'key' => env('INTERNAL_API_KEY'),
+        'user_id' => env('INTERNAL_API_USER_ID'), // User ID associated with API actions
+    ],
+
 ];

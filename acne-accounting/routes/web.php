@@ -19,7 +19,9 @@ Route::get('/dashboard', function () {
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])
+        ->middleware('not.buyer')
+        ->name('profile.destroy');
 });
 
 require __DIR__.'/auth.php';
@@ -49,4 +51,19 @@ Route::middleware(['auth', 'verified', 'admin'])
         // Daily Expenses (using index for view/add, store for AJAX add)
         Route::get('daily-expenses', [DailyExpenseController::class, 'index'])->name('daily-expenses.index');
         Route::post('daily-expenses', [DailyExpenseController::class, 'store'])->name('daily-expenses.store');
+
+        // Bulk Daily Expenses Entry (Admin/Finance only)
+        Route::middleware('admin_or_finance')->group(function() {
+            Route::get('bulk-expenses/create', [\App\Http\Controllers\Admin\BulkExpenseController::class, 'create'])->name('bulk-expenses.create');
+            Route::post('bulk-expenses', [\App\Http\Controllers\Admin\BulkExpenseController::class, 'store'])->name('bulk-expenses.store');
+        });
+    });
+
+// Buyer Routes
+Route::middleware(['auth', 'verified', 'buyer'])
+    ->prefix('buyer')
+    ->name('buyer.')
+    ->group(function () {
+        Route::get('dashboard', [App\Http\Controllers\Buyer\BuyerDashboardController::class, 'index'])->name('dashboard');
+        // Add other buyer-specific routes here if needed
     });

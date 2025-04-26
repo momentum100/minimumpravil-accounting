@@ -5,8 +5,9 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Facades\Auth;
 
-class EnsureUserIsAdmin
+class EnsureUserIsAdminOrFinance
 {
     /**
      * Handle an incoming request.
@@ -15,14 +16,20 @@ class EnsureUserIsAdmin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        // Check if user is authenticated and has either 'admin' or 'owner' role
-        if (! $request->user() || ! in_array($request->user()->role, ['admin', 'owner'])) {
-            // Redirect or abort if not authorized
+        if (!Auth::check()) {
             // For API requests, returning JSON might be better:
             // if ($request->expectsJson()) {
-            //     return response()->json(['message' => 'Unauthorized.'], 403);
+            //     return response()->json(['message' => 'Unauthenticated.'], 401);
             // }
-            abort(403, 'Unauthorized action.');
+            return redirect('login');
+        }
+
+        $userRole = Auth::user()->role;
+        $allowedRoles = ['admin', 'finance', 'owner']; // Added 'owner'
+
+        if (!in_array($userRole, $allowedRoles)) {
+            // If the user role is not in the allowed list, forbid access.
+            abort(403, 'This action is unauthorized for your role.');
         }
 
         return $next($request);

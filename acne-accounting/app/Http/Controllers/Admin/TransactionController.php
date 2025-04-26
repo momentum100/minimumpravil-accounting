@@ -14,7 +14,10 @@ class TransactionController extends Controller
      */
     public function index(): View
     {
-        $transactions = Transaction::with('operation.creator') // Eager load the operation and its creator
+        $transactions = Transaction::with([
+                                      'operation.creator', // Eager load the operation and its creator
+                                      'lines' // Eager load the transaction lines
+                                  ])
                                   ->latest('transaction_date') // Order by date
                                   ->paginate(20);
 

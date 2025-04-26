@@ -15,6 +15,10 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->alias([
             'admin' => \App\Http\Middleware\EnsureUserIsAdmin::class,
+            'buyer' => \App\Http\Middleware\EnsureUserIsBuyer::class,
+            'not.buyer' => \App\Http\Middleware\EnsureUserIsNotBuyer::class,
+            'admin_or_finance' => \App\Http\Middleware\EnsureUserIsAdminOrFinance::class,
+            'auth.internal_api' => \App\Http\Middleware\AuthenticateInternalApiKey::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
