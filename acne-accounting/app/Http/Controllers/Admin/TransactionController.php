@@ -16,10 +16,11 @@ class TransactionController extends Controller
     {
         $transactions = Transaction::with([
                                       'operation.creator', // Eager load the operation and its creator
-                                      'lines' // Eager load the transaction lines
+                                      // Eager load lines and their account + user for display
+                                      'lines.account.user'
                                   ])
-                                  ->latest('transaction_date') // Order by date
-                                  ->paginate(20);
+                                  ->orderBy('id', 'desc') // Order by ID descending
+                                  ->paginate(200); // Paginate with 200 items
 
         return view('admin.transactions.index', compact('transactions'));
     }

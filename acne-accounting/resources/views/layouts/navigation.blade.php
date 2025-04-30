@@ -24,6 +24,10 @@
                          <x-nav-link :href="route('admin.fund-transfers.create')" :active="request()->routeIs('admin.fund-transfers.create')">
                             {{ __('Create Fund Transfer') }}
                          </x-nav-link>
+                         {{-- Add Bulk Transfer Link Here --}}
+                         <x-nav-link :href="route('admin.fund-transfers.bulk.create')" :active="request()->routeIs('admin.fund-transfers.bulk.create')">
+                            {{ __('Bulk Fund Transfers') }}
+                         </x-nav-link>
                          <x-nav-link :href="route('admin.transactions.index')" :active="request()->routeIs('admin.transactions.*')">
                             {{ __('View Transactions') }}
                          </x-nav-link>
@@ -113,6 +117,10 @@
                     </x-responsive-nav-link>
                     <x-responsive-nav-link :href="route('admin.fund-transfers.create')" :active="request()->routeIs('admin.fund-transfers.create')">
                         {{ __('Create Fund Transfer') }}
+                    </x-responsive-nav-link>
+                    {{-- Add Bulk Transfer Link Here (Responsive) --}}
+                    <x-responsive-nav-link :href="route('admin.fund-transfers.bulk.create')" :active="request()->routeIs('admin.fund-transfers.bulk.create')">
+                        {{ __('Bulk Fund Transfers') }}
                     </x-responsive-nav-link>
                     <x-responsive-nav-link :href="route('admin.transactions.index')" :active="request()->routeIs('admin.transactions.*')">
                         {{ __('View Transactions') }}

@@ -37,10 +37,15 @@ Route::middleware(['auth', 'verified', 'admin'])
 
         Route::resource('teams', TeamController::class);
         Route::resource('users', UserController::class);
+        Route::post('users/check-existence', [UserController::class, 'checkExistence'])->name('users.check');
 
         // Fund Transfers
         Route::get('fund-transfers/create', [FundTransferController::class, 'create'])->name('fund-transfers.create');
         Route::post('fund-transfers', [FundTransferController::class, 'store'])->name('fund-transfers.store');
+
+        // Fund Transfers (Bulk) - NEW
+        Route::get('fund-transfers/bulk/create', [FundTransferController::class, 'bulkCreate'])->name('fund-transfers.bulk.create');
+        Route::post('fund-transfers/bulk/store', [FundTransferController::class, 'bulkStore'])->name('fund-transfers.bulk.store'); // Endpoint for individual AJAX transfers
 
         // API endpoint for user accounts (used by fund transfer form)
         Route::get('users/{user}/accounts', [FundTransferController::class, 'getAccountsForUser'])->name('users.accounts');

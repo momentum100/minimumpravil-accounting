@@ -22,6 +22,7 @@
                                     <th scope="col" class="px-6 py-3">Amount</th>
                                     <th scope="col" class="px-6 py-3">Description</th>
                                     <th scope="col" class="px-6 py-3">Created By</th>
+                                    <th scope="col" class="px-6 py-3">Parties Involved</th>
                                     <th scope="col" class="px-6 py-3"><span class="sr-only">Actions</span></th>
                                 </tr>
                             </thead>
@@ -32,17 +33,37 @@
                                         <td class="px-6 py-4 whitespace-nowrap">{{ $transaction->transaction_date->format('Y-m-d H:i') }}</td>
                                         <td class="px-6 py-4">{{ ucfirst(class_basename($transaction->operation_type)) }}</td>
                                         <td class="px-6 py-4 text-right">
-                                            {{ number_format($transaction->lines->sum('debit'), 2) }}
+                                            @php
+                                                $operation = $transaction->operation;
+                                                $amount = 0;
+                                                if ($operation instanceof \App\Models\FundTransfer || $operation instanceof \App\Models\Adjustment) {
+                                                    $amount = $operation->amount;
+                                                } elseif ($operation instanceof \App\Models\DailyExpense) {
+                                                    $amount = $operation->total;
+                                                } // Add other operation types if necessary
+                                            @endphp
+                                            {{ number_format($amount, 2) }}
                                         </td>
                                         <td class="px-6 py-4">{{ Str::limit($transaction->description, 60) }}</td>
                                         <td class="px-6 py-4">{{ $transaction->operation?->creator?->name ?? 'N/A' }}</td>
+                                        <td class="px-6 py-4">
+                                            @foreach($transaction->lines as $line)
+                                                @php
+                                                    $partyName = $line->account?->user?->name ?? $line->account?->description ?? 'Unknown Account';
+                                                    $partyType = $line->account?->user ? '(User)' : '(Account)';
+                                                @endphp
+                                                <div>
+                                                    {{ $partyName }} <span class="text-xs text-gray-500">{{ $partyType }}</span>
+                                                </div>
+                                            @endforeach
+                                        </td>
                                         <td class="px-6 py-4 text-right">
                                             <a href="{{ route('admin.transactions.show', $transaction) }}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">View Details</a>
                                         </td>
                                     </tr>
                                 @empty
                                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                        <td colspan="7" class="px-6 py-4 text-center text-gray-500 dark:text-gray-400">
+                                        <td colspan="8" class="px-6 py-4 text-center text-gray-500 dark:text-gray-400">
                                             No transactions found.
                                         </td>
                                     </tr>

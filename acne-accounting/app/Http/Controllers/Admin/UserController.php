@@ -14,6 +14,7 @@ use Illuminate\View\View;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Http\JsonResponse;
 
 class UserController extends Controller
 {
@@ -200,5 +201,44 @@ class UserController extends Controller
         $user->delete();
 
         return redirect()->route('admin.users.index')->with('success', 'User deleted successfully.');
+    }
+
+    /**
+     * Check if a list of usernames exist.
+     * Expects a JSON request body with a 'usernames' array.
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function checkExistence(Request $request): JsonResponse
+    {
+        $usernames = $request->input('usernames', []);
+        Log::info('User checkExistence request', ['usernames_count' => count($usernames)]);
+
+        if (empty($usernames)) {
+            return response()->json(['exists' => []]); // Return empty if no usernames provided
+        }
+
+        // Find users whose names are in the provided list (case-insensitive check might be better)
+        $existingUsers = User::whereIn('name', $usernames)
+                              ->pluck('name') // Get only the names
+                              ->all(); // Convert collection to array
+
+        // Create a map of username => exists (boolean)
+        $existenceMap = [];
+        foreach ($usernames as $username) {
+            // Perform case-insensitive comparison if needed
+            $found = false;
+            foreach ($existingUsers as $existing) {
+                if (strcasecmp($username, $existing) == 0) {
+                    $found = true;
+                    break;
+                }
+            }
+            $existenceMap[$username] = $found;
+        }
+        Log::info('User checkExistence result', ['existence_map' => $existenceMap]);
+
+        return response()->json(['exists' => $existenceMap]);
     }
 } 

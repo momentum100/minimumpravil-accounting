@@ -2,37 +2,15 @@
 
 namespace App\Services;
 
-use App\Models\Account;
-use App\Models\DailyExpense;
-use App\Models\Adjustment;
-use App\Models\FundTransfer;
 use App\Models\Transaction;
+use App\Models\TransactionLine;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Log;
 use Throwable;
 
 class TransactionService
 {
-    protected AccountService $accountService;
-
-    public function __construct(AccountService $accountService)
-    {
-        $this->accountService = $accountService;
-    }
-
-    /**
-     * Record a double-entry transaction for a given operation.
-     *
-     * @param Model $operation The source operation model (DailyExpense, Adjustment, FundTransfer)
-     * @param int $debitAccountId
-     * @param float $debitAmount
-     * @param int $creditAccountId
-     * @param float $creditAmount
-     * @param string|null $debitDescription
-     * @param string|null $creditDescription
-     * @return Transaction|null The created transaction or null on failure.
-     * @throws Throwable
-     */
     public function recordOperationTransaction(
         Model $operation,
         int $debitAccountId,
@@ -40,21 +18,61 @@ class TransactionService
         int $creditAccountId,
         float $creditAmount,
         ?string $debitDescription = null,
-        ?string $creditDescription = null
+        ?string $creditDescription = null,
+        ?string $mainDescription = null
     ): ?Transaction
     {
-        // TODO: Implement Task 4.3 logic here.
         // 1. Start DB transaction.
-        // 2. Create Transaction model linked to the $operation (morphTo).
-        //    - Determine transaction_date, description, accounting_period from $operation.
-        // 3. Create debit TransactionLine.
-        // 4. Create credit TransactionLine.
-        // 5. Commit DB transaction.
-        // 6. Return created Transaction or handle exceptions/rollback.
+        DB::beginTransaction();
+        try {
+            // 2. Create Transaction model linked to the $operation (morphTo).
+            $transaction = $operation->transaction()->create([
+                'description' => $mainDescription ?? 'Transaction for ' . class_basename($operation) . ' #' . $operation->id,
+                // Determine transaction_date, accounting_period from $operation if possible, or use now()
+                'transaction_date' => $operation->transfer_date ?? $operation->expense_date ?? $operation->adjustment_date ?? now(),
+                'status' => 'completed', // Assuming completion, might need adjustment based on operation
+                'accounting_period' => ($operation->transfer_date ?? $operation->expense_date ?? $operation->adjustment_date ?? now())->format('Y-m'),
+            ]);
+            Log::info('Transaction record created via Service', ['transaction_id' => $transaction->id, 'operation_type' => get_class($operation), 'operation_id' => $operation->id]);
 
-        return null; // Placeholder
+            // 3. Create debit TransactionLine.
+            TransactionLine::create([
+                'transaction_id' => $transaction->id,
+                'account_id' => $debitAccountId,
+                'debit' => $debitAmount,
+                'credit' => 0,
+                'description' => $debitDescription ?? 'Debit',
+            ]);
+            Log::info('Debit Transaction Line created via Service', ['transaction_id' => $transaction->id, 'account_id' => $debitAccountId, 'amount' => $debitAmount]);
+
+            // 4. Create credit TransactionLine.
+            TransactionLine::create([
+                'transaction_id' => $transaction->id,
+                'account_id' => $creditAccountId,
+                'debit' => 0,
+                'credit' => $creditAmount,
+                'description' => $creditDescription ?? 'Credit',
+            ]);
+             Log::info('Credit Transaction Line created via Service', ['transaction_id' => $transaction->id, 'account_id' => $creditAccountId, 'amount' => $creditAmount]);
+
+
+            // 5. Commit DB transaction.
+            DB::commit();
+            Log::info('Transaction committed via Service', ['transaction_id' => $transaction->id]);
+
+            // 6. Return created Transaction
+            return $transaction;
+
+        } catch (Throwable $e) {
+            DB::rollBack();
+            Log::error('TransactionService::recordOperationTransaction failed', [
+                'operation_type' => get_class($operation),
+                'operation_id' => $operation->id,
+                'error' => $e->getMessage(),
+                'exception' => $e
+            ]);
+            // Re-throw the exception to be handled by the calling controller
+            throw $e;
+        }
     }
-
-    // Helper method to generate transaction description based on operation type?
-    // private function generateTransactionDescription(Model $operation): string { ... }
-} 
+}
