@@ -37,27 +37,41 @@
                         {{-- Hidden input for period shortcuts --}}
                         <input type="hidden" name="period" id="period" value="{{ $period }}">
 
-                        <div class="flex items-end space-x-2">
+                        <div class="flex items-end space-x-4">
+                            {{-- Filter Button First --}}
                             <button type="submit" class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:ring focus:ring-blue-200 active:bg-blue-600 disabled:opacity-25 transition dark:bg-blue-500 dark:hover:bg-blue-400 dark:focus:ring-offset-gray-800">Filter</button>
-                            <button type="button" onclick="setPeriod('last_30_days')" class="inline-flex items-center px-4 py-2 bg-gray-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-500 focus:outline-none focus:border-gray-700 focus:ring focus:ring-gray-200 active:bg-gray-600 disabled:opacity-25 transition dark:bg-gray-500 dark:hover:bg-gray-400 dark:focus:ring-offset-gray-800">Last 30 Days</button>
-                            <button type="button" onclick="setPeriod('last_60_days')" class="inline-flex items-center px-4 py-2 bg-gray-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-500 focus:outline-none focus:border-gray-700 focus:ring focus:ring-gray-200 active:bg-gray-600 disabled:opacity-25 transition dark:bg-gray-500 dark:hover:bg-gray-400 dark:focus:ring-offset-gray-800">Last 60 Days</button>
+                            
+                            {{-- Clear Button Second --}}
                             <a href="{{ route('admin.buyer-statements.index') }}" class="inline-flex items-center px-4 py-2 bg-gray-200 border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest hover:bg-gray-300 focus:outline-none focus:border-gray-400 focus:ring focus:ring-gray-200 active:bg-gray-300 disabled:opacity-25 transition dark:bg-gray-600 dark:border-gray-500 dark:text-gray-300 dark:hover:bg-gray-500 dark:focus:ring-offset-gray-800">Clear</a>
+                            
+                            {{-- Text Links Last --}}
+                            <a href="javascript:void(0);" onclick="setDates(30)" class="text-sm text-blue-600 dark:text-blue-400 hover:underline focus:outline-none focus:underline">Last 30 Days</a>
+                            <a href="javascript:void(0);" onclick="setDates(60)" class="text-sm text-blue-600 dark:text-blue-400 hover:underline focus:outline-none focus:underline">Last 60 Days</a>
                         </div>
                     </form>
 
                     <script>
-                        function setPeriod(periodValue) {
-                            document.getElementById('period').value = periodValue;
-                            // Clear date inputs when using period shortcuts
-                            document.getElementById('date_from').value = '';
-                            document.getElementById('date_to').value = '';
-                            // Submit the form
-                            document.querySelector('form').submit();
-                        }
+                        function setDates(days) {
+                            const endDate = new Date();
+                            const startDate = new Date();
+                            startDate.setDate(endDate.getDate() - days);
 
-                        // Clear period if date inputs are used
-                        document.getElementById('date_from').addEventListener('change', () => { document.getElementById('period').value = ''; });
-                        document.getElementById('date_to').addEventListener('change', () => { document.getElementById('period').value = ''; });
+                            // Format dates as YYYY-MM-DD
+                            const formatDate = (date) => {
+                                const year = date.getFullYear();
+                                const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed
+                                const day = String(date.getDate()).padStart(2, '0');
+                                return `${year}-${month}-${day}`;
+                            };
+
+                            document.getElementById('date_from').value = formatDate(startDate);
+                            document.getElementById('date_to').value = formatDate(endDate);
+                            
+                            // Clear the period input (no longer primary driver)
+                            document.getElementById('period').value = ''; 
+                        }
+                        
+                        // No longer need the listeners that cleared the period input
                     </script>
 
                     {{-- Total Amount --}}
