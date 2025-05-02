@@ -40,6 +40,10 @@
                          <x-nav-link :href="route('admin.teams.index')" :active="request()->routeIs('admin.teams.*')">
                             {{ __('Manage Teams') }}
                          </x-nav-link>
+                         {{-- Add Buyer Statement Link --}}
+                         <x-nav-link :href="route('admin.buyer-statements.index')" :active="request()->routeIs('admin.buyer-statements.*')">
+                             {{ __('Buyer Statements') }}
+                         </x-nav-link>
                          {{-- The old generic 'Admin Area' link is removed in favor of specific links --}}
                          {{--
                          <x-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard') || request()->routeIs('admin.teams.*') || request()->routeIs('admin.users.*')" class="relative group">
@@ -133,6 +137,10 @@
                     </x-responsive-nav-link>
                     <x-responsive-nav-link :href="route('admin.teams.index')" :active="request()->routeIs('admin.teams.*')">
                         {{ __('Manage Teams') }}
+                    </x-responsive-nav-link>
+                    {{-- Add Responsive Buyer Statement Link --}}
+                    <x-responsive-nav-link :href="route('admin.buyer-statements.index')" :active="request()->routeIs('admin.buyer-statements.*')">
+                        {{ __('Buyer Statements') }}
                     </x-responsive-nav-link>
                 </div>
             </div>

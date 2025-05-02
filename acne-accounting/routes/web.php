@@ -7,6 +7,9 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\FundTransferController;
 use App\Http\Controllers\Admin\TransactionController;
 use App\Http\Controllers\Admin\DailyExpenseController;
+use App\Http\Controllers\Admin\BuyerStatementController;
+use App\Http\Middleware\EnsureUserIsAdmin;
+use App\Http\Middleware\EnsureUserIsAdminOrFinance;
 
 Route::get('/', function () {
     return view('welcome');
@@ -27,7 +30,7 @@ Route::middleware('auth')->group(function () {
 require __DIR__.'/auth.php';
 
 // Admin Routes
-Route::middleware(['auth', 'verified', 'admin'])
+Route::middleware(['auth', 'verified', \App\Http\Middleware\EnsureUserIsAdminOrFinance::class])
     ->prefix('admin')
     ->name('admin.')
     ->group(function () {
@@ -62,6 +65,9 @@ Route::middleware(['auth', 'verified', 'admin'])
             Route::get('bulk-expenses/create', [\App\Http\Controllers\Admin\BulkExpenseController::class, 'create'])->name('bulk-expenses.create');
             Route::post('bulk-expenses', [\App\Http\Controllers\Admin\BulkExpenseController::class, 'store'])->name('bulk-expenses.store');
         });
+
+        // Add Buyer Statement Route (covered by the group middleware)
+        Route::get('/buyer-statements', [BuyerStatementController::class, 'index'])->name('buyer-statements.index');
     });
 
 // Buyer Routes

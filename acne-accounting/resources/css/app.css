@@ -1,5 +1,7 @@
+@import 'flatpickr/dist/flatpickr.min.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@import 'flatpickr/dist/flatpickr.min.css';
+/* Any other custom styles would go here */
