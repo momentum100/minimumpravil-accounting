@@ -52,6 +52,15 @@
                          </x-nav-link>
                          --}}
                     @endif
+
+                    {{-- Buyer Links --}}
+                    @if(Auth::user()->role === 'buyer')
+                        {{-- Single link now points to statement via buyer.dashboard route --}}
+                        <x-nav-link :href="route('buyer.dashboard')" :active="request()->routeIs('buyer.dashboard') || request()->routeIs('buyer.statement.index')"> {{-- Keep active state for both potential old references temporarily? Or just buyer.dashboard --}}
+                            {{ __('My Statement') }}
+                        </x-nav-link>
+                         {{-- Remove other buyer links or add new ones here --}}
+                    @endif
                 </div>
             </div>
 
@@ -142,6 +151,22 @@
                     <x-responsive-nav-link :href="route('admin.buyer-statements.index')" :active="request()->routeIs('admin.buyer-statements.*')">
                         {{ __('Buyer Statements') }}
                     </x-responsive-nav-link>
+                </div>
+            </div>
+        @endif
+
+        {{-- Responsive Buyer Links --}}
+        @if(Auth::user()->role === 'buyer')
+            <div class="pt-4 pb-1 border-t border-gray-200">
+                 <div class="px-4">
+                    <div class="font-medium text-base text-gray-800">{{ Auth::user()->name }} (Buyer)</div>
+                </div>
+                <div class="mt-3 space-y-1">
+                    {{-- Single responsive link --}}
+                     <x-responsive-nav-link :href="route('buyer.dashboard')" :active="request()->routeIs('buyer.dashboard') || request()->routeIs('buyer.statement.index')">
+                        {{ __('My Statement') }}
+                    </x-responsive-nav-link>
+                     {{-- Remove other responsive buyer links --}}
                 </div>
             </div>
         @endif

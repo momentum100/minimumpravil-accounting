@@ -7,9 +7,10 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\FundTransferController;
 use App\Http\Controllers\Admin\TransactionController;
 use App\Http\Controllers\Admin\DailyExpenseController;
-use App\Http\Controllers\Admin\BuyerStatementController;
+use App\Http\Controllers\Admin\BuyerStatementController as AdminBuyerStatementController;
 use App\Http\Middleware\EnsureUserIsAdmin;
 use App\Http\Middleware\EnsureUserIsAdminOrFinance;
+use App\Http\Controllers\Buyer\StatementController as BuyerStatementController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -66,8 +67,8 @@ Route::middleware(['auth', 'verified', \App\Http\Middleware\EnsureUserIsAdminOrF
             Route::post('bulk-expenses', [\App\Http\Controllers\Admin\BulkExpenseController::class, 'store'])->name('bulk-expenses.store');
         });
 
-        // Add Buyer Statement Route (covered by the group middleware)
-        Route::get('/buyer-statements', [BuyerStatementController::class, 'index'])->name('buyer-statements.index');
+        // Add Buyer Statement Route (Admin)
+        Route::get('/buyer-statements', [AdminBuyerStatementController::class, 'index'])->name('buyer-statements.index');
     });
 
 // Buyer Routes
@@ -75,6 +76,9 @@ Route::middleware(['auth', 'verified', 'buyer'])
     ->prefix('buyer')
     ->name('buyer.')
     ->group(function () {
-        Route::get('dashboard', [App\Http\Controllers\Buyer\BuyerDashboardController::class, 'index'])->name('dashboard');
+        // Point the main buyer route to the StatementController
+        Route::get('dashboard', [BuyerStatementController::class, 'index'])->name('dashboard'); 
+        // Remove the separate statement route as it's now the dashboard
+        // Route::get('statement', [BuyerStatementController::class, 'index'])->name('statement.index'); 
         // Add other buyer-specific routes here if needed
     });
