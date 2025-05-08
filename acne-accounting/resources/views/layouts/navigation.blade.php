@@ -55,11 +55,13 @@
 
                     {{-- Buyer Links --}}
                     @if(Auth::user()->role === 'buyer')
-                        {{-- Single link now points to statement via buyer.dashboard route --}}
-                        <x-nav-link :href="route('buyer.dashboard')" :active="request()->routeIs('buyer.dashboard') || request()->routeIs('buyer.statement.index')"> {{-- Keep active state for both potential old references temporarily? Or just buyer.dashboard --}}
+                        <x-nav-link :href="route('buyer.dashboard')" :active="request()->routeIs('buyer.dashboard')">
                             {{ __('My Statement') }}
                         </x-nav-link>
-                         {{-- Remove other buyer links or add new ones here --}}
+                        {{-- Add Agency Transfer Link --}}
+                        <x-nav-link :href="route('buyer.agency-transfers.index')" :active="request()->routeIs('buyer.agency-transfers.index')">
+                            {{ __('Agency Transfers') }}
+                        </x-nav-link>
                     @endif
                 </div>
             </div>
@@ -162,11 +164,13 @@
                     <div class="font-medium text-base text-gray-800">{{ Auth::user()->name }} (Buyer)</div>
                 </div>
                 <div class="mt-3 space-y-1">
-                    {{-- Single responsive link --}}
-                     <x-responsive-nav-link :href="route('buyer.dashboard')" :active="request()->routeIs('buyer.dashboard') || request()->routeIs('buyer.statement.index')">
+                     <x-responsive-nav-link :href="route('buyer.dashboard')" :active="request()->routeIs('buyer.dashboard')">
                         {{ __('My Statement') }}
                     </x-responsive-nav-link>
-                     {{-- Remove other responsive buyer links --}}
+                     {{-- Add Responsive Agency Transfer Link --}}
+                     <x-responsive-nav-link :href="route('buyer.agency-transfers.index')" :active="request()->routeIs('buyer.agency-transfers.index')">
+                        {{ __('Agency Transfers') }}
+                    </x-responsive-nav-link>
                 </div>
             </div>
         @endif

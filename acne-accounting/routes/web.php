@@ -78,6 +78,8 @@ Route::middleware(['auth', 'verified', 'buyer'])
     ->group(function () {
         // Point the main buyer route to the StatementController
         Route::get('dashboard', [BuyerStatementController::class, 'index'])->name('dashboard'); 
+        // Add route for agency transfers
+        Route::get('agency-transfers', [BuyerStatementController::class, 'agencyTransfers'])->name('agency-transfers.index');
         // Remove the separate statement route as it's now the dashboard
         // Route::get('statement', [BuyerStatementController::class, 'index'])->name('statement.index'); 
         // Add other buyer-specific routes here if needed
