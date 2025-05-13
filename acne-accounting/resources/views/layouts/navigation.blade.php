@@ -28,9 +28,9 @@
                          <x-nav-link :href="route('admin.fund-transfers.bulk.create')" :active="request()->routeIs('admin.fund-transfers.bulk.create')">
                             {{ __('Bulk Fund Transfers') }}
                          </x-nav-link>
-                         <x-nav-link :href="route('admin.transactions.index')" :active="request()->routeIs('admin.transactions.*')">
+                         {{-- <x-nav-link :href="route('admin.transactions.index')" :active="request()->routeIs('admin.transactions.*')">
                             {{ __('View Transactions') }}
-                         </x-nav-link>
+                         </x-nav-link> --}}
                          <x-nav-link :href="route('admin.daily-expenses.index')" :active="request()->routeIs('admin.daily-expenses.*')">
                             {{ __('Daily Expenses') }}
                          </x-nav-link>
@@ -43,6 +43,10 @@
                          {{-- Add Buyer Statement Link --}}
                          <x-nav-link :href="route('admin.buyer-statements.index')" :active="request()->routeIs('admin.buyer-statements.*')">
                              {{ __('Buyer Statements') }}
+                         </x-nav-link>
+                         {{-- Add Admin Agency Transfers Link --}}
+                         <x-nav-link :href="route('admin.agency-transfers.index')" :active="request()->routeIs('admin.agency-transfers.index')">
+                            {{ __('Agency Transfers (Admin)') }}
                          </x-nav-link>
                          {{-- The old generic 'Admin Area' link is removed in favor of specific links --}}
                          {{--
@@ -137,13 +141,13 @@
                     <x-responsive-nav-link :href="route('admin.fund-transfers.bulk.create')" :active="request()->routeIs('admin.fund-transfers.bulk.create')">
                         {{ __('Bulk Fund Transfers') }}
                     </x-responsive-nav-link>
-                    <x-responsive-nav-link :href="route('admin.transactions.index')" :active="request()->routeIs('admin.transactions.*')">
+                    {{-- <x-responsive-nav-link :href="route('admin.transactions.index')" :active="request()->routeIs('admin.transactions.*')">
                         {{ __('View Transactions') }}
-                    </x-responsive-nav-link>
+                    </x-responsive-nav-link> --}}
                     <x-responsive-nav-link :href="route('admin.daily-expenses.index')" :active="request()->routeIs('admin.daily-expenses.*')">
                         {{ __('Daily Expenses') }}
                     </x-responsive-nav-link>
-                     <x-responsive-nav-link :href="route('admin.users.index')" :active="request()->routeIs('admin.users.*')">
+                    <x-responsive-nav-link :href="route('admin.users.index')" :active="request()->routeIs('admin.users.*')">
                         {{ __('Manage Users') }}
                     </x-responsive-nav-link>
                     <x-responsive-nav-link :href="route('admin.teams.index')" :active="request()->routeIs('admin.teams.*')">
@@ -152,6 +156,10 @@
                     {{-- Add Responsive Buyer Statement Link --}}
                     <x-responsive-nav-link :href="route('admin.buyer-statements.index')" :active="request()->routeIs('admin.buyer-statements.*')">
                         {{ __('Buyer Statements') }}
+                    </x-responsive-nav-link>
+                    {{-- Add Responsive Admin Agency Transfers Link --}}
+                    <x-responsive-nav-link :href="route('admin.agency-transfers.index')" :active="request()->routeIs('admin.agency-transfers.index')">
+                        {{ __('Agency Transfers (Admin)') }}
                     </x-responsive-nav-link>
                 </div>
             </div>

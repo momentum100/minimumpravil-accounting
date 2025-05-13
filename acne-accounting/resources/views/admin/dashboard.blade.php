@@ -14,6 +14,7 @@
                     <div class="mt-6">
                         <a href="{{ route('admin.teams.index') }}" class="text-blue-600 dark:text-blue-400 hover:underline">Manage Teams</a>
                         <a href="{{ route('admin.users.index') }}" class="ml-4 text-blue-600 dark:text-blue-400 hover:underline">Manage Users</a>
+                        <a href="{{ route('admin.transactions.index') }}" class="ml-4 text-blue-600 dark:text-blue-400 hover:underline">View Transactions</a>
                         <a href="{{ route('admin.bulk-expenses.create') }}" class="ml-4 text-blue-600 dark:text-blue-400 hover:underline">Bulk Expense Entry</a>
                     </div>
                 </div>

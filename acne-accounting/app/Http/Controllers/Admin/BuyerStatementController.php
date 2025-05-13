@@ -128,4 +128,135 @@ class BuyerStatementController extends Controller
              'buyerAccountId' => $buyerAccount?->id 
         ]);
     }
+
+    /**
+     * Display agency transfers for a selected buyer (Admin View).
+     */
+    public function adminAgencyTransfers(Request $request, User $buyer = null): View
+    {
+        Log::info('Accessing Admin Agency Transfers', [
+            'request_data' => $request->all(),
+            'selected_buyer_id_param' => $buyer?->id
+        ]);
+
+        $allBuyers = User::where('role', 'buyer')->orderBy('name')->get();
+        $selectedBuyer = $buyer; // From route model binding
+        $selectedBuyerId = $request->input('buyer_id', $selectedBuyer?->id);
+
+        if (!$selectedBuyer && $selectedBuyerId) {
+            $selectedBuyer = User::find($selectedBuyerId);
+        }
+
+        $dateFrom = $request->input('date_from');
+        $dateTo = $request->input('date_to');
+
+        $transactions = null;
+        $totalAmount = 0;
+        $startDate = null;
+        $endDate = null;
+        $buyerAccount = null;
+
+        if ($selectedBuyer) {
+            $buyerAccount = Account::where('user_id', $selectedBuyer->id)->first();
+
+            if ($buyerAccount) {
+                Log::debug('Found buyer account for admin agency transfer view', [
+                    'selected_buyer_id' => $selectedBuyer->id,
+                    'account_id' => $buyerAccount->id
+                ]);
+
+                if ($dateFrom && $dateTo) {
+                    try {
+                        $startDate = Carbon::parse($dateFrom)->startOfDay();
+                        $endDate = Carbon::parse($dateTo)->endOfDay();
+                    } catch (\Exception $e) {
+                        Log::error('Invalid date format for admin agency transfers', ['from' => $dateFrom, 'to' => $dateTo, 'error' => $e->getMessage()]);
+                    }
+                } else {
+                    // Default to current month if no date range provided by admin
+                    $startDate = Carbon::now()->startOfMonth();
+                    $endDate = Carbon::now()->endOfMonth();
+                }
+
+                // --- Query for Agency Transfers (Expenses charged via Agency to selected buyer) --- 
+                $transactionQuery = Transaction::query()
+                    ->where('operation_type', \App\Models\FundTransfer::class) // Ensure FundTransfer model is correctly namespaced
+                    ->whereHas('lines', function ($lineQuery) use ($buyerAccount) {
+                        $lineQuery->where('account_id', $buyerAccount->id)
+                                  ->where('credit', '>', 0);
+                    })
+                    ->whereHasMorph(
+                        'operation',
+                        [\App\Models\FundTransfer::class], // Ensure FundTransfer model is correctly namespaced
+                        function ($fundTransferQuery) {
+                            $fundTransferQuery->whereHas('fromAccount.user', function ($userQuery) {
+                                $userQuery->where('role', 'agency');
+                            });
+                        }
+                    );
+                
+                if ($startDate && $endDate) {
+                    $transactionQuery->whereBetween('transaction_date', [$startDate, $endDate]);
+                }
+            
+                $transactionQuery->with([
+                    'operation.fromAccount.user',
+                    'lines' 
+                ]);
+
+                $transactions = $transactionQuery->orderBy('transaction_date', 'desc')->paginate(25);
+                Log::info('Fetched agency expense transactions for selected buyer (admin)', [
+                    'selected_buyer_id' => $selectedBuyer->id,
+                    'count' => $transactions->count()
+                ]);
+
+                if ($startDate && $endDate) {
+                    $totalAmount = TransactionLine::query()
+                        ->where('account_id', $buyerAccount->id)
+                        ->where('credit', '>', 0)
+                        ->whereHas('transaction', function($tQuery) use ($startDate, $endDate) {
+                             $tQuery->whereBetween('transaction_date', [$startDate, $endDate])
+                                    ->where('operation_type', \App\Models\FundTransfer::class) // Ensure FundTransfer model is correctly namespaced
+                                    ->whereHasMorph(
+                                        'operation', 
+                                        [\App\Models\FundTransfer::class], // Ensure FundTransfer model is correctly namespaced
+                                        function ($ftQuery) {
+                                            $ftQuery->whereHas('fromAccount.user', function ($uQuery) { 
+                                                $uQuery->where('role', 'agency');
+                                            });
+                                        }
+                                    );
+                        })
+                        ->sum('credit');
+                    Log::info('Calculated total expense amount for selected buyer (admin)', [
+                        'selected_buyer_id' => $selectedBuyer->id,
+                        'account_id' => $buyerAccount->id,
+                        'from' => $startDate,
+                        'to' => $endDate,
+                        'total' => $totalAmount
+                    ]);
+                }
+
+            } else {
+                 Log::warning('Could not find account for selected buyer (admin agency transfers)', ['selected_buyer_id' => $selectedBuyer->id]);
+                 $transactions = new \Illuminate\Pagination\LengthAwarePaginator([], 0, 25);
+            }
+        } else {
+             Log::debug('No buyer selected by admin for agency transfers.');
+             // Prepare an empty paginator if no buyer is selected, or if a buyer ID was passed but not found.
+             $transactions = new \Illuminate\Pagination\LengthAwarePaginator([], 0, 25);
+        }
+
+        return view('buyer.statement.index', [ // Reusing the buyer's statement view
+            'viewMode' => 'agency', // Keep the mode as agency
+            'isAdminView' => true, // Flag for the view to show buyer selector
+            'buyers' => $allBuyers, // List of all buyers for the dropdown
+            'selectedBuyer' => $selectedBuyer, // The currently selected buyer object
+            'transactions' => $transactions,
+            'totalAmount' => $totalAmount,
+            'dateFrom' => $dateFrom ?? ($startDate ? $startDate->format('Y-m-d') : null),
+            'dateTo' => $dateTo ?? ($endDate ? $endDate->format('Y-m-d') : null),
+            'buyerAccountId' => $buyerAccount?->id, // Account ID of the selected buyer
+        ]);
+    }
 } 

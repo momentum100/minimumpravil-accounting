@@ -84,3 +84,8 @@ Route::middleware(['auth', 'verified', 'buyer'])
         // Route::get('statement', [BuyerStatementController::class, 'index'])->name('statement.index'); 
         // Add other buyer-specific routes here if needed
     });
+
+// Admin route for agency transfers with buyer selection
+Route::get('admin/agency-transfers/{buyer?}', [App\Http\Controllers\Admin\BuyerStatementController::class, 'adminAgencyTransfers'])
+    ->name('admin.agency-transfers.index')
+    ->middleware(['auth', 'verified', \App\Http\Middleware\EnsureUserIsAdminOrFinance::class]);
