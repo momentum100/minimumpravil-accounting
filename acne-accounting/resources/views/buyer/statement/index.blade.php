@@ -3,11 +3,11 @@
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
             {{-- Conditional Title --}}
             @if(isset($isAdminView) && $isAdminView && $viewMode === 'agency')
-                {{ __('Admin View: Agency Charges for Buyer') }}
+                {{ __('Админ панель: Списания агентств для баера') }}
             @elseif($viewMode === 'agency')
-                {{ __('My Agency Charges / Expenses') }}
+                {{ __('Мои списания агентств / Расходы') }}
             @else
-                {{ __('My Statement') }}
+                {{ __('Мой отчет') }}
             @endif
         </h2>
     </x-slot>
@@ -23,9 +23,9 @@
                             @csrf
                             <div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-end">
                                 <div>
-                                    <label for="buyer_id" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Select Buyer</label>
+                                    <label for="buyer_id" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Выберите баера</label>
                                     <select name="buyer_id" id="buyer_id" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 dark:bg-gray-600 dark:border-gray-500 dark:text-gray-300 dark:focus:ring-offset-gray-800" onchange="this.form.submit()">
-                                        <option value="">-- Select a Buyer --</option>
+                                        <option value="">-- Выберите баера --</option>
                                         @foreach($buyers as $buyerOption)
                                             <option value="{{ $buyerOption->id }}" {{ (isset($selectedBuyer) && $selectedBuyer->id == $buyerOption->id) ? 'selected' : '' }}>
                                                 {{ $buyerOption->name }} ({{ $buyerOption->email }})
@@ -35,17 +35,17 @@
                                 </div>
                                 {{-- Date inputs for admin --}}
                                 <div>
-                                    <label for="date_from_admin" class="block text-sm font-medium text-gray-700 dark:text-gray-300">From</label>
+                                    <label for="date_from_admin" class="block text-sm font-medium text-gray-700 dark:text-gray-300">С</label>
                                     <input type="date" name="date_from" id="date_from_admin" value="{{ $dateFrom }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 dark:bg-gray-600 dark:border-gray-500 dark:text-gray-300 dark:focus:ring-offset-gray-800">
                                 </div>
                                 <div>
-                                    <label for="date_to_admin" class="block text-sm font-medium text-gray-700 dark:text-gray-300">To</label>
+                                    <label for="date_to_admin" class="block text-sm font-medium text-gray-700 dark:text-gray-300">По</label>
                                     <input type="date" name="date_to" id="date_to_admin" value="{{ $dateTo }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 dark:bg-gray-600 dark:border-gray-500 dark:text-gray-300 dark:focus:ring-offset-gray-800">
                                 </div>
                             </div>
                             <div class="mt-4 flex items-center space-x-2">
-                                <button type="submit" class="inline-flex items-center px-4 py-2 bg-indigo-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:ring focus:ring-indigo-200 active:bg-indigo-600 disabled:opacity-25 transition dark:bg-indigo-500 dark:hover:bg-indigo-400 dark:focus:ring-offset-gray-800">Apply Filters</button>
-                                <a href="{{ route('admin.agency-transfers.index') }}" class="inline-flex items-center px-4 py-2 bg-gray-200 border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest hover:bg-gray-300 focus:outline-none focus:border-gray-400 focus:ring focus:ring-gray-200 active:bg-gray-300 disabled:opacity-25 transition dark:bg-gray-600 dark:border-gray-500 dark:text-gray-300 dark:hover:bg-gray-500 dark:focus:ring-offset-gray-800">Clear All</a>
+                                <button type="submit" class="inline-flex items-center px-4 py-2 bg-indigo-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:ring focus:ring-indigo-200 active:bg-indigo-600 disabled:opacity-25 transition dark:bg-indigo-500 dark:hover:bg-indigo-400 dark:focus:ring-offset-gray-800">Применить фильтры</button>
+                                <a href="{{ route('admin.agency-transfers.index') }}" class="inline-flex items-center px-4 py-2 bg-gray-200 border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest hover:bg-gray-300 focus:outline-none focus:border-gray-400 focus:ring focus:ring-gray-200 active:bg-gray-300 disabled:opacity-25 transition dark:bg-gray-600 dark:border-gray-500 dark:text-gray-300 dark:hover:bg-gray-500 dark:focus:ring-offset-gray-800">Очистить все</a>
                             </div>
                         </form>
                     @endif
@@ -70,16 +70,16 @@
                             @endif
 
                             <div>
-                                <label for="date_from" class="block text-sm font-medium text-gray-700 dark:text-gray-300">From</label>
+                                <label for="date_from" class="block text-sm font-medium text-gray-700 dark:text-gray-300">С</label>
                                 <input type="date" name="date_from" id="date_from" value="{{ $dateFrom }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 dark:focus:ring-offset-gray-800">
                             </div>
                             <div>
-                                <label for="date_to" class="block text-sm font-medium text-gray-700 dark:text-gray-300">To</label>
+                                <label for="date_to" class="block text-sm font-medium text-gray-700 dark:text-gray-300">По</label>
                                 <input type="date" name="date_to" id="date_to" value="{{ $dateTo }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 dark:focus:ring-offset-gray-800">
                             </div>
 
                             <div class="flex items-end space-x-2">
-                                <button type="submit" class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:ring focus:ring-blue-200 active:bg-blue-600 disabled:opacity-25 transition dark:bg-blue-500 dark:hover:bg-blue-400 dark:focus:ring-offset-gray-800">Filter</button>
+                                <button type="submit" class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:ring focus:ring-blue-200 active:bg-blue-600 disabled:opacity-25 transition dark:bg-blue-500 dark:hover:bg-blue-400 dark:focus:ring-offset-gray-800">Фильтр</button>
                                 <a href="{{-- Determine clear link based on context --}}
                                     @if(isset($isAdminView) && $isAdminView && $viewMode !== 'agency')
                                         {{ route('admin.buyer-statements.index', (isset($selectedBuyer) ? ['buyer_id' => $selectedBuyer->id] : [])) }}
@@ -90,7 +90,7 @@
                                     @else
                                         {{ route('buyer.dashboard') }}
                                     @endif
-                                " class="inline-flex items-center px-4 py-2 bg-gray-200 border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest hover:bg-gray-300 focus:outline-none focus:border-gray-400 focus:ring focus:ring-gray-200 active:bg-gray-300 disabled:opacity-25 transition dark:bg-gray-600 dark:border-gray-500 dark:text-gray-300 dark:hover:bg-gray-500 dark:focus:ring-offset-gray-800">Clear / Current Month</a>
+                                " class="inline-flex items-center px-4 py-2 bg-gray-200 border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest hover:bg-gray-300 focus:outline-none focus:border-gray-400 focus:ring focus:ring-gray-200 active:bg-gray-300 disabled:opacity-25 transition dark:bg-gray-600 dark:border-gray-500 dark:text-gray-300 dark:hover:bg-gray-500 dark:focus:ring-offset-gray-800">Очистить / Текущий месяц</a>
                                 
                                 {{-- The period input is no longer present in the original form --}}
                                 {{-- <input type="hidden" name="period" id="period"> --}}
@@ -134,13 +134,13 @@
                     @if(isset($isAdminView) && $isAdminView && $viewMode === 'agency' && isset($selectedBuyer))
                         <div class="mb-4 p-3 bg-indigo-100 dark:bg-indigo-900 rounded-md">
                             <p class="text-sm font-semibold text-indigo-800 dark:text-indigo-200">
-                                Showing agency charges for: <span class="font-bold">{{ $selectedBuyer->name }}</span>
+                                Показаны списания агентств для: <span class="font-bold">{{ $selectedBuyer->name }}</span>
                             </p>
                         </div>
                     @elseif(isset($isAdminView) && $isAdminView && $viewMode === 'agency' && !isset($selectedBuyer) && request()->has('buyer_id'))
                          <div class="mb-4 p-3 bg-yellow-100 dark:bg-yellow-900 rounded-md">
                             <p class="text-sm font-semibold text-yellow-800 dark:text-yellow-200">
-                                Please select a buyer to view their agency charges. If a buyer was selected but not found, they may not exist.
+                                Пожалуйста, выберите баера для просмотра его списаний агентств. Если баер был выбран, но не найден, возможно, он не существует.
                             </p>
                         </div>
                     @endif
@@ -151,9 +151,9 @@
                             @if($viewMode === 'agency') bg-orange-100 dark:bg-orange-900 text-orange-800 dark:text-orange-200 @else bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 @endif"> 
                             <span class="font-semibold">
                                 @if($viewMode === 'agency')
-                                    Total Charged by Agencies ({{ $dateFrom }} to {{ $dateTo }}):
+                                    Всего списано агентствами ({{ $dateFrom }} по {{ $dateTo }}):
                                 @else
-                                    Total Expenses for Period ({{ $dateFrom }} to {{ $dateTo }}):
+                                    Общие расходы за период ({{ $dateFrom }} по {{ $dateTo }}):
                                 @endif
                             </span> {{ number_format($totalAmount, 2) }}
                         </div>
@@ -164,16 +164,16 @@
                         <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                              <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                                 <tr>
-                                    <th scope="col" class="px-6 py-3">Date</th>
+                                    <th scope="col" class="px-6 py-3">Дата</th>
                                     @if($viewMode === 'agency')
-                                        <th scope="col" class="px-6 py-3">Charged By Agency</th>
-                                        <th scope="col" class="px-6 py-3">Amount Charged</th>
-                                        <th scope="col" class="px-6 py-3">Description / Comment</th>
+                                        <th scope="col" class="px-6 py-3">Списано агентством</th>
+                                        <th scope="col" class="px-6 py-3">Сумма списания</th>
+                                        <th scope="col" class="px-6 py-3">Описание / Комментарий</th>
                                     @else
-                                        <th scope="col" class="px-6 py-3">Type</th>
-                                        <th scope="col" class="px-6 py-3">Amount</th>
-                                        <th scope="col" class="px-6 py-3">Description</th>
-                                        <th scope="col" class="px-6 py-3"><span class="sr-only">Details</span></th>
+                                        <th scope="col" class="px-6 py-3">Тип</th>
+                                        <th scope="col" class="px-6 py-3">Сумма</th>
+                                        <th scope="col" class="px-6 py-3">Описание</th>
+                                        <th scope="col" class="px-6 py-3"><span class="sr-only">Детали</span></th>
                                     @endif
                                 </tr>
                             </thead>
@@ -189,7 +189,7 @@
                                                 $fundTransfer = $transaction->operation;
                                                 $creditLine = $transaction->lines->where('credit', '>', 0)->first(); 
                                                 $chargedAmount = $creditLine ? $creditLine->credit : 0;
-                                                $fromAgencyName = $fundTransfer?->fromAccount?->user?->name ?? 'Unknown Agency';
+                                                $fromAgencyName = $fundTransfer?->fromAccount?->user?->name ?? 'Неизвестное агентство';
                                             @endphp
                                             <td class="px-6 py-4">{{ $fromAgencyName }}</td>
                                             <td class="px-6 py-4 text-right">{{ number_format($chargedAmount, 2) }}</td>
@@ -220,11 +220,11 @@
                                         {{-- Conditional Empty Message --}}
                                         <td colspan="{{ $viewMode === 'agency' ? 4 : 5 }}" class="px-6 py-4 text-center text-gray-500 dark:text-gray-400">
                                            @if(isset($isAdminView) && $isAdminView && $viewMode === 'agency' && !isset($selectedBuyer))
-                                               Please select a buyer from the dropdown above to see their agency charges.
+                                               Пожалуйста, выберите баера из выпадающего списка выше, чтобы увидеть его списания агентств.
                                            @elseif($viewMode === 'agency')
-                                               No charges via agencies found for the selected buyer and period.
+                                               Списания через агентства не найдены для выбранного баера и периода.
                                            @else
-                                               No expense transactions found for the selected period.
+                                               Транзакции расходов не найдены за выбранный период.
                                            @endif
                                         </td>
                                     </tr>

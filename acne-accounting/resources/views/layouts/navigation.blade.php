@@ -13,40 +13,40 @@
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
+                        {{ __('Панель управления') }}
                     </x-nav-link>
 
                     {{-- Admin Links --}}
                     @if(in_array(Auth::user()->role, ['owner', 'finance']))
                         <x-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
-                            {{ __('Admin Dashboard') }}
+                            {{ __('Админ панель') }}
                          </x-nav-link>
                          <x-nav-link :href="route('admin.fund-transfers.create')" :active="request()->routeIs('admin.fund-transfers.create')">
-                            {{ __('Create Fund Transfer') }}
+                            {{ __('Создать перевод средств') }}
                          </x-nav-link>
                          {{-- Add Bulk Transfer Link Here --}}
                          <x-nav-link :href="route('admin.fund-transfers.bulk.create')" :active="request()->routeIs('admin.fund-transfers.bulk.create')">
-                            {{ __('Bulk Fund Transfers') }}
+                            {{ __('Массовые переводы средств') }}
                          </x-nav-link>
                          {{-- <x-nav-link :href="route('admin.transactions.index')" :active="request()->routeIs('admin.transactions.*')">
                             {{ __('View Transactions') }}
                          </x-nav-link> --}}
                          <x-nav-link :href="route('admin.daily-expenses.index')" :active="request()->routeIs('admin.daily-expenses.*')">
-                            {{ __('Daily Expenses') }}
+                            {{ __('Ежедневные расходы') }}
                          </x-nav-link>
                          <x-nav-link :href="route('admin.users.index')" :active="request()->routeIs('admin.users.*')">
-                            {{ __('Manage Users') }}
+                            {{ __('Управление пользователями') }}
                          </x-nav-link>
                          <x-nav-link :href="route('admin.teams.index')" :active="request()->routeIs('admin.teams.*')">
-                            {{ __('Manage Teams') }}
+                            {{ __('Управление командами') }}
                          </x-nav-link>
                          {{-- Add Buyer Statement Link --}}
                          <x-nav-link :href="route('admin.buyer-statements.index')" :active="request()->routeIs('admin.buyer-statements.*')">
-                             {{ __('Buyer Statements') }}
+                             {{ __('Отчеты баеров') }}
                          </x-nav-link>
                          {{-- Add Admin Agency Transfers Link --}}
                          <x-nav-link :href="route('admin.agency-transfers.index')" :active="request()->routeIs('admin.agency-transfers.index')">
-                            {{ __('Agency Transfers (Admin)') }}
+                            {{ __('Расходы агенств (Админ)') }}
                          </x-nav-link>
                          {{-- The old generic 'Admin Area' link is removed in favor of specific links --}}
                          {{--
@@ -60,11 +60,11 @@
                     {{-- Buyer Links --}}
                     @if(Auth::user()->role === 'buyer')
                         <x-nav-link :href="route('buyer.dashboard')" :active="request()->routeIs('buyer.dashboard')">
-                            {{ __('My Statement') }}
+                            {{ __('Мой отчет') }}
                         </x-nav-link>
                         {{-- Add Agency Transfer Link --}}
                         <x-nav-link :href="route('buyer.agency-transfers.index')" :active="request()->routeIs('buyer.agency-transfers.index')">
-                            {{ __('Agency Transfers') }}
+                            {{ __('Расходы агентств') }}
                         </x-nav-link>
                     @endif
                 </div>
@@ -87,7 +87,7 @@
 
                     <x-slot name="content">
                         <x-dropdown-link :href="route('profile.edit')">
-                            {{ __('Profile') }}
+                            {{ __('Профиль') }}
                         </x-dropdown-link>
 
                         <!-- Authentication -->
@@ -97,7 +97,7 @@
                             <x-dropdown-link :href="route('logout')"
                                     onclick="event.preventDefault();
                                                 this.closest('form').submit();">
-                                {{ __('Log Out') }}
+                                {{ __('Выйти') }}
                             </x-dropdown-link>
                         </form>
                     </x-slot>
@@ -120,7 +120,7 @@
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                {{ __('Dashboard') }}
+                {{ __('Панель управления') }}
             </x-responsive-nav-link>
         </div>
 
@@ -128,38 +128,38 @@
         @if(in_array(Auth::user()->role, ['owner', 'finance']))
             <div class="pt-4 pb-1 border-t border-gray-200">
                 <div class="px-4">
-                    <div class="font-medium text-base text-gray-800">{{ __('Admin Area') }}</div>
+                    <div class="font-medium text-base text-gray-800">{{ __('Админ зона') }}</div>
                 </div>
                 <div class="mt-3 space-y-1">
                      <x-responsive-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
-                        {{ __('Admin Dashboard') }}
+                        {{ __('Админ панель') }}
                     </x-responsive-nav-link>
                     <x-responsive-nav-link :href="route('admin.fund-transfers.create')" :active="request()->routeIs('admin.fund-transfers.create')">
-                        {{ __('Create Fund Transfer') }}
+                        {{ __('Создать перевод средств') }}
                     </x-responsive-nav-link>
                     {{-- Add Bulk Transfer Link Here (Responsive) --}}
                     <x-responsive-nav-link :href="route('admin.fund-transfers.bulk.create')" :active="request()->routeIs('admin.fund-transfers.bulk.create')">
-                        {{ __('Bulk Fund Transfers') }}
+                        {{ __('Массовые переводы средств') }}
                     </x-responsive-nav-link>
                     {{-- <x-responsive-nav-link :href="route('admin.transactions.index')" :active="request()->routeIs('admin.transactions.*')">
                         {{ __('View Transactions') }}
                     </x-responsive-nav-link> --}}
                     <x-responsive-nav-link :href="route('admin.daily-expenses.index')" :active="request()->routeIs('admin.daily-expenses.*')">
-                        {{ __('Daily Expenses') }}
+                        {{ __('Ежедневные расходы') }}
                     </x-responsive-nav-link>
                     <x-responsive-nav-link :href="route('admin.users.index')" :active="request()->routeIs('admin.users.*')">
-                        {{ __('Manage Users') }}
+                        {{ __('Управление пользователями') }}
                     </x-responsive-nav-link>
                     <x-responsive-nav-link :href="route('admin.teams.index')" :active="request()->routeIs('admin.teams.*')">
-                        {{ __('Manage Teams') }}
+                        {{ __('Управление командами') }}
                     </x-responsive-nav-link>
                     {{-- Add Responsive Buyer Statement Link --}}
                     <x-responsive-nav-link :href="route('admin.buyer-statements.index')" :active="request()->routeIs('admin.buyer-statements.*')">
-                        {{ __('Buyer Statements') }}
+                        {{ __('Отчеты баеров') }}
                     </x-responsive-nav-link>
                     {{-- Add Responsive Admin Agency Transfers Link --}}
                     <x-responsive-nav-link :href="route('admin.agency-transfers.index')" :active="request()->routeIs('admin.agency-transfers.index')">
-                        {{ __('Agency Transfers (Admin)') }}
+                        {{ __('Переводы агентств (Админ)') }}
                     </x-responsive-nav-link>
                 </div>
             </div>
@@ -169,15 +169,15 @@
         @if(Auth::user()->role === 'buyer')
             <div class="pt-4 pb-1 border-t border-gray-200">
                  <div class="px-4">
-                    <div class="font-medium text-base text-gray-800">{{ Auth::user()->name }} (Buyer)</div>
+                    <div class="font-medium text-base text-gray-800">{{ Auth::user()->name }} (Баер)</div>
                 </div>
                 <div class="mt-3 space-y-1">
                      <x-responsive-nav-link :href="route('buyer.dashboard')" :active="request()->routeIs('buyer.dashboard')">
-                        {{ __('My Statement') }}
+                        {{ __('Мой отчет') }}
                     </x-responsive-nav-link>
                      {{-- Add Responsive Agency Transfer Link --}}
                      <x-responsive-nav-link :href="route('buyer.agency-transfers.index')" :active="request()->routeIs('buyer.agency-transfers.index')">
-                        {{ __('Agency Transfers') }}
+                        {{ __('Переводы агентств') }}
                     </x-responsive-nav-link>
                 </div>
             </div>
@@ -192,7 +192,7 @@
 
             <div class="mt-3 space-y-1">
                 <x-responsive-nav-link :href="route('profile.edit')">
-                    {{ __('Profile') }}
+                    {{ __('Профиль') }}
                 </x-responsive-nav-link>
 
                 <!-- Authentication -->
@@ -202,7 +202,7 @@
                     <x-responsive-nav-link :href="route('logout')"
                             onclick="event.preventDefault();
                                         this.closest('form').submit();">
-                        {{ __('Log Out') }}
+                        {{ __('Выйти') }}
                     </x-responsive-nav-link>
                 </form>
             </div>

@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Buyer Statements') }}
+            Отчеты баеров
         </h2>
     </x-slot>
 
@@ -13,9 +13,9 @@
                     {{-- Filter Form --}}
                     <form method="GET" action="{{ route('admin.buyer-statements.index') }}" class="mb-6 space-y-4 md:space-y-0 md:flex md:items-end md:space-x-4">
                         <div>
-                            <label for="buyer_id" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Buyer</label>
+                            <label for="buyer_id" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Баер</label>
                             <select name="buyer_id" id="buyer_id" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 dark:focus:ring-offset-gray-800">
-                                <option value="">-- Select Buyer --</option>
+                                <option value="">-- Выберите баера --</option>
                                 @foreach ($buyers as $buyer)
                                     <option value="{{ $buyer->id }}" {{ $selectedBuyerId == $buyer->id ? 'selected' : '' }}>
                                         {{ $buyer->name }}
@@ -25,12 +25,12 @@
                         </div>
 
                         <div>
-                            <label for="date_from" class="block text-sm font-medium text-gray-700 dark:text-gray-300">From</label>
+                            <label for="date_from" class="block text-sm font-medium text-gray-700 dark:text-gray-300">С</label>
                             <input type="date" name="date_from" id="date_from" value="{{ $dateFrom }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 dark:focus:ring-offset-gray-800">
                         </div>
 
                         <div>
-                            <label for="date_to" class="block text-sm font-medium text-gray-700 dark:text-gray-300">To</label>
+                            <label for="date_to" class="block text-sm font-medium text-gray-700 dark:text-gray-300">По</label>
                             <input type="date" name="date_to" id="date_to" value="{{ $dateTo }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 dark:focus:ring-offset-gray-800">
                         </div>
 
@@ -39,14 +39,14 @@
 
                         <div class="flex items-end space-x-4">
                             {{-- Filter Button First --}}
-                            <button type="submit" class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:ring focus:ring-blue-200 active:bg-blue-600 disabled:opacity-25 transition dark:bg-blue-500 dark:hover:bg-blue-400 dark:focus:ring-offset-gray-800">Filter</button>
+                            <button type="submit" class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-500 focus:outline-none focus:border-blue-700 focus:ring focus:ring-blue-200 active:bg-blue-600 disabled:opacity-25 transition dark:bg-blue-500 dark:hover:bg-blue-400 dark:focus:ring-offset-gray-800">Фильтр</button>
                             
                             {{-- Clear Button Second --}}
-                            <a href="{{ route('admin.buyer-statements.index') }}" class="inline-flex items-center px-4 py-2 bg-gray-200 border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest hover:bg-gray-300 focus:outline-none focus:border-gray-400 focus:ring focus:ring-gray-200 active:bg-gray-300 disabled:opacity-25 transition dark:bg-gray-600 dark:border-gray-500 dark:text-gray-300 dark:hover:bg-gray-500 dark:focus:ring-offset-gray-800">Clear</a>
+                            <a href="{{ route('admin.buyer-statements.index') }}" class="inline-flex items-center px-4 py-2 bg-gray-200 border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest hover:bg-gray-300 focus:outline-none focus:border-gray-400 focus:ring focus:ring-gray-200 active:bg-gray-300 disabled:opacity-25 transition dark:bg-gray-600 dark:border-gray-500 dark:text-gray-300 dark:hover:bg-gray-500 dark:focus:ring-offset-gray-800">Очистить</a>
                             
                             {{-- Text Links Last --}}
-                            <a href="javascript:void(0);" onclick="setDates(30)" class="text-sm text-blue-600 dark:text-blue-400 hover:underline focus:outline-none focus:underline">Last 30 Days</a>
-                            <a href="javascript:void(0);" onclick="setDates(60)" class="text-sm text-blue-600 dark:text-blue-400 hover:underline focus:outline-none focus:underline">Last 60 Days</a>
+                            <a href="javascript:void(0);" onclick="setDates(30)" class="text-sm text-blue-600 dark:text-blue-400 hover:underline focus:outline-none focus:underline">Последние 30 дней</a>
+                            <a href="javascript:void(0);" onclick="setDates(60)" class="text-sm text-blue-600 dark:text-blue-400 hover:underline focus:outline-none focus:underline">Последние 60 дней</a>
                         </div>
                     </form>
 
@@ -77,7 +77,7 @@
                     {{-- Total Amount --}}
                     @if($selectedBuyerId && ($dateFrom || $dateTo || $period))
                         <div class="mb-4 p-4 bg-green-100 dark:bg-green-900 rounded-lg text-green-800 dark:text-green-200">
-                            <span class="font-semibold">Total Expenses for Selected Period:</span> {{ number_format($totalAmount, 2) }}
+                            <span class="font-semibold">Общие расходы за выбранный период:</span> {{ number_format($totalAmount, 2) }}
                         </div>
                     @endif
 
@@ -87,13 +87,13 @@
                             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                                 <tr>
                                     <th scope="col" class="px-6 py-3">ID</th>
-                                    <th scope="col" class="px-6 py-3">Date</th>
-                                    <th scope="col" class="px-6 py-3">Type</th>
-                                    <th scope="col" class="px-6 py-3">Amount</th>
-                                    <th scope="col" class="px-6 py-3">Description</th>
+                                    <th scope="col" class="px-6 py-3">Дата</th>
+                                    <th scope="col" class="px-6 py-3">Тип</th>
+                                    <th scope="col" class="px-6 py-3">Сумма</th>
+                                    <th scope="col" class="px-6 py-3">Описание</th>
                                     {{-- <th scope="col" class="px-6 py-3">Created By</th> --}}
                                     {{-- <th scope="col" class="px-6 py-3">Parties Involved</th> --}}
-                                    <th scope="col" class="px-6 py-3"><span class="sr-only">Actions</span></th>
+                                    <th scope="col" class="px-6 py-3"><span class="sr-only">Действия</span></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -134,16 +134,16 @@
                                         {{-- <td class="px-6 py-4">...parties...</td> --}}
                                         <td class="px-6 py-4 text-right">
                                             {{-- Link to general transaction detail if needed --}}
-                                            <a href="{{ route('admin.transactions.show', $transaction) }}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">View Details</a>
+                                            <a href="{{ route('admin.transactions.show', $transaction) }}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Подробности</a>
                                         </td>
                                     </tr>
                                 @empty
                                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                         <td colspan="6" class="px-6 py-4 text-center text-gray-500 dark:text-gray-400">
                                             @if($selectedBuyerId)
-                                                No transactions found for the selected buyer and period.
+                                                Транзакции не найдены для выбранного баера и периода.
                                             @else
-                                                Please select a buyer to view their statement.
+                                                Пожалуйста, выберите баера для просмотра его отчета.
                                             @endif
                                         </td>
                                     </tr>

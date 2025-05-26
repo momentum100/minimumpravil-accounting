@@ -41,23 +41,57 @@ class FundTransferController extends Controller
         }
 
         // Get non-virtual users suitable for transfers (for the 'To' dropdown)
-        $toUsers = User::where('is_virtual', false)->orderBy('name')->get(['id', 'name']); // Only need id and name for 'to'
+        // Sort buyers separately for To dropdown
+        $buyers = User::where('is_virtual', false)
+                     ->where('role', 'buyer')
+                     ->orderBy('name')
+                     ->get(['id', 'name']);
+        
+        $agencies = User::where('is_virtual', false)
+                       ->where('role', 'agency')
+                       ->orderBy('name')
+                       ->get(['id', 'name']);
+        
+        // Merge agencies first, then buyers for To dropdown
+        $toUsers = $agencies->merge($buyers);
 
         // Get non-virtual users with role and terms for the 'From' dropdown
-        $fromUsersData = User::where('is_virtual', false)
-                              ->orderBy('name')
-                              ->get(['id', 'name', 'role', 'terms']); // Fetch role and terms
+        $agenciesData = User::where('is_virtual', false)
+                           ->where('role', 'agency')
+                           ->orderBy('name')
+                           ->get(['id', 'name', 'role', 'terms']);
+        
+        $buyersData = User::where('is_virtual', false)
+                         ->where('role', 'buyer')
+                         ->orderBy('name')
+                         ->get(['id', 'name', 'role', 'terms']);
 
-        // Create the list for the 'From' dropdown: System user + non-virtual users data
-        // Ensure the system user object has dummy role/terms if needed by the view later
-        // Or handle it in the view itself. For now, just prepend.
-         $systemUserForDropdown = (object) [ // Cast to object for consistency if needed by view loops
+        // Create system user for dropdown
+        $systemUserForDropdown = (object) [
             'id' => $systemUser->id,
-            'name' => $systemUser->name . ' (System)', // Differentiate system user
-            'role' => 'System', // Assign a role
-            'terms' => 0 // Assign default terms
+            'name' => $systemUser->name . ' (System)',
+            'role' => 'System',
+            'terms' => 0
         ];
-        $fromUsers = $fromUsersData->prepend($systemUserForDropdown);
+
+        // Create separator for dropdown
+        $separator = (object) [
+            'id' => '',
+            'name' => '------',
+            'role' => 'separator',
+            'terms' => 0
+        ];
+
+        // Build the sorted fromUsers collection: System -> Agencies -> Separator -> Buyers
+        $fromUsers = collect([$systemUserForDropdown])
+                    ->merge($agenciesData)
+                    ->push($separator)
+                    ->merge($buyersData);
+        
+        // Merge all data for Alpine (without separator)
+        $fromUsersData = collect([$systemUserForDropdown])
+                        ->merge($agenciesData)
+                        ->merge($buyersData);
 
         // Pass the system user ID as a default
         $defaultFromUserId = $systemUser->id;
@@ -198,18 +232,42 @@ class FundTransferController extends Controller
         $systemUser = User::where('is_virtual', true)->firstOrFail();
 
         // Get non-virtual users with role and terms for the 'From' dropdown
-        $fromUsersData = User::where('is_virtual', false)
-                              ->orderBy('name')
-                              ->get(['id', 'name', 'role', 'terms']);
+        $agenciesData = User::where('is_virtual', false)
+                           ->where('role', 'agency')
+                           ->orderBy('name')
+                           ->get(['id', 'name', 'role', 'terms']);
+        
+        $buyersData = User::where('is_virtual', false)
+                         ->where('role', 'buyer')
+                         ->orderBy('name')
+                         ->get(['id', 'name', 'role', 'terms']);
 
-        // Create the list for the 'From' dropdown: System user + non-virtual users data
-         $systemUserForDropdown = (object) [
+        // Create system user for dropdown
+        $systemUserForDropdown = (object) [
             'id' => $systemUser->id,
             'name' => $systemUser->name . ' (System)',
             'role' => 'System',
             'terms' => 0
         ];
-        $fromUsers = $fromUsersData->prepend($systemUserForDropdown);
+
+        // Create separator for dropdown
+        $separator = (object) [
+            'id' => '',
+            'name' => '------',
+            'role' => 'separator',
+            'terms' => 0
+        ];
+
+        // Build the sorted fromUsers collection: System -> Agencies -> Separator -> Buyers
+        $fromUsers = collect([$systemUserForDropdown])
+                    ->merge($agenciesData)
+                    ->push($separator)
+                    ->merge($buyersData);
+        
+        // Merge all data for Alpine (without separator)
+        $fromUsersData = collect([$systemUserForDropdown])
+                        ->merge($agenciesData)
+                        ->merge($buyersData);
 
         // Pass the system user ID as a default
         $defaultFromUserId = $systemUser->id;

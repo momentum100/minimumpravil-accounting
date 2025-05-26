@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Daily Expenses') }}
+            Ежедневные расходы
         </h2>
     </x-slot>
 
@@ -11,20 +11,20 @@
             {{-- Add Expense Form --}}
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg mb-6">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
-                    <h3 class="text-lg font-medium mb-4">Add New Expense</h3>
+                    <h3 class="text-lg font-medium mb-4">Добавить новый расход</h3>
                     <form @submit.prevent="addExpense" class="space-y-4 relative" x-ref="expenseForm">
                         @csrf {{-- Although not directly used by fetch, good practice to include --}}
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                             <div>
-                                <x-input-label for="date" value="Date" />
+                                <x-input-label for="date" value="Дата" />
                                 {{-- Name still date for label/id, model is operation_date --}}
                                 <x-text-input id="date" class="block mt-1 w-full" type="text" name="operation_date" x-ref="dateInput" x-model="newExpense.operation_date" required />
                                 <p x-show="errors.operation_date" x-text="errors.operation_date ? errors.operation_date[0] : ''" class="text-sm text-red-600 dark:text-red-400 mt-1"></p>
                             </div>
                             <div>
-                                <x-input-label for="buyer_id" value="Buyer" />
+                                <x-input-label for="buyer_id" value="Баер" />
                                 <select id="buyer_id" name="buyer_id" x-model="newExpense.buyer_id" required class="mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm">
-                                    <option value="">Select Buyer...</option>
+                                    <option value="">Выберите баера...</option>
                                     @foreach($buyers as $buyer)
                                         <option value="{{ $buyer->id }}">{{ $buyer->name }}</option>
                                     @endforeach
@@ -32,30 +32,30 @@
                                 <p x-show="errors.buyer_id" x-text="errors.buyer_id ? errors.buyer_id[0] : ''" class="text-sm text-red-600 dark:text-red-400 mt-1"></p>
                             </div>
                              <div>
-                                <x-input-label for="category" value="Category" />
+                                <x-input-label for="category" value="Категория" />
                                 <x-text-input id="category" class="block mt-1 w-full" type="text" name="category" x-model="newExpense.category" required />
                                 <p x-show="errors.category" x-text="errors.category ? errors.category[0] : ''" class="text-sm text-red-600 dark:text-red-400 mt-1"></p>
                             </div>
                         </div>
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                              <div>
-                                <x-input-label for="quantity" value="Quantity" />
+                                <x-input-label for="quantity" value="Количество" />
                                 <x-text-input id="quantity" class="block mt-1 w-full" type="number" step="0.01" name="quantity" x-model="newExpense.quantity" required />
                                 <p x-show="errors.quantity" x-text="errors.quantity ? errors.quantity[0] : ''" class="text-sm text-red-600 dark:text-red-400 mt-1"></p>
                             </div>
                              <div>
-                                <x-input-label for="tariff" value="Tariff" />
+                                <x-input-label for="tariff" value="Тариф" />
                                 <x-text-input id="tariff" class="block mt-1 w-full" type="number" step="0.01" name="tariff" x-model="newExpense.tariff" required />
                                 <p x-show="errors.tariff" x-text="errors.tariff ? errors.tariff[0] : ''" class="text-sm text-red-600 dark:text-red-400 mt-1"></p>
                             </div>
                             <div>
                                 {{-- Total is calculated backend --}}
-                                <x-input-label value="Total (Calculated)" />
+                                <x-input-label value="Итого (Рассчитано)" />
                                 <p class="mt-1 block w-full h-10 flex items-center px-3 bg-gray-100 dark:bg-gray-700 rounded-md shadow-sm text-gray-500 dark:text-gray-400" x-text="calculateTotal()"></p>
                             </div>
                         </div>
                         <div>
-                            <x-input-label for="comment" value="Comment" />
+                            <x-input-label for="comment" value="Комментарий" />
                             <textarea id="comment" name="comment" rows="2" x-model="newExpense.comment"
                                       class="block mt-1 w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm"
                             ></textarea>
@@ -64,8 +64,8 @@
 
                         <div class="flex items-center justify-end">
                             <x-primary-button x-bind:disabled="isLoading">
-                                <span x-show="!isLoading">{{ __('Add Expense') }}</span>
-                                <span x-show="isLoading">Adding...</span>
+                                <span x-show="!isLoading">Добавить расход</span>
+                                <span x-show="isLoading">Добавление...</span>
                             </x-primary-button>
                         </div>
                     </form>
@@ -75,11 +75,11 @@
             {{-- Expenses Table --}}
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
-                     <h3 class="text-lg font-medium mb-4">Existing Expenses</h3>
+                     <h3 class="text-lg font-medium mb-4">Существующие расходы</h3>
 
                      {{-- Loading Indicator --}}
                      <div x-show="isLoading && expenses.length === 0" class="text-center py-4">
-                        Loading expenses...
+                        Загрузка расходов...
                      </div>
 
                      {{-- Table --}}
@@ -87,14 +87,14 @@
                         <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                                 <tr>
-                                    <th scope="col" class="px-6 py-3">Date</th>
-                                    <th scope="col" class="px-6 py-3">Buyer</th>
-                                    <th scope="col" class="px-6 py-3">Category</th>
-                                    <th scope="col" class="px-6 py-3">Quantity</th>
-                                    <th scope="col" class="px-6 py-3">Tariff</th>
-                                    <th scope="col" class="px-6 py-3">Total</th>
-                                    <th scope="col" class="px-6 py-3">Comment</th>
-                                    <th scope="col" class="px-6 py-3">Created By</th>
+                                    <th scope="col" class="px-6 py-3">Дата</th>
+                                    <th scope="col" class="px-6 py-3">Баер</th>
+                                    <th scope="col" class="px-6 py-3">Категория</th>
+                                    <th scope="col" class="px-6 py-3">Количество</th>
+                                    <th scope="col" class="px-6 py-3">Тариф</th>
+                                    <th scope="col" class="px-6 py-3">Итого</th>
+                                    <th scope="col" class="px-6 py-3">Комментарий</th>
+                                    <th scope="col" class="px-6 py-3">Создано</th>
                                     {{-- <th scope="col" class="px-6 py-3"><span class="sr-only">Actions</span></th> --}}
                                 </tr>
                             </thead>
@@ -116,7 +116,7 @@
                                 </template>
                                 <tr x-show="!isLoading && expenses.length === 0">
                                      <td colspan="8" class="px-6 py-4 text-center text-gray-500 dark:text-gray-400">
-                                        No expenses found.
+                                        Расходы не найдены.
                                     </td>
                                 </tr>
                             </tbody>
@@ -127,20 +127,20 @@
                     <div class="mt-4" x-show="pagination.total > pagination.per_page">
                         <nav class="flex items-center justify-between">
                             <p class="text-sm text-gray-700 dark:text-gray-400">
-                                Showing
+                                Показано
                                 <span class="font-medium" x-text="pagination.from"></span>
-                                to
+                                до
                                 <span class="font-medium" x-text="pagination.to"></span>
-                                of
+                                из
                                 <span class="font-medium" x-text="pagination.total"></span>
-                                results
+                                результатов
                             </p>
                             <div class="flex justify-end">
                                 <button @click="fetchExpenses(pagination.current_page - 1)" :disabled="!pagination.prev_page_url || isLoading" class="px-3 py-1 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white mr-2">
-                                    Previous
+                                    Предыдущая
                                 </button>
                                 <button @click="fetchExpenses(pagination.current_page + 1)" :disabled="!pagination.next_page_url || isLoading" class="px-3 py-1 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
-                                    Next
+                                    Следующая
                                 </button>
                             </div>
                         </nav>

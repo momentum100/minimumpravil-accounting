@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Create Bulk Fund Transfers') }}
+            Создать массовые переводы средств
         </h2>
     </x-slot>
 
@@ -21,37 +21,41 @@
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             {{-- From User/Account (Mostly reused from single transfer) --}}
                             <div class="space-y-4 p-4 border border-gray-200 dark:border-gray-700 rounded-md">
-                                <h3 class="text-lg font-medium">From</h3>
+                                <h3 class="text-lg font-medium">От</h3>
                                 <div>
-                                    <x-input-label for="from_user_id" value="From User" />
+                                    <x-input-label for="from_user_id" value="От пользователя" />
                                     <select id="from_user_id" name="from_user_id" class="block mt-1 w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm" x-model="fromUserId" @change="fetchFromAccounts(); checkCommission();" required size="10">
-                                        <option value="">-- Select User --</option>
+                                        <option value="">-- Выберите пользователя --</option>
                                         @foreach ($fromUsers as $user)
-                                            <option value="{{ $user->id }}" {{ $defaultFromUserId == $user->id ? 'selected' : '' }}>
-                                                {{ $user->name }} @if($user->role && $user->role !== 'System') - {{ ucfirst($user->role) }} (Terms: {{ number_format($user->terms * 100, 1) }}%) @endif
-                                            </option>
+                                            @if($user->role === 'separator')
+                                                <option disabled>{{ $user->name }}</option>
+                                            @else
+                                                <option value="{{ $user->id }}" {{ $defaultFromUserId == $user->id ? 'selected' : '' }}>
+                                                    {{ $user->name }} @if($user->role && $user->role !== 'System') - {{ ucfirst($user->role) }} (Условия: {{ number_format($user->terms * 100, 1) }}%) @endif
+                                                </option>
+                                            @endif
                                         @endforeach
                                     </select>
                                     {{-- Consider adding x-input-error here if needed --}}
                                 </div>
                                 <div>
-                                    <x-input-label for="from_account_id" value="From Account (USD)" />
+                                    <x-input-label for="from_account_id" value="От счета (USD)" />
                                     <div class="relative">
                                         <select id="from_account_id" name="from_account_id" class="block mt-1 w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm disabled:opacity-50" x-model="fromAccountId" required x-bind:disabled="loadingFromAccounts || fromAccounts.length === 0">
                                             <template x-if="loadingFromAccounts">
-                                                <option value="">Loading accounts...</option>
+                                                <option value="">Загрузка счетов...</option>
                                             </template>
                                             <template x-if="!loadingFromAccounts && fromAccounts.length === 0 && fromUserId">
-                                                <option value="">No USD accounts found for selected user.</option>
+                                                <option value="">USD счета не найдены для выбранного пользователя.</option>
                                             </template>
                                             <template x-if="!loadingFromAccounts && fromAccounts.length === 0 && !fromUserId">
-                                                <option value="">Select a user first</option>
+                                                <option value="">Сначала выберите пользователя</option>
                                             </template>
                                             <template x-if="!loadingFromAccounts && fromAccounts.length > 0">
-                                                <option value="">-- Select Account --</option>
+                                                <option value="">-- Выберите счет --</option>
                                             </template>
                                             <template x-for="account in fromAccounts" :key="account.id">
-                                                <option :value="account.id" x-text="account.description + ' (' + account.account_number + ') - Bal: $' + parseFloat(account.balance).toFixed(2)"></option>
+                                                <option :value="account.id" x-text="account.description + ' (' + account.account_number + ') - Баланс: $' + parseFloat(account.balance).toFixed(2)"></option>
                                             </template>
                                         </select>
                                         <div x-show="loadingFromAccounts" class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
@@ -67,27 +71,27 @@
 
                             {{-- Bulk Input Section --}}
                             <div class="space-y-4 p-4 border border-gray-200 dark:border-gray-700 rounded-md">
-                                <h3 class="text-lg font-medium">To (Bulk Input)</h3>
+                                <h3 class="text-lg font-medium">Кому (Массовый ввод)</h3>
                                 <div>
-                                    <x-input-label for="bulk_input" value="Recipients & Amounts" />
+                                    <x-input-label for="bulk_input" value="Получатели и суммы" />
                                     <textarea id="bulk_input" name="bulk_input"
                                               class="block mt-1 w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm"
                                               x-model="bulkInput"
                                               rows="15"
-                                              placeholder="Enter each recipient on a new line:
-username1 100.50 [Optional description]
-username2 75 [Another description]
+                                              placeholder="Вводите каждого получателя на новой строке:
+username1 100.50 [Необязательное описание]
+username2 75 [Другое описание]
 petya 200"
                                               @input="parseBulkInput"></textarea>
-                                    <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">Format: `username amount [optional description]` per line.</p>
+                                    <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">Формат: `имя_пользователя сумма [необязательное описание]` на строку.</p>
                                      {{-- Error display for parsing issues? --}}
                                 </div>
 
                                 {{-- Description (Applies to all if no line description) --}}
                                 <div class="mt-4">
-                                    <x-input-label for="description" value="Default Description (Optional)" />
+                                    <x-input-label for="description" value="Описание по умолчанию (Необязательно)" />
                                     <x-text-input id="description" class="block mt-1 w-full" type="text" name="description" x-model="defaultDescription" />
-                                    <p class="mt-1 text-xs text-gray-600 dark:text-gray-400">This description will be used if a line doesn't have its own description.</p>
+                                    <p class="mt-1 text-xs text-gray-600 dark:text-gray-400">Это описание будет использоваться, если у строки нет собственного описания.</p>
                                 </div>
 
                                 {{-- Add Commission Checkbox (Conditional) - Use Component --}}
@@ -103,16 +107,16 @@ petya 200"
 
                         {{-- Parsed Transfers Table --}}
                         <div class="mt-8" x-show="parsedTransfers.length > 0">
-                             <h3 class="text-lg font-medium mb-4">Transfers to Process (<span x-text="parsedTransfers.length"></span>)</h3>
+                             <h3 class="text-lg font-medium mb-4">Переводы к обработке (<span x-text="parsedTransfers.length"></span>)</h3>
                              <div class="overflow-x-auto">
                                 <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
                                     <thead class="bg-gray-50 dark:bg-gray-700">
                                         <tr>
                                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">#</th>
-                                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Recipient Username</th>
-                                            <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Amount (USD)</th>
-                                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Description</th>
-                                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Status</th>
+                                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Имя получателя</th>
+                                            <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Сумма (USD)</th>
+                                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Описание</th>
+                                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Статус</th>
                                         </tr>
                                     </thead>
                                     <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
@@ -124,12 +128,12 @@ petya 200"
                                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-300" x-text="transfer.description || defaultDescription"></td>
                                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                                     <span x-text="transfer.status" :class="{
-                                                        'text-gray-500 dark:text-gray-400': transfer.status === 'Pending',
-                                                        'text-yellow-600 dark:text-yellow-400': transfer.status === 'Processing',
-                                                        'text-green-600 dark:text-green-400': transfer.status === 'Success',
-                                                        'text-red-600 dark:text-red-400': transfer.status.startsWith('Error')
+                                                        'text-gray-500 dark:text-gray-400': transfer.status === 'В ожидании',
+                                                        'text-yellow-600 dark:text-yellow-400': transfer.status === 'Обрабатывается',
+                                                        'text-green-600 dark:text-green-400': transfer.status === 'Успешно',
+                                                        'text-red-600 dark:text-red-400': transfer.status.startsWith('Ошибка')
                                                     }"></span>
-                                                     <template x-if="transfer.status.startsWith('Error')">
+                                                     <template x-if="transfer.status.startsWith('Ошибка')">
                                                         <p class="text-xs text-red-500" x-text="transfer.message"></p>
                                                     </template>
                                                 </td>
@@ -143,14 +147,14 @@ petya 200"
                         {{-- Submit Button --}}
                         <div class="flex items-center justify-end mt-6">
                              <a href="{{ route('admin.dashboard') }}" class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800 mr-4">
-                                {{ __('Cancel') }}
+                                Отмена
                             </a>
                             <x-primary-button
                                 type="submit"
                                 x-bind:disabled="isProcessing || isCheckingUsers || loadingFromAccounts || parsedTransfers.length === 0 || !fromAccountId || hasErrors">
-                                <span x-show="isProcessing">Processing...</span>
-                                <span x-show="isCheckingUsers && !isProcessing">Checking Users...</span>
-                                <span x-show="!isProcessing && !isCheckingUsers">{{ __('Process Bulk Transfers') }}</span>
+                                <span x-show="isProcessing">Обрабатывается...</span>
+                                <span x-show="isCheckingUsers && !isProcessing">Проверка пользователей...</span>
+                                <span x-show="!isProcessing && !isCheckingUsers">Обработать массовые переводы</span>
                             </x-primary-button>
                         </div>
                     </form>
@@ -285,20 +289,20 @@ petya 200"
                                     username: username,
                                     amount: amount,
                                     description: description,
-                                    status: 'Pending',
+                                    status: 'В ожидании',
                                     message: ''
                                 });
                             } else {
-                                transfers.push({ uniqueId: `${uniqueId}-invalidAmount`, username: username, amount: NaN, description: description, status: 'Error (Parse)', message: 'Invalid amount format.' });
+                                transfers.push({ uniqueId: `${uniqueId}-invalidAmount`, username: username, amount: NaN, description: description, status: 'Ошибка (Parse)', message: 'Invalid amount format.' });
                             }
                         } else {
-                            transfers.push({ uniqueId: `${uniqueId}-invalidLine`, username: line.trim().split(' ')[0] || '?', amount: NaN, description: '', status: 'Error (Parse)', message: 'Invalid line format. Use: username amount [description]' });
+                            transfers.push({ uniqueId: `${uniqueId}-invalidLine`, username: line.trim().split(' ')[0] || '?', amount: NaN, description: '', status: 'Ошибка (Parse)', message: 'Invalid line format. Use: username amount [description]' });
                         }
                     });
                     this.parsedTransfers = transfers;
                      console.log('Parsed Transfers (Input Event):', this.parsedTransfers);
                     this.generalError = '';
-                    this.hasErrors = this.parsedTransfers.some(t => t.status.startsWith('Error'));
+                    this.hasErrors = this.parsedTransfers.some(t => t.status.startsWith('Ошибка'));
 
                     clearTimeout(this.debounceTimeout);
                     this.debounceTimeout = setTimeout(() => {
@@ -308,7 +312,7 @@ petya 200"
                 },
 
                 async checkUserExistence() {
-                    const validParsedTransfers = this.parsedTransfers.filter(t => !t.status.startsWith('Error'));
+                    const validParsedTransfers = this.parsedTransfers.filter(t => !t.status.startsWith('Ошибка'));
                     const usernamesToCheck = [ ...new Set(validParsedTransfers.map(t => t.username)) ];
 
                     if (usernamesToCheck.length === 0) {
@@ -340,9 +344,9 @@ petya 200"
                         console.log('User existence map received:', existenceMap);
 
                         this.parsedTransfers.forEach(transfer => {
-                            if (transfer.status === 'Pending' && existenceMap.hasOwnProperty(transfer.username)) {
+                            if (transfer.status === 'В ожидании' && existenceMap.hasOwnProperty(transfer.username)) {
                                 if (!existenceMap[transfer.username]) {
-                                    transfer.status = 'Error (User NF)';
+                                    transfer.status = 'Ошибка (User NF)';
                                     transfer.message = 'Recipient username not found.';
                                     console.warn(`User not found: ${transfer.username}`);
                                 }
@@ -353,14 +357,14 @@ petya 200"
                         console.error('Error checking user existence:', error);
                         this.generalError = 'Failed to verify recipient usernames. Check network or try again.';
                         this.parsedTransfers.forEach(transfer => {
-                            if (transfer.status === 'Pending') {
-                                transfer.status = 'Error (Check Fail)';
+                            if (transfer.status === 'В ожидании') {
+                                transfer.status = 'Ошибка (Check Fail)';
                                 transfer.message = 'Could not verify user existence.';
                             }
                         });
                     } finally {
                         this.isCheckingUsers = false;
-                        this.hasErrors = this.parsedTransfers.some(t => t.status.startsWith('Error'));
+                        this.hasErrors = this.parsedTransfers.some(t => t.status.startsWith('Ошибка'));
                         console.log('User check finished. Has errors:', this.hasErrors);
                     }
                 },
@@ -394,7 +398,7 @@ petya 200"
 
                     if (this.hasErrors) {
                         this.generalError = 'Please fix the errors highlighted in the table before processing.';
-                        console.error('[processBulkTransfers] EXIT: Errors found (hasErrors=true).', this.parsedTransfers.filter(t => t.status.startsWith('Error')));
+                        console.error('[processBulkTransfers] EXIT: Errors found (hasErrors=true).', this.parsedTransfers.filter(t => t.status.startsWith('Ошибка')));
                         return;
                     }
                      if (!this.fromAccountId) {
@@ -402,7 +406,7 @@ petya 200"
                          console.error('[processBulkTransfers] EXIT: No From Account selected.');
                          return;
                      }
-                     let validTransfers = this.parsedTransfers.filter(t => !t.status.startsWith('Error'));
+                     let validTransfers = this.parsedTransfers.filter(t => !t.status.startsWith('Ошибка'));
                      if (validTransfers.length === 0) {
                          this.generalError = 'No valid transfers to process.';
                          console.error('[processBulkTransfers] EXIT: No valid transfers in the list after filtering.');
@@ -421,11 +425,11 @@ petya 200"
                      console.log('[processBulkTransfers] Prerequisites met. Starting processing...');
                      this.isProcessing = true;
                      this.generalError = '';
-                     validTransfers.forEach(t => this.updateTransferStatus(t.uniqueId, 'Pending'));
+                     validTransfers.forEach(t => this.updateTransferStatus(t.uniqueId, 'В ожидании'));
                      console.log(`Processing ${validTransfers.length} transfers.`);
                      for (const transfer of validTransfers) {
                          console.log(`[Loop Start] Processing transfer ID: ${transfer.uniqueId}, User: ${transfer.username}, Amount: ${transfer.amount}`);
-                         this.updateTransferStatus(transfer.uniqueId, 'Processing');
+                         this.updateTransferStatus(transfer.uniqueId, 'Обрабатывается');
                          console.log(`[Loop] Calculating amountToSend for ${transfer.uniqueId}...`);
                          let amountToSend = transfer.amount;
                          let commissionApplied = false;
@@ -441,7 +445,7 @@ petya 200"
                          const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
                          if (!csrfToken) {
                               console.error(`[Loop EXIT] CSRF token not found for ${transfer.uniqueId}.`);
-                              this.updateTransferStatus(transfer.uniqueId, 'Error (Setup)', 'CSRF token missing.');
+                              this.updateTransferStatus(transfer.uniqueId, 'Ошибка (Setup)', 'CSRF token missing.');
                               this.generalError = 'Configuration error: CSRF token missing.';
                               this.isProcessing = false;
                               return;
@@ -479,14 +483,14 @@ petya 200"
                              if (!response.ok || !result.success) {
                                  const errorMsg = result.message || `API Error (${response.status})`;
                                  console.error(`Error processing transfer ${resultUniqueId}:`, errorMsg, result);
-                                 this.updateTransferStatus(resultUniqueId, `Error (API)`, errorMsg);
+                                 this.updateTransferStatus(resultUniqueId, `Ошибка (API)`, errorMsg);
                               } else {
                                  console.log(`Transfer ${resultUniqueId} success:`, result);
-                                 this.updateTransferStatus(resultUniqueId, 'Success', result.message || 'Completed');
+                                 this.updateTransferStatus(resultUniqueId, 'Успешно', result.message || 'Completed');
                              }
                          } catch (error) {
                              console.error(`Network/fetch error processing transfer ${transfer.uniqueId}:`, error);
-                              this.updateTransferStatus(transfer.uniqueId, 'Error (Network)', error.message || 'Could not communicate with the server.');
+                              this.updateTransferStatus(transfer.uniqueId, 'Ошибка (Network)', error.message || 'Could not communicate with the server.');
                          }
                          await new Promise(resolve => setTimeout(resolve, 150));
                      }
@@ -500,7 +504,7 @@ petya 200"
                     if (index !== -1) {
                         this.parsedTransfers[index].status = status;
                         this.parsedTransfers[index].message = message;
-                        if(status.startsWith('Error') && !this.hasErrors) {
+                        if(status.startsWith('Ошибка') && !this.hasErrors) {
                             this.hasErrors = true;
                         }
                     }

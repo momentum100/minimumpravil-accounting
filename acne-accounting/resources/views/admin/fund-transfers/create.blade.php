@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Create Fund Transfer') }}
+            Создать перевод средств
         </h2>
     </x-slot>
 
@@ -24,37 +24,41 @@
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             {{-- From User/Account --}}
                             <div class="space-y-4 p-4 border border-gray-200 dark:border-gray-700 rounded-md">
-                                <h3 class="text-lg font-medium">From</h3>
+                                <h3 class="text-lg font-medium">От</h3>
                                 <div>
-                                    <x-input-label for="from_user_id" value="From User" />
+                                    <x-input-label for="from_user_id" value="От пользователя" />
                                     <select id="from_user_id" name="from_user_id" class="block mt-1 w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm" x-model="fromUserId" @change="fetchFromAccounts(); checkCommission();" required size="10">
-                                        <option value="">-- Select User --</option>
+                                        <option value="">-- Выберите пользователя --</option>
                                         @foreach ($fromUsers as $user)
-                                            <option value="{{ $user->id }}" {{ old('from_user_id', $defaultFromUserId ?? '') == $user->id ? 'selected' : '' }}>
-                                                {{ $user->name }} @if($user->role && $user->role !== 'System') - {{ ucfirst($user->role) }} (Terms: {{ number_format($user->terms * 100, 1) }}%) @endif
-                                            </option>
+                                            @if($user->role === 'separator')
+                                                <option disabled>{{ $user->name }}</option>
+                                            @else
+                                                <option value="{{ $user->id }}" {{ old('from_user_id', $defaultFromUserId ?? '') == $user->id ? 'selected' : '' }}>
+                                                    {{ $user->name }} @if($user->role && $user->role !== 'System') - {{ ucfirst($user->role) }} (Условия: {{ number_format($user->terms * 100, 1) }}%) @endif
+                                                </option>
+                                            @endif
                                         @endforeach
                                     </select>
                                     <x-input-error :messages="$errors->get('from_user_id')" class="mt-2" />
                                 </div>
                                 <div>
-                                    <x-input-label for="from_account_id" value="From Account (USD)" />
+                                    <x-input-label for="from_account_id" value="От счета (USD)" />
                                     <div class="relative">
                                         <select id="from_account_id" name="from_account_id" class="block mt-1 w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm disabled:opacity-50" x-model="fromAccountId" required x-bind:disabled="loadingFromAccounts || fromAccounts.length === 0">
                                             <template x-if="loadingFromAccounts">
-                                                <option value="">Loading accounts...</option>
+                                                <option value="">Загрузка счетов...</option>
                                             </template>
                                             <template x-if="!loadingFromAccounts && fromAccounts.length === 0 && fromUserId">
-                                                <option value="">No USD accounts found for selected user.</option>
+                                                <option value="">USD счета не найдены для выбранного пользователя.</option>
                                             </template>
                                             <template x-if="!loadingFromAccounts && fromAccounts.length === 0 && !fromUserId">
-                                                <option value="">Select a user first</option>
+                                                <option value="">Сначала выберите пользователя</option>
                                             </template>
                                             <template x-if="!loadingFromAccounts && fromAccounts.length > 0">
-                                                <option value="">-- Select Account --</option>
+                                                <option value="">-- Выберите счет --</option>
                                             </template>
                                             <template x-for="account in fromAccounts" :key="account.id">
-                                                <option :value="account.id" x-text="account.description + ' (' + account.account_number + ') - Bal: $' + parseFloat(account.balance).toFixed(2)"></option>
+                                                <option :value="account.id" x-text="account.description + ' (' + account.account_number + ') - Баланс: $' + parseFloat(account.balance).toFixed(2)"></option>
                                             </template>
                                         </select>
                                         <div x-show="loadingFromAccounts" class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
@@ -71,11 +75,11 @@
 
                             {{-- To User/Account --}}
                             <div class="space-y-4 p-4 border border-gray-200 dark:border-gray-700 rounded-md">
-                                 <h3 class="text-lg font-medium">To</h3>
+                                 <h3 class="text-lg font-medium">Кому</h3>
                                 <div>
-                                    <x-input-label for="to_user_id" value="To User" />
+                                    <x-input-label for="to_user_id" value="Кому" />
                                     <select id="to_user_id" name="to_user_id" class="block mt-1 w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm" x-model="toUserId" @change="fetchToAccounts" required size="10">
-                                        <option value="">-- Select User --</option>
+                                        <option value="">-- Выберите пользователя --</option>
                                         @foreach ($toUsers as $user)
                                             <option value="{{ $user->id }}" {{ old('to_user_id') == $user->id ? 'selected' : '' }}>{{ $user->name }}</option>
                                         @endforeach
@@ -83,18 +87,18 @@
                                     <x-input-error :messages="$errors->get('to_user_id')" class="mt-2" />
                                 </div>
                                 <div>
-                                    <x-input-label for="to_account_id" value="Account (USD)" />
+                                    <x-input-label for="to_account_id" value="Счет (USD)" />
                                     <select id="to_account_id" name="to_account_id"
                                             x-ref="toAccountSelect"
                                             :disabled="!toUserId || loadingToAccounts"
                                             class="mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm disabled:opacity-50">
-                                        <option value="" x-show="!toUserId || loadingToAccounts">{{ __('Select User First...') }}</option>
+                                        <option value="" x-show="!toUserId || loadingToAccounts">Сначала выберите пользователя...</option>
                                         <template x-if="toUserId && !loadingToAccounts">
                                             <template x-for="account in toAccounts" :key="account.id">
                                                 <option :value="account.id" x-text="`${account.description} (${account.account_type})`"></option>
                                             </template>
                                         </template>
-                                        <option value="" x-show="toUserId && !loadingToAccounts && toAccounts.length === 0">{{ __('No USD accounts found') }}</option>
+                                        <option value="" x-show="toUserId && !loadingToAccounts && toAccounts.length === 0">USD счета не найдены</option>
                                     </select>
                                     <x-input-error :messages="$errors->get('to_account_id')" class="mt-2" />
                                 </div>
@@ -103,7 +107,7 @@
 
                          {{-- Amount --}}
                         <div class="mt-6">
-                            <x-input-label for="amount" value="Amount (USD)" />
+                            <x-input-label for="amount" value="Сумма (USD)" />
                             <x-text-input id="amount" class="block mt-1 w-full" type="number" name="amount" required step="0.01" min="0.01"
                                           x-model.number="amountValue" @input="updateCalculatedTotal" />
                             <x-input-error :messages="$errors->get('amount')" class="mt-2" />
@@ -119,12 +123,12 @@
 
                         {{-- Calculated Total Amount Display (Conditional) --}}
                         <div x-show="showCommissionCheckbox && amountValue > 0" class="mt-2 text-sm text-gray-700 dark:text-gray-300"> {{-- Hide if amount is 0 --}}
-                            <strong>Calculated Total: $ <span x-text="calculatedTotalAmount"></span></strong>
+                            <strong>Итоговая сумма: $ <span x-text="calculatedTotalAmount"></span></strong>
                         </div>
 
                         {{-- Description --}}
                         <div class="mt-4">
-                            <x-input-label for="description" value="Description" />
+                            <x-input-label for="description" value="Описание" />
                             <x-text-input id="description" class="block mt-1 w-full" type="text" name="description" :value="old('description')" required />
                             <x-input-error :messages="$errors->get('description')" class="mt-2" />
                         </div>
@@ -132,11 +136,11 @@
                         {{-- Submit Button --}}
                         <div class="flex items-center justify-end mt-6">
                              <a href="{{ route('admin.dashboard') }}" class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800 mr-4">
-                                {{ __('Cancel') }}
+                                Отмена
                             </a>
                             <x-primary-button x-bind:disabled="loadingFromAccounts || loadingToAccounts">
-                                <span x-show="loadingFromAccounts || loadingToAccounts">Loading...</span>
-                                <span x-show="!loadingFromAccounts && !loadingToAccounts">{{ __('Create Transfer') }}</span>
+                                <span x-show="loadingFromAccounts || loadingToAccounts">Загрузка...</span>
+                                <span x-show="!loadingFromAccounts && !loadingToAccounts">Создать перевод</span>
                             </x-primary-button>
                         </div>
                     </form>
