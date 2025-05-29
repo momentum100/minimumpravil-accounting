@@ -1,0 +1,118 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# Laravel 12 Coding Standards & Best Practices
+
+## Framework Version
+- **Laravel Version:** 12
+- **PHP Version:** 8.3+
+- **Database:** MySQL 8
+
+## Architectural Principles
+
+### SOLID Principles
+1. **Single Responsibility:** One class/module → one responsibility
+2. **Open/Closed:** Classes open for extension, closed for modification
+3. **Liskov Substitution:** Subclasses must be replaceable for base classes
+4. **Interface Segregation:** Granular interfaces, avoid "fat" interfaces
+5. **Dependency Inversion:** Depend on abstractions (interfaces) not concretions
+
+### KISS & DRY
+- Favor straightforward solutions over over-engineering
+- Use Laravel's built-in features (Form Requests, Policies, Resources)
+- Extract repeated logic into Blade components, Traits, Services
+- Reuse validation rules via Form Request classes
+
+## Code Structure
+
+### Controllers
+- **Thin Controllers:** Delegate business logic to Actions/Services
+- **One Action per Method:** One public method per controller action
+- **Form Requests:** Use for validation and authorization
+- **Route Model Binding:** Leverage automatic model injection
+
+```php
+// Good Example
+Route::get('/posts/{post}', [PostController::class, 'show']);
+
+public function show(Post $post)
+{
+    $this->authorize('view', $post);
+    return new PostResource($post);
+}
+```
+
+### Models & Database
+- **Eloquent:** Use proper relationships and eager loading
+- **Mass Assignment:** Always set $fillable or $guarded
+- **Query Scopes:** Create reusable query filters
+- **Migrations:** Use for all schema changes, avoid raw SQL
+
+```php
+// Prevent N+1 queries
+Post::with(['author', 'comments'])->paginate();
+```
+
+### API Development
+- **API Resources:** Use for JSON responses
+- **HTTP Status Codes:** Use appropriate status codes
+- **Versioning:** Use /api/v1/ pattern
+- **Rate Limiting:** Implement proper throttling
+
+```php
+return new UserResource($user);
+return response()->noContent(); // 204
+```
+
+### Validation & Security
+- **Form Requests:** Centralize validation logic
+- **Authorization:** Use authorize() method in Form Requests
+- **Output Escaping:** Use {{ $var }} in Blade, avoid {!! !!} unless trusted
+- **SQL Injection:** Use Eloquent ORM, avoid raw queries
+
+## Testing Requirements
+- **Feature Tests:** For API endpoints and user journeys
+- **Unit Tests:** For individual classes and methods
+- **Factories:** Use for test data generation
+- **Coverage:** Aim for >80% on critical paths
+
+```php
+// Use factories and RefreshDatabase
+use RefreshDatabase;
+
+public function test_user_can_create_post()
+{
+    $user = User::factory()->create();
+    // Test implementation
+}
+```
+
+## Naming Conventions
+- **Controllers:** PascalCaseController (e.g., UserController)
+- **Models:** Singular PascalCase (User, not Users)
+- **Routes:** snake_case/URL-friendly
+- **Database:** snake_case for tables and columns
+- **Variables:** camelCase
+
+## Performance Best Practices
+- **Eager Loading:** Always load relationships to prevent N+1
+- **Query Optimization:** Use database indexes and efficient queries
+- **Caching:** Implement caching for expensive operations
+- **Asset Compilation:** Use Vite for frontend assets
+
+## Code Quality Tools
+- **PSR-12:** Follow PHP coding standards
+- **Laravel Pint:** Use for code formatting
+- **PHPStan/Larastan:** Static analysis
+- **Logging:** Write comprehensive logs for debugging
+
+## What to Avoid
+- ❌ Fat Controllers and Models
+- ❌ Inline SQL in Views
+- ❌ Duplicated validation rules
+- ❌ Global facade abuse (prefer DI)
+- ❌ Hard-coded values (use config() and .env)
+- ❌ Skipping migrations for schema changes
+

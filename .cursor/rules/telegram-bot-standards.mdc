@@ -1,0 +1,208 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# Telegram Bot Development Standards (aiogram 3)
+
+## Framework & Technology
+- **Bot Framework:** aiogram 3.x (latest stable)
+- **Python Version:** 3.11+
+- **Architecture:** Async/await non-blocking operations
+- **Type Hints:** Full type annotation required
+- **API Integration:** RESTful calls to Laravel backend
+
+## Project Structure
+
+### Core Files
+- **Main Bot:** `telegram/bot.py` - Main application entry point
+- **Configuration:** `telegram/config/config.py` - Bot settings and API configuration
+- **Handlers:** `telegram/handlers/` - Command and message handlers
+- **Services:** `telegram/services/` - Business logic and API integration
+- **Utils:** `telegram/utils/` - Helper functions and utilities
+
+### Configuration Template
+```python
+# config/config.py structure
+TELEGRAM_BOT_TOKEN = "bot_token"
+API_BASE_URL = "https://api.accounting.domain"
+API_KEY = "api_key"
+ADMIN_USER_IDS = [123456789, 987654321]
+DATABASE_CONFIG = {...}
+LOGGING_CONFIG = {...}
+```
+
+## Bot Commands Implementation
+
+### Core Commands (from PRD)
+- **`/start`** - Initialize bot, user authentication, main menu
+- **`/buyer_expenses`** - Expense entry workflow (name, product, quantity, price)
+- **`/buyer_transfers`** - Transfer management (admin only)
+
+### Command Handler Structure
+```python
+from aiogram import Router, types
+from aiogram.filters import Command
+
+router = Router()
+
+@router.message(Command("start"))
+async def start_command(message: types.Message):
+    # Implementation with inline keyboards
+    pass
+
+@router.message(Command("buyer_expenses"))
+async def buyer_expenses_command(message: types.Message, state: FSMContext):
+    # State machine for expense entry
+    pass
+```
+
+## Conversation Management
+
+### State Machine (FSM)
+- **State Persistence:** Maintain conversation state
+- **Input Validation:** Real-time validation with clear error messages
+- **Session Timeout:** 10-minute inactivity timeout
+- **Error Recovery:** Clear error messages and retry options
+
+### Data Flow Pattern
+```python
+# Expense Entry Flow
+1. User: /buyer_expenses
+2. Bot: Select buyer (inline keyboard from DB)
+3. Bot: Enter product description
+4. Bot: Enter quantity (validate numeric)
+5. Bot: Enter unit price (validate currency)
+6. Bot: Confirmation dialog
+7. Bot: Submit to API + success feedback
+```
+
+## User Interface Standards
+
+### Message Design
+- **Emojis:** Use for visual cues (👤 📦 🔢 💰 📋 ✅ ❌)
+- **Clear Language:** Simple, non-technical terms
+- **Consistent Format:** Standardized message structure
+- **Examples:** Provide sample inputs for guidance
+
+### Inline Keyboards
+- **Buyer Selection:** Dynamic keyboard from database
+- **Confirmation Dialogs:** Yes/No confirmations
+- **Command Menu:** Available actions
+- **Admin Functions:** Administrative commands (role-based)
+
+## API Integration
+
+### Laravel API Endpoints
+```python
+# API endpoints to integrate
+POST /api/v1/expenses     # Record buyer expenses
+POST /api/v1/transfers    # Record transfers to buyers
+GET  /api/v1/buyers       # Get buyer list for keyboards
+GET  /api/v1/health       # API health check
+```
+
+### Data Format (JSON)
+```python
+# Expense Entry
+expense_data = {
+    "buyer_id": 123,
+    "product": "Product Name",
+    "quantity": 10,
+    "unit_price": 25.50,
+    "total_amount": 255.00,
+    "entry_date": "2024-12-01T10:30:00Z",
+    "telegram_user_id": 987654321
+}
+
+# Transfer Entry
+transfer_data = {
+    "buyer_id": 123,
+    "amount": 1000.00,
+    "description": "Monthly advance",
+    "transfer_date": "2024-12-01T10:30:00Z",
+    "authorized_by": 123456789
+}
+```
+
+## Security & Authentication
+
+### User Verification
+- **Telegram User ID:** Validate against authorized users
+- **Admin Detection:** Multi-factor admin identification
+- **API Security:** Secure API key management
+- **Rate Limiting:** 30 requests/minute per user, 100 for admins
+
+### Input Sanitization
+- **All Inputs:** Sanitize user inputs before processing
+- **Validation:** Multi-layer validation (bot + API)
+- **Error Handling:** Graceful error handling with user feedback
+
+## Error Handling
+
+### Error Types & Responses
+```python
+# Invalid input examples
+User: "abc" (invalid quantity)
+Bot: "❌ Invalid quantity. Please enter a positive number.\nExample: 5 or 2.5"
+
+User: "-5" (negative quantity)  
+Bot: "❌ Quantity must be positive. Please try again."
+
+# API errors
+API_UNAVAILABLE: "🔄 System temporarily unavailable. Please try again later."
+VALIDATION_ERROR: "❌ Invalid data format. Please check your input."
+```
+
+### Logging Requirements
+- **Complete Logging:** Log all interactions for debugging
+- **Error Tracking:** Detailed error logs with context
+- **Performance Monitoring:** Track response times and API calls
+- **Security Auditing:** Log authentication and authorization events
+
+## Performance Standards
+
+### Response Time Requirements
+- **Bot Response:** <1 second for text responses
+- **API Calls:** <2 seconds for data submission
+- **Database Queries:** <500ms for buyer lookups
+- **Error Recovery:** <3 seconds for error handling
+
+### Scalability
+- **Concurrent Users:** Support 100+ simultaneous users
+- **Daily Transactions:** Handle 1000+ daily entries
+- **Memory Usage:** <512MB RAM usage
+- **Data Volume:** Process large buyer lists efficiently
+
+## Development Best Practices
+
+### Code Quality
+- **Type Hints:** Full type annotation
+- **Async/Await:** Proper async programming patterns
+- **Error Handling:** Comprehensive try/catch blocks
+- **Code Documentation:** Clear docstrings and comments
+
+### Testing
+- **Unit Tests:** Test individual functions
+- **Integration Tests:** Test API integration
+- **Mock Testing:** Mock external API calls
+- **Coverage:** Aim for >80% test coverage
+
+## Deployment Considerations
+
+### Environment Variables
+```python
+# Required environment variables
+TELEGRAM_BOT_TOKEN=your_bot_token
+API_BASE_URL=https://api.domain.com
+API_KEY=your_api_key
+ADMIN_IDS=123456789,987654321
+LOG_LEVEL=INFO
+```
+
+### Monitoring
+- **Health Checks:** Regular API health monitoring
+- **Error Alerts:** Automatic error notification
+- **Usage Statistics:** Track user activity and command usage
+- **Performance Metrics:** Monitor response times and throughput
+

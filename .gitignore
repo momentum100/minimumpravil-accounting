@@ -28,4 +28,9 @@ node_modules/
 npm-debug.log
 yarn-error.log
 
+# Python Virtual Environments
+venv/
+telegram/venv/
+gsheets-bot/venv/
+
 # End of https://www.toptal.com/developers/gitignore/api/laravel 

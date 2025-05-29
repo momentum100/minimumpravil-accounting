@@ -400,4 +400,162 @@ class FundTransferController extends Controller
             ], 500); // Use 500 for server-side errors during processing
         }
     }
+
+    /**
+     * API endpoint for single fund transfer.
+     * Automatically applies agency commission if FROM user is agency.
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function singleTransferApi(Request $request): JsonResponse
+    {
+        Log::info('API Single Transfer Request:', $request->all());
+
+        $validator = Validator::make($request->all(), [
+            'from_user' => 'required|string|exists:users,name',
+            'to_user' => 'required|string|exists:users,name|different:from_user',
+            'amount' => 'required|numeric|min:0.01',
+            'description' => 'nullable|string|max:255',
+        ]);
+
+        if ($validator->fails()) {
+            Log::warning('API Single Transfer validation failed', [
+                'errors' => $validator->errors()->all(), 
+                'input' => $request->all()
+            ]);
+            return response()->json([
+                'success' => false,
+                'message' => 'Validation failed',
+                'errors' => $validator->errors()
+            ], 422);
+        }
+
+        $validated = $validator->validated();
+        $originalAmount = (float) $validated['amount'];
+        $description = $validated['description'] ?? 'API Transfer';
+
+        DB::beginTransaction();
+        try {
+            // Get users by username
+            $fromUser = User::where('name', $validated['from_user'])->firstOrFail();
+            $toUser = User::where('name', $validated['to_user'])->firstOrFail();
+
+            // Check if both users are active
+            if (!$fromUser->active || !$toUser->active) {
+                throw new \Exception("Both users must be active to perform transfers.");
+            }
+
+            // Find appropriate USD accounts
+            $fromAccount = $fromUser->accounts()
+                ->where('currency', 'USD')
+                ->orderByRaw("CASE WHEN account_type LIKE '%_MAIN' THEN 0 ELSE 1 END")
+                ->first();
+
+            $toAccount = $toUser->accounts()
+                ->where('currency', 'USD')
+                ->orderByRaw("CASE WHEN account_type LIKE '%_MAIN' THEN 0 ELSE 1 END")
+                ->first();
+
+            if (!$fromAccount) {
+                throw new \Exception("No suitable USD account found for sender '{$fromUser->name}'.");
+            }
+
+            if (!$toAccount) {
+                throw new \Exception("No suitable USD account found for recipient '{$toUser->name}'.");
+            }
+
+            // Calculate final amount with commission if FROM user is agency
+            $finalAmount = $originalAmount;
+            $commissionRate = 0;
+            $commissionAmount = 0;
+            $hasCommission = false;
+
+            if (strcasecmp($fromUser->role, 'agency') == 0 && $fromUser->terms > 0) {
+                $commissionRate = (float) $fromUser->terms;
+                $commissionAmount = $originalAmount * $commissionRate;
+                $finalAmount = $originalAmount + $commissionAmount;
+                $hasCommission = true;
+                
+                Log::info('Agency commission applied', [
+                    'user' => $fromUser->name,
+                    'original_amount' => $originalAmount,
+                    'commission_rate' => $commissionRate,
+                    'commission_amount' => $commissionAmount,
+                    'final_amount' => $finalAmount
+                ]);
+            }
+
+            // Create FundTransfer record
+            $fundTransfer = FundTransfer::create([
+                'from_account_id' => $fromAccount->id,
+                'to_account_id' => $toAccount->id,
+                'amount' => $finalAmount,
+                'currency' => 'USD',
+                'transfer_date' => now(),
+                'comment' => $description . ($hasCommission ? " (incl. " . ($commissionRate * 100) . "% comm.)" : ""),
+                'created_by' => auth()->id() ?? 1, // Default to admin if no auth
+            ]);
+
+            Log::info('API FundTransfer record created', [
+                'id' => $fundTransfer->id,
+                'from_user' => $fromUser->name,
+                'to_user' => $toUser->name,
+                'amount' => $finalAmount
+            ]);
+
+            // Use TransactionService to record the transaction
+            $mainDescription = $description . ($hasCommission ? " (incl. commission)" : "");
+            $debitDesc = 'Transfer to ' . $toAccount->description . ($hasCommission ? " (incl. commission)" : "");
+            $creditDesc = 'Transfer from ' . $fromAccount->description . ($hasCommission ? " (incl. commission)" : "");
+
+            $transaction = $this->transactionService->recordOperationTransaction(
+                $fundTransfer,
+                $fromAccount->id,
+                $finalAmount,
+                $toAccount->id,
+                $finalAmount,
+                $debitDesc,
+                $creditDesc,
+                $mainDescription
+            );
+
+            DB::commit();
+            
+            Log::info('API Single Transfer completed successfully', [
+                'fund_transfer_id' => $fundTransfer->id,
+                'transaction_id' => $transaction->id
+            ]);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Transfer completed successfully',
+                'data' => [
+                    'fund_transfer_id' => $fundTransfer->id,
+                    'transaction_id' => $transaction->id,
+                    'from_user' => $fromUser->name,
+                    'to_user' => $toUser->name,
+                    'original_amount' => $originalAmount,
+                    'final_amount' => $finalAmount,
+                    'commission_applied' => $hasCommission,
+                    'commission_rate' => $hasCommission ? $commissionRate : null,
+                    'commission_amount' => $hasCommission ? $commissionAmount : null,
+                    'transfer_date' => $fundTransfer->transfer_date->toDateString(),
+                    'description' => $description
+                ]
+            ]);
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error("API Single Transfer Failed", [
+                'input' => $validated ?? $request->all(),
+                'error_message' => $e->getMessage()
+            ]);
+            
+            return response()->json([
+                'success' => false,
+                'message' => 'Transfer failed: ' . $e->getMessage()
+            ], 500);
+        }
+    }
 } 

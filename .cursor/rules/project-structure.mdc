@@ -1,0 +1,55 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# Project Structure Guide
+
+## Overview
+This project consists of a Laravel 12 accounting system with Telegram bot integration for financial data entry.
+
+## Directory Structure
+
+### Laravel Application
+- **Main Laravel Directory:** `acne-accounting/` - Contains the Laravel 12 accounting system
+- **API Routes:** [acne-accounting/routes/api.php](mdc:acne-accounting/routes/api.php) - RESTful API endpoints for bot integration
+- **Database:** MySQL 8 with Laravel migrations in `acne-accounting/database/migrations/`
+- **Models:** Buyer, Expense, Transfer models in `acne-accounting/app/Models/`
+- **Controllers:** API controllers in `acne-accounting/app/Http/Controllers/Api/`
+
+### Telegram Bot
+- **Bot Directory:** `telegram/` - Contains the aiogram 3 Python bot
+- **Documentation:** [telegram/bot-docs/README.md](mdc:telegram/bot-docs/README.md) - Bot requirements and features
+- **PRD:** [telegram/PRD-Telegram-Finance-Bot.md](mdc:telegram/PRD-Telegram-Finance-Bot.md) - Complete product requirements
+- **Configuration:** `telegram/config/config.py` - Bot configuration and API settings
+- **Main Bot File:** `telegram/bot.py` - Main bot application
+- **Handlers:** `telegram/handlers/` - Command and message handlers
+
+## Key Integration Points
+
+### API Endpoints (Laravel)
+```
+POST /api/v1/expenses     - Record buyer expenses
+POST /api/v1/transfers    - Record transfers to buyers  
+GET  /api/v1/buyers       - Get buyer list for bot
+GET  /api/v1/health       - API health check
+```
+
+### Bot Commands
+- `/start` - Initialize bot interaction
+- `/buyer_expenses` - Record buyer expenses (name, product, quantity, price)
+- `/buyer_transfers` - Record transfers to buyers (admin only)
+
+## Development Environment
+- **OS:** Windows 11 Pro
+- **Shell:** PowerShell (use `;` as command separator)
+- **Laravel Version:** 12 with PHP 8.3
+- **Database:** MySQL 8
+- **Bot Framework:** aiogram 3 (Python)
+
+## File Naming Conventions
+- Laravel: Follow PSR-12 standards
+- Python: Follow PEP 8 standards
+- Database: snake_case for tables and columns
+- API: RESTful conventions with versioning (/api/v1/)
+

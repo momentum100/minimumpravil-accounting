@@ -1,0 +1,311 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# API Integration Guide - Telegram Bot ↔ Laravel Accounting System
+
+## Overview
+This guide defines the integration patterns between the aiogram 3 Telegram bot and the Laravel 12 accounting system via RESTful API.
+
+## API Architecture
+
+### Base Configuration
+- **API Base URL:** Configured in `telegram/config/config.py`
+- **Authentication:** Bearer token (API key)
+- **Content-Type:** `application/json`
+- **API Version:** `/api/v1/`
+
+### Laravel API Endpoints
+Reference: [acne-accounting/routes/api.php](mdc:acne-accounting/routes/api.php)
+
+```php
+// API Routes Structure
+POST /api/v1/expenses     // Record buyer expenses
+POST /api/v1/transfers    // Record transfers to buyers
+GET  /api/v1/buyers       // Get buyer list for bot
+GET  /api/v1/health       // API health check
+```
+
+## Authentication Pattern
+
+### API Key Setup
+```python
+# In telegram/config/config.py
+API_KEY = "your_laravel_api_key"
+API_BASE_URL = "https://your-domain.com/api/v1"
+
+# HTTP Headers
+headers = {
+    "Authorization": f"Bearer {API_KEY}",
+    "Content-Type": "application/json",
+    "Accept": "application/json"
+}
+```
+
+### Rate Limiting
+- **User Limits:** 30 requests/minute per user
+- **Admin Limits:** 100 requests/minute for admins
+- **Global Limit:** 1000 requests/minute system-wide
+- **Handle 429 responses** with exponential backoff
+
+## Data Models & Validation
+
+### Expense Entry Payload
+```json
+{
+  "buyer_id": 123,
+  "product": "Product Name",
+  "quantity": 10,
+  "unit_price": 25.50,
+  "total_amount": 255.00,
+  "entry_date": "2024-12-01T10:30:00Z",
+  "telegram_user_id": 987654321,
+  "metadata": {
+    "bot_version": "1.0",
+    "entry_method": "telegram_bot"
+  }
+}
+```
+
+### Transfer Entry Payload
+```json
+{
+  "buyer_id": 123,
+  "amount": 1000.00,
+  "description": "Monthly advance",
+  "transfer_date": "2024-12-01T10:30:00Z",
+  "authorized_by": 123456789,
+  "metadata": {
+    "bot_version": "1.0",
+    "entry_method": "telegram_bot"
+  }
+}
+```
+
+### Buyer List Response
+```json
+{
+  "data": [
+    {
+      "id": 123,
+      "name": "John Doe",
+      "status": "active",
+      "created_at": "2024-01-01T00:00:00Z"
+    }
+  ],
+  "meta": {
+    "total": 50,
+    "active": 45
+  }
+}
+```
+
+## API Integration Patterns
+
+### HTTP Client Configuration
+```python
+import aiohttp
+import asyncio
+from typing import Dict, Any, Optional
+
+class APIClient:
+    def __init__(self, base_url: str, api_key: str):
+        self.base_url = base_url.rstrip('/')
+        self.headers = {
+            "Authorization": f"Bearer {api_key}",
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+        }
+    
+    async def post(self, endpoint: str, data: Dict[str, Any]) -> Dict[str, Any]:
+        # Implementation with error handling
+        pass
+    
+    async def get(self, endpoint: str, params: Optional[Dict] = None) -> Dict[str, Any]:
+        # Implementation with error handling  
+        pass
+```
+
+### Error Handling Strategy
+```python
+# HTTP Status Code Handling
+200: Success - Process response data
+201: Created - Resource created successfully  
+400: Bad Request - Validation errors, show user-friendly message
+401: Unauthorized - API key issues, log and alert admin
+403: Forbidden - Permission denied, check user authorization
+404: Not Found - Resource doesn't exist
+422: Unprocessable Entity - Validation failed, show specific errors
+429: Too Many Requests - Rate limited, implement backoff
+500: Server Error - Log error, show generic message to user
+503: Service Unavailable - Service down, show maintenance message
+```
+
+### Retry Logic
+```python
+import asyncio
+from typing import Callable
+
+async def api_request_with_retry(
+    request_func: Callable,
+    max_retries: int = 3,
+    backoff_factor: float = 1.0
+) -> Dict[str, Any]:
+    """
+    Implements exponential backoff retry logic
+    """
+    for attempt in range(max_retries + 1):
+        try:
+            response = await request_func()
+            return response
+        except aiohttp.ClientError as e:
+            if attempt == max_retries:
+                raise
+            await asyncio.sleep(backoff_factor * (2 ** attempt))
+```
+
+## Bot Command → API Mapping
+
+### /buyer_expenses Command Flow
+```python
+# 1. Get buyer list from API
+GET /api/v1/buyers
+→ Display inline keyboard with buyers
+
+# 2. Collect expense data via conversation
+# 3. Validate data locally
+# 4. Submit to API
+POST /api/v1/expenses
+{
+  "buyer_id": selected_buyer_id,
+  "product": user_input_product,
+  "quantity": validated_quantity,
+  "unit_price": validated_price,
+  "total_amount": calculated_total,
+  "telegram_user_id": message.from_user.id
+}
+
+# 5. Handle response
+Success (201): Show confirmation with entry ID
+Error (4xx): Show validation errors to user
+Error (5xx): Show generic error message
+```
+
+### /buyer_transfers Command Flow
+```python
+# 1. Verify admin authorization
+if user_id not in ADMIN_USER_IDS:
+    return "❌ Unauthorized access"
+
+# 2. Get buyer list
+GET /api/v1/buyers
+→ Display admin transfer interface
+
+# 3. Submit transfer
+POST /api/v1/transfers
+{
+  "buyer_id": selected_buyer_id,
+  "amount": validated_amount,
+  "description": optional_description,
+  "authorized_by": admin_user_id
+}
+```
+
+## Response Processing
+
+### Success Response Handling
+```python
+async def handle_expense_response(response: Dict[str, Any]) -> str:
+    """Process successful expense creation"""
+    entry_id = response.get('data', {}).get('id')
+    return f"✅ Expense recorded successfully!\nEntry ID: #EXP-{entry_id}"
+
+async def handle_transfer_response(response: Dict[str, Any]) -> str:
+    """Process successful transfer creation"""
+    transfer_id = response.get('data', {}).get('id')
+    return f"✅ Transfer processed successfully!\nTransfer ID: #TRF-{transfer_id}"
+```
+
+### Error Response Handling
+```python
+async def handle_api_error(status_code: int, response: Dict[str, Any]) -> str:
+    """Convert API errors to user-friendly messages"""
+    if status_code == 422:
+        errors = response.get('errors', {})
+        return format_validation_errors(errors)
+    elif status_code == 429:
+        return "🔄 Too many requests. Please wait a moment and try again."
+    elif status_code >= 500:
+        return "🔧 System temporarily unavailable. Please try again later."
+    else:
+        return "❌ An error occurred. Please contact support if this persists."
+```
+
+## Logging & Monitoring
+
+### API Call Logging
+```python
+import logging
+
+# Log all API interactions
+logger.info(f"API Request: {method} {endpoint}")
+logger.info(f"Request Data: {data}")
+logger.info(f"Response Status: {status_code}")
+logger.info(f"Response Time: {response_time}ms")
+
+# Log errors with context
+logger.error(f"API Error: {status_code} - {error_message}")
+logger.error(f"User: {telegram_user_id}, Command: {command}")
+```
+
+### Health Check Implementation
+```python
+async def health_check() -> bool:
+    """Check API availability"""
+    try:
+        response = await api_client.get('/health')
+        return response.get('status') == 'ok'
+    except Exception as e:
+        logger.error(f"Health check failed: {e}")
+        return False
+```
+
+## Performance Optimization
+
+### Caching Strategy
+- **Buyer List:** Cache for 10 minutes (updated infrequently)
+- **API Responses:** Cache successful responses for 1 minute
+- **Error Responses:** Don't cache, always retry
+
+### Connection Pooling
+```python
+# Use aiohttp connector with connection pooling
+connector = aiohttp.TCPConnector(
+    limit=100,           # Total connection pool size
+    limit_per_host=10,   # Per-host connection limit
+    ttl_dns_cache=300,   # DNS cache TTL
+    use_dns_cache=True,
+)
+```
+
+## Security Considerations
+
+### API Key Management
+- Store API keys in environment variables
+- Rotate API keys regularly (quarterly)
+- Use different keys for development/production
+- Log API key usage for audit trails
+
+### Request Validation
+- Validate all user inputs before API calls
+- Sanitize data to prevent injection attacks
+- Implement request size limits
+- Use HTTPS only for all API communications
+
+### Data Privacy
+- Don't log sensitive financial data
+- Implement data retention policies
+- Encrypt sensitive data in transit
+- Follow GDPR/privacy compliance requirements
+

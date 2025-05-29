@@ -1,5 +1,12 @@
 # Bulk Daily Expense Entry (API)
 
+Enter expense records below, with each record consisting of 4 lines:
+1. Buyer Username
+@2. Category
+3. Quantity (numeric)
+4. Tariff (numeric)
+Separate each 4-line record with an empty line (optional, but recommended for readability).
+
 This document describes how to use the API endpoint for submitting bulk daily expense records.
 
 ## Endpoint

@@ -1,0 +1,313 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# Development Workflow Guide
+
+## Project Overview
+Integration project between Laravel 12 accounting system and aiogram 3 Telegram bot for financial data entry.
+
+## Environment Setup
+
+### Windows Development Environment
+- **OS:** Windows 11 Pro
+- **Shell:** PowerShell (use `;` as command separator)
+- **PHP:** 8.3+ for Laravel
+- **Python:** 3.11+ for Telegram bot
+- **Database:** MySQL 8
+
+### Directory Structure
+```
+minimumpravil-accounting/
+├── acne-accounting/          # Laravel 12 application
+│   ├── routes/api.php        # API endpoints for bot
+│   ├── app/Models/           # Buyer, Expense, Transfer models
+│   └── app/Http/Controllers/Api/  # API controllers
+├── telegram/                 # Telegram bot application
+│   ├── bot.py               # Main bot file
+│   ├── config/config.py     # Bot configuration
+│   ├── handlers/            # Command handlers
+│   └── services/            # API integration services
+└── .cursor/rules/           # Cursor development rules
+```
+
+## Development Process
+
+### 1. Laravel API Development
+Reference: [acne-accounting/routes/api.php](mdc:acne-accounting/routes/api.php)
+
+#### API Endpoints to Implement
+```php
+// Required API routes for bot integration
+Route::group(['prefix' => 'v1', 'middleware' => 'api'], function () {
+    Route::post('/expenses', [ExpenseController::class, 'store']);
+    Route::post('/transfers', [TransferController::class, 'store']);
+    Route::get('/buyers', [BuyerController::class, 'index']);
+    Route::get('/health', [HealthController::class, 'check']);
+});
+```
+
+#### API Controller Standards
+```php
+// Follow Laravel 12 best practices
+class ExpenseController extends Controller
+{
+    public function store(ExpenseRequest $request)
+    {
+        // Validate via Form Request
+        // Delegate to Service/Action
+        // Return API Resource
+        return new ExpenseResource($expense);
+    }
+}
+```
+
+### 2. Telegram Bot Development
+Reference: [telegram/PRD-Telegram-Finance-Bot.md](mdc:telegram/PRD-Telegram-Finance-Bot.md)
+
+#### Bot Structure
+```python
+# telegram/bot.py - Main application
+from aiogram import Bot, Dispatcher, Router
+from config.config import TELEGRAM_BOT_TOKEN
+
+# telegram/handlers/ - Command handlers
+@router.message(Command("start"))
+async def start_command(message: types.Message):
+    pass
+
+@router.message(Command("buyer_expenses"))
+async def buyer_expenses_command(message: types.Message, state: FSMContext):
+    pass
+```
+
+## Testing Strategy
+
+### Laravel Testing
+```bash
+# Run in acne-accounting/ directory
+cd acne-accounting
+php artisan test --filter=Api
+php artisan test --coverage
+```
+
+### Bot Testing
+```bash
+# Run in telegram/ directory
+cd telegram
+python -m pytest tests/
+python -m pytest --cov=src tests/
+```
+
+## Git Workflow
+
+### Branch Strategy
+```bash
+# Feature branches
+git checkout -b feature/api-expenses-endpoint
+git checkout -b feature/bot-expense-handler
+
+# Integration branches  
+git checkout -b integration/bot-api-connection
+
+# Release branches
+git checkout -b release/v1.0.0
+```
+
+### Commit Standards
+```bash
+# Laravel commits
+git commit -m "feat(api): add expenses endpoint with validation"
+git commit -m "fix(controller): handle buyer not found error"
+
+# Bot commits  
+git commit -m "feat(bot): implement expense entry conversation flow"
+git commit -m "fix(handler): improve error message formatting"
+
+# Integration commits
+git commit -m "integration: connect bot expense handler to Laravel API"
+```
+
+## Local Development Setup
+
+### Laravel Setup
+```powershell
+# In acne-accounting/ directory
+cd acne-accounting
+composer install
+cp .env.example .env
+php artisan key:generate
+php artisan migrate
+php artisan serve --port=8000
+```
+
+### Bot Setup
+```powershell
+# In telegram/ directory
+cd telegram
+python -m venv venv
+venv\Scripts\Activate.ps1
+pip install -r requirements.txt
+python bot.py
+```
+
+### Environment Variables
+```bash
+# Laravel (.env)
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=accounting
+API_KEY=your_bot_api_key
+
+# Bot (.env)
+TELEGRAM_BOT_TOKEN=your_telegram_token
+API_BASE_URL=http://localhost:8000/api/v1
+API_KEY=your_bot_api_key
+ADMIN_IDS=123456789,987654321
+```
+
+## Code Quality & Standards
+
+### Laravel Quality Checks
+```powershell
+# In acne-accounting/
+vendor/bin/pint                    # Code formatting
+vendor/bin/phpstan analyse         # Static analysis
+php artisan route:list             # Verify routes
+php artisan api:cache              # Cache API routes
+```
+
+### Bot Quality Checks
+```powershell
+# In telegram/
+black .                           # Code formatting
+flake8 .                         # Linting
+mypy .                           # Type checking
+python -m pytest tests/         # Unit tests
+```
+
+## Integration Testing
+
+### API Testing with Bot
+```python
+# Test API integration from bot
+async def test_api_integration():
+    # Test expense creation
+    response = await api_client.post('/expenses', expense_data)
+    assert response.status_code == 201
+    
+    # Test buyer list retrieval
+    buyers = await api_client.get('/buyers')
+    assert len(buyers['data']) > 0
+```
+
+### End-to-End Testing
+```python
+# Test complete bot workflow
+async def test_expense_entry_workflow():
+    # Simulate bot commands
+    # Verify API calls
+    # Check database entries
+    # Validate bot responses
+```
+
+## Deployment Workflow
+
+### Staging Deployment
+```powershell
+# Laravel staging
+cd acne-accounting
+php artisan config:cache
+php artisan route:cache
+php artisan migrate --env=staging
+
+# Bot staging
+cd telegram
+python -m pytest tests/
+python bot.py --env=staging
+```
+
+### Production Deployment
+```powershell
+# Laravel production
+php artisan down
+git pull origin main
+composer install --no-dev --optimize-autoloader
+php artisan migrate --force
+php artisan config:cache
+php artisan route:cache
+php artisan up
+
+# Bot production
+git pull origin main
+pip install -r requirements.txt
+supervisorctl restart telegram_bot
+```
+
+## Monitoring & Logging
+
+### Laravel Logs
+```powershell
+# Monitor Laravel logs
+cd acne-accounting
+tail -f storage/logs/laravel.log
+
+# Check API performance
+php artisan route:list --verbose
+```
+
+### Bot Logs
+```powershell
+# Monitor bot logs
+cd telegram
+tail -f logs/bot.log
+
+# Check bot status
+python health_check.py
+```
+
+## Documentation Updates
+
+### When to Update Documentation
+- New API endpoints added
+- Bot commands changed
+- Configuration requirements updated
+- Integration patterns modified
+
+### Documentation Files
+- [telegram/PRD-Telegram-Finance-Bot.md](mdc:telegram/PRD-Telegram-Finance-Bot.md) - Product requirements
+- [telegram/bot-docs/README.md](mdc:telegram/bot-docs/README.md) - Bot documentation
+- API documentation in Laravel (generate with Swagger/OpenAPI)
+
+## Troubleshooting
+
+### Common Issues
+1. **API Connection Failed**
+   - Check Laravel server running
+   - Verify API key configuration
+   - Check network connectivity
+
+2. **Bot Not Responding**
+   - Verify Telegram token
+   - Check bot permissions
+   - Review error logs
+
+3. **Database Errors**
+   - Check MySQL connection
+   - Verify migrations run
+   - Check table permissions
+
+### Debug Commands
+```powershell
+# Laravel debugging
+php artisan route:list --json
+php artisan config:show database
+php artisan queue:work --verbose
+
+# Bot debugging  
+python -c "import telegram; print('Bot token valid')"
+python test_api_connection.py
+```
+
