@@ -83,6 +83,281 @@ python test_api_integration.py
 
 This will test connectivity between the bot and Laravel API.
 
+## 🚀 Production Deployment with Systemd
+
+### Setting up Telegram Bot as a System Service
+
+For production deployment, you can run the telegram bot as a systemd service so it starts automatically on boot and restarts if it crashes.
+
+#### 1. Create Systemd Service File
+
+Create a service file for the telegram bot:
+
+```bash
+sudo nano /etc/systemd/system/telegram-finance-bot.service
+```
+
+Add the following content:
+
+```ini
+[Unit]
+Description=Telegram Finance Bot
+After=network.target
+After=syslog.target
+
+[Service]
+Type=simple
+User=www-data
+Group=www-data
+WorkingDirectory=/var/www/minimumpravil-accounting/telegram
+Environment=PATH=/var/www/minimumpravil-accounting/telegram/venv/bin
+ExecStart=/var/www/minimumpravil-accounting/telegram/venv/bin/python main.py
+ExecReload=/bin/kill -HUP $MAINPID
+KillMode=mixed
+Restart=always
+RestartSec=10
+
+# Logging
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=telegram-finance-bot
+
+[Install]
+WantedBy=multi-user.target
+```
+
+#### 2. Set Proper Permissions
+
+Ensure the bot files have correct ownership and permissions:
+
+```bash
+# Set ownership to www-data (or your web server user)
+sudo chown -R www-data:www-data /var/www/minimumpravil-accounting/telegram
+
+# Set proper permissions
+sudo chmod -R 755 /var/www/minimumpravil-accounting/telegram
+sudo chmod +x /var/www/minimumpravil-accounting/telegram/main.py
+
+# Make sure virtual environment is accessible
+sudo chmod -R 755 /var/www/minimumpravil-accounting/telegram/venv
+```
+
+#### 3. Enable and Start the Service
+
+```bash
+# Reload systemd to recognize the new service
+sudo systemctl daemon-reload
+
+# Enable the service to start on boot
+sudo systemctl enable telegram-finance-bot.service
+
+# Start the service
+sudo systemctl start telegram-finance-bot.service
+
+# Check service status
+sudo systemctl status telegram-finance-bot.service
+```
+
+#### 4. Service Management Commands
+
+```bash
+# Start the service
+sudo systemctl start telegram-finance-bot
+
+# Stop the service
+sudo systemctl stop telegram-finance-bot
+
+# Restart the service
+sudo systemctl restart telegram-finance-bot
+
+# Check service status
+sudo systemctl status telegram-finance-bot
+
+# View service logs
+sudo journalctl -u telegram-finance-bot -f
+
+# View recent logs
+sudo journalctl -u telegram-finance-bot --since "1 hour ago"
+
+# View logs from specific date
+sudo journalctl -u telegram-finance-bot --since "2024-12-01"
+```
+
+#### 5. Configuration for Different Users
+
+If you want to run the service as a different user (not www-data), update the service file:
+
+```ini
+# For a specific user (replace 'youruser' with actual username)
+User=youruser
+Group=youruser
+
+# Make sure the user has access to the files
+```
+
+Then set ownership accordingly:
+```bash
+sudo chown -R youruser:youruser /var/www/minimumpravil-accounting/telegram
+```
+
+#### 6. Environment Variables
+
+If you need to set additional environment variables, add them to the service file:
+
+```ini
+[Service]
+Environment=PATH=/var/www/minimumpravil-accounting/telegram/venv/bin
+Environment=PYTHONPATH=/var/www/minimumpravil-accounting/telegram
+Environment=PYTHONUNBUFFERED=1
+# Add other environment variables as needed
+```
+
+#### 7. Log Rotation
+
+To prevent log files from growing too large, you can configure log rotation. Create a logrotate configuration:
+
+```bash
+sudo nano /etc/logrotate.d/telegram-finance-bot
+```
+
+Add:
+```
+/var/www/minimumpravil-accounting/telegram/bot.log {
+    daily
+    missingok
+    rotate 7
+    compress
+    delaycompress
+    notifempty
+    postrotate
+        systemctl reload telegram-finance-bot
+    endscript
+}
+```
+
+#### 8. Monitoring and Health Checks
+
+Add a simple health check script:
+
+```bash
+# Create health check script
+sudo nano /var/www/minimumpravil-accounting/telegram/health_check.sh
+```
+
+```bash
+#!/bin/bash
+# Simple health check for telegram bot service
+
+SERVICE_NAME="telegram-finance-bot"
+
+if systemctl is-active --quiet $SERVICE_NAME; then
+    echo "✅ $SERVICE_NAME is running"
+    exit 0
+else
+    echo "❌ $SERVICE_NAME is not running"
+    echo "Attempting to restart..."
+    systemctl restart $SERVICE_NAME
+    sleep 5
+    if systemctl is-active --quiet $SERVICE_NAME; then
+        echo "✅ $SERVICE_NAME restarted successfully"
+        exit 0
+    else
+        echo "❌ Failed to restart $SERVICE_NAME"
+        exit 1
+    fi
+fi
+```
+
+Make it executable:
+```bash
+sudo chmod +x /var/www/minimumpravil-accounting/telegram/health_check.sh
+```
+
+#### 9. Troubleshooting Service Issues
+
+**Service won't start:**
+```bash
+# Check service status
+sudo systemctl status telegram-finance-bot
+
+# Check service logs
+sudo journalctl -u telegram-finance-bot --no-pager
+
+# Test manually
+cd /var/www/minimumpravil-accounting/telegram
+sudo -u www-data /var/www/minimumpravil-accounting/telegram/venv/bin/python main.py
+```
+
+**Permission issues:**
+```bash
+# Check file ownership
+ls -la /var/www/minimumpravil-accounting/telegram/
+
+# Check virtual environment
+ls -la /var/www/minimumpravil-accounting/telegram/venv/bin/
+
+# Fix permissions if needed
+sudo chown -R www-data:www-data /var/www/minimumpravil-accounting/telegram
+```
+
+**Python path issues:**
+```bash
+# Test Python executable
+sudo -u www-data /var/www/minimumpravil-accounting/telegram/venv/bin/python --version
+
+# Test imports
+sudo -u www-data /var/www/minimumpravil-accounting/telegram/venv/bin/python -c "import sys; print(sys.path)"
+```
+
+#### 10. Security Considerations
+
+- **File Permissions**: Ensure config files with API keys are not readable by other users
+- **Service User**: Run the service as a dedicated user with minimal privileges
+- **Log Access**: Restrict access to log files containing sensitive information
+
+```bash
+# Secure config file
+sudo chmod 600 /var/www/minimumpravil-accounting/telegram/src/config/config.py
+sudo chown www-data:www-data /var/www/minimumpravil-accounting/telegram/src/config/config.py
+
+# Secure log file
+sudo chmod 640 /var/www/minimumpravil-accounting/telegram/bot.log
+sudo chown www-data:www-data /var/www/minimumpravil-accounting/telegram/bot.log
+```
+
+### Benefits of Systemd Service
+
+- ✅ **Auto-start**: Bot starts automatically on server boot
+- ✅ **Auto-restart**: Bot restarts automatically if it crashes
+- ✅ **Logging**: Centralized logging through systemd journal
+- ✅ **Management**: Easy start/stop/restart commands
+- ✅ **Monitoring**: Integration with system monitoring tools
+- ✅ **Security**: Runs with appropriate user permissions
+- ✅ **Resource Control**: Can set memory/CPU limits if needed
+
+## 🔧 API Configuration Improvements
+
+### Centralized User ID Management
+
+The bot now uses a centralized `INTERNAL_API_USER_ID` configuration that matches Laravel's setup:
+
+- **Laravel**: Uses `INTERNAL_API_USER_ID=1` in `.env`
+- **Telegram Bot**: Uses `INTERNAL_API_USER_ID = 1` in `config.py`
+- **Benefits**: 
+  - Consistent user tracking across API calls
+  - Simplified API integration (no need to pass user IDs manually)
+  - Better audit trail in Laravel logs
+  - Centralized configuration management
+
+### Automatic User Context
+
+All API calls now automatically include the configured user context:
+- **Expenses**: Include both Telegram user ID and API user ID in comments
+- **Transfers**: Use API user ID for authorization tracking
+- **Logging**: Shows which API user ID is being used for each call
+
+## 🧪 Testing Fund Transfers
+
 ## Usage
 
 ### Getting Started
