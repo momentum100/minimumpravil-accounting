@@ -40,6 +40,14 @@ class FundTransferController extends Controller
             abort(500, 'System user not found.');
         }
 
+        // Create system user object for dropdowns
+        $systemUserForDropdown = (object) [
+            'id' => $systemUser->id,
+            'name' => $systemUser->name . ' (System)', // Clearly identify as System
+            'role' => 'System', // Add role for consistency if needed by view
+            'terms' => 0 // Add terms for consistency if needed by view
+        ];
+
         // Get non-virtual users suitable for transfers (for the 'To' dropdown)
         // Sort buyers separately for To dropdown
         $buyers = User::where('is_virtual', false)
@@ -52,8 +60,10 @@ class FundTransferController extends Controller
                        ->orderBy('name')
                        ->get(['id', 'name']);
         
-        // Merge agencies first, then buyers for To dropdown
-        $toUsers = $agencies->merge($buyers);
+        // Merge System user, then agencies, then buyers for To dropdown
+        $toUsers = collect([$systemUserForDropdown]) // Add System user first
+                    ->merge($agencies)
+                    ->merge($buyers);
 
         // Get non-virtual users with role and terms for the 'From' dropdown
         $agenciesData = User::where('is_virtual', false)
@@ -66,15 +76,7 @@ class FundTransferController extends Controller
                          ->orderBy('name')
                          ->get(['id', 'name', 'role', 'terms']);
 
-        // Create system user for dropdown
-        $systemUserForDropdown = (object) [
-            'id' => $systemUser->id,
-            'name' => $systemUser->name . ' (System)',
-            'role' => 'System',
-            'terms' => 0
-        ];
-
-        // Create separator for dropdown
+        // Create separator for dropdown (if you want to keep it for 'From' or use a similar concept for 'To')
         $separator = (object) [
             'id' => '',
             'name' => '------',
@@ -83,13 +85,13 @@ class FundTransferController extends Controller
         ];
 
         // Build the sorted fromUsers collection: System -> Agencies -> Separator -> Buyers
-        $fromUsers = collect([$systemUserForDropdown])
+        $fromUsers = collect([$systemUserForDropdown]) // Use the already created object
                     ->merge($agenciesData)
                     ->push($separator)
                     ->merge($buyersData);
         
         // Merge all data for Alpine (without separator)
-        $fromUsersData = collect([$systemUserForDropdown])
+        $fromUsersData = collect([$systemUserForDropdown]) // Use the already created object
                         ->merge($agenciesData)
                         ->merge($buyersData);
 
