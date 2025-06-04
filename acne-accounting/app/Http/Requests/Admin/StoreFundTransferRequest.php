@@ -33,7 +33,7 @@ class StoreFundTransferRequest extends FormRequest
                 Rule::exists('accounts', 'id')->where('currency', 'USD'), // Ensure it's a USD account
                 new AccountBelongsToUser($this->input('from_user_id')) // Custom rule check
             ],
-            'to_user_id' => ['required', 'integer', Rule::exists('users', 'id')->whereNot('is_virtual', true)],
+            'to_user_id' => ['required', 'integer', Rule::exists('users', 'id')],
             'to_account_id' => [
                 'required', 
                 'integer', 
