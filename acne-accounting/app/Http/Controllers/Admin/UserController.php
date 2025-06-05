@@ -90,16 +90,27 @@ class UserController extends Controller
             $user = User::create($validatedData);
             Log::info('UserController@store: User created successfully', ['user_id' => $user->id]);
 
-            // Automatically create a default USD account if user is Buyer or Agency
-            if (in_array($user->role, ['buyer', 'agency'])) {
-                $accountType = ($user->role === 'buyer') ? 'BUYER_MAIN' : 'AGENCY_MAIN';
-                Account::create([
-                    'user_id' => $user->id,
-                    'account_type' => $accountType,
-                    'currency' => 'USD',
-                    'description' => $user->name . ' Main USD Account',
-                ]);
-            }
+            // Automatically create a default USD account for all users
+            $accountType = match($user->role) {
+                'owner' => 'OWNER_USD',
+                'finance' => 'FINANCE_USD', 
+                'buyer' => 'BUYER_USD',
+                'agency' => 'AGENCY_USD',
+                default => 'USER_USD', // Fallback for any future roles
+            };
+            
+            Account::create([
+                'user_id' => $user->id,
+                'account_type' => $accountType,
+                'currency' => 'USD',
+                'description' => $user->name . ' Main USD Account',
+            ]);
+            
+            Log::info('UserController@store: USD account created automatically', [
+                'user_id' => $user->id,
+                'account_type' => $accountType,
+                'user_role' => $user->role
+            ]);
 
             // Redirect to the user's detail page or index page
             return redirect()->route('admin.users.index')->with('success', 'User created successfully.');
